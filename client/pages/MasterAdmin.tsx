@@ -17,6 +17,19 @@ export default function MasterAdmin() {
   const [eventsData, setEventsData] = useState<MasterAdminResponse | null>(null);
   const [eventsLoading, setEventsLoading] = useState(false);
   const [deletingEventId, setDeletingEventId] = useState<number | null>(null);
+  const [editingEvent, setEditingEvent] = useState<EventWithStats | null>(null);
+  const [editForm, setEditForm] = useState({
+    title: "",
+    date: "",
+    time: "",
+    location: "",
+    full_address: "",
+    phone: "",
+    maps_link: "",
+    message: ""
+  });
+  const [editLoading, setEditLoading] = useState(false);
+  const [editOpen, setEditOpen] = useState(false);
 
   useEffect(() => {
     if (isAuthenticated) {
