@@ -262,7 +262,7 @@ export default function Confirmation() {
               ) : (
                 <form onSubmit={handleConfirmation} className="space-y-3">
                   <Label htmlFor="guest_name" className="font-semibold">
-                    Confirme sua presença:
+                    Confirme sua presença para "{event.title}":
                   </Label>
                   <Input
                     id="guest_name"
