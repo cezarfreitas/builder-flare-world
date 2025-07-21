@@ -24,9 +24,9 @@ COPY . .
 # Build da aplicação
 RUN npm run build
 
-# Limpar node_modules e reinstalar apenas produção
+# Limpar node_modules e reinstalar apenas produção (.npmrc resolve conflitos)
 RUN rm -rf node_modules && \
-    npm install --production --no-optional --legacy-peer-deps && \
+    npm install --production --no-optional && \
     npm cache clean --force
 
 # Criar usuário não-root
