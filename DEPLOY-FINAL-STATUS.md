@@ -3,6 +3,7 @@
 ## ✅ ERRO CORS CORRIGIDO
 
 ### 🚨 Problema Anterior - CORS Missing
+
 ```
 Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'cors'
 ```
@@ -10,6 +11,7 @@ Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'cors'
 **✅ CORRIGIDO**: Movido `cors` de devDependencies para dependencies
 
 ### 🚨 Problema Anterior - ROLLUP ALPINE LINUX
+
 ```
 Error: Cannot find module @rollup/rollup-linux-x64-musl
 ```
@@ -19,16 +21,19 @@ Error: Cannot find module @rollup/rollup-linux-x64-musl
 ### ✅ SOLUÇÕES IMPLEMENTADAS
 
 **1. Dockerfile Principal (Fixado)**
+
 - Removido `--no-optional` para permitir dependências opcionais
 - Adicionado `npm rebuild` para recompilar binários nativos
 - Removido package-lock.json para forçar resolução limpa
 
 **2. Dockerfile.debian (Backup)**
+
 - Usa imagem padrão Debian ao invés de Alpine
 - Maior compatibilidade com binários nativos
 - Fallback confiável para problemas de Alpine
 
 **3. Dockerfile.robust (Multi-stage)**
+
 - Build em stage separado com todas ferramentas
 - Produção limpa apenas com runtime necessário
 - Usa `--ignore-engines` para contornar conflitos
@@ -36,16 +41,19 @@ Error: Cannot find module @rollup/rollup-linux-x64-musl
 ### 📋 OPÇÕES DE DEPLOY
 
 #### Opção 1: Dockerfile Principal
+
 ```bash
 docker build -f Dockerfile -t app .
 ```
 
 #### Opção 2: Dockerfile Debian (Recomendado)
+
 ```bash
 docker build -f Dockerfile.debian -t app .
 ```
 
 #### Opção 3: Dockerfile Robusto
+
 ```bash
 docker build -f Dockerfile.robust -t app .
 ```
@@ -53,6 +61,7 @@ docker build -f Dockerfile.robust -t app .
 ### 🎯 RECOMENDAÇÃO
 
 **Use Dockerfile.debian** - mais estável e compatível:
+
 - Sem problemas de binários nativos Alpine
 - Tamanho maior mas funcionamento garantido
 - Melhor para produ��ão crítica
@@ -60,6 +69,7 @@ docker build -f Dockerfile.robust -t app .
 ### 🔧 CONFIGURAÇÃO EASYPANEL
 
 **Variáveis de Ambiente necessárias:**
+
 ```
 NODE_ENV=production
 PORT=8080
