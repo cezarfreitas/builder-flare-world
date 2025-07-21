@@ -1,12 +1,34 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Calendar, Clock, MapPin, MessageSquare, CheckCircle, AlertCircle, Heart, Building, Phone, Navigation, Users } from "lucide-react";
-import { EventDetailsResponse, ConfirmGuestRequest, ConfirmGuestResponse } from "@shared/api";
-import { fireConfirmationConfetti } from '@/lib/confetti-utils';
+import {
+  Calendar,
+  Clock,
+  MapPin,
+  MessageSquare,
+  CheckCircle,
+  AlertCircle,
+  Heart,
+  Building,
+  Phone,
+  Navigation,
+  Users,
+} from "lucide-react";
+import {
+  EventDetailsResponse,
+  ConfirmGuestRequest,
+  ConfirmGuestResponse,
+} from "@shared/api";
+import { fireConfirmationConfetti } from "@/lib/confetti-utils";
 
 export default function Confirmation() {
   const { code } = useParams<{ code: string }>();
@@ -14,7 +36,8 @@ export default function Confirmation() {
   const [guestName, setGuestName] = useState("");
   const [loading, setLoading] = useState(true);
   const [confirming, setConfirming] = useState(false);
-  const [confirmationResult, setConfirmationResult] = useState<ConfirmGuestResponse | null>(null);
+  const [confirmationResult, setConfirmationResult] =
+    useState<ConfirmGuestResponse | null>(null);
   const [isSimilarNameError, setIsSimilarNameError] = useState(false);
 
   useEffect(() => {
@@ -37,17 +60,15 @@ export default function Confirmation() {
       const data: EventDetailsResponse = await response.json();
       setEventData(data);
     } catch (error) {
-      console.error('Error fetching event:', error);
+      console.error("Error fetching event:", error);
       setEventData({
         success: false,
-        error: 'Erro ao carregar evento'
+        error: "Erro ao carregar evento",
       });
     } finally {
       setLoading(false);
     }
   };
-
-
 
   const handleConfirmation = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -57,18 +78,23 @@ export default function Confirmation() {
 
     try {
       const response = await fetch(`/api/events/${code}/confirm`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ guest_name: guestName.trim() } as ConfirmGuestRequest),
+        body: JSON.stringify({
+          guest_name: guestName.trim(),
+        } as ConfirmGuestRequest),
       });
 
       const result: ConfirmGuestResponse = await response.json();
       setConfirmationResult(result);
 
       // Detectar se é erro de nome similar
-      const isSimilarError = !result.success && result.message?.includes('Já existe') && result.message?.includes('nome completo');
+      const isSimilarError =
+        !result.success &&
+        result.message?.includes("Já existe") &&
+        result.message?.includes("nome completo");
       setIsSimilarNameError(isSimilarError);
 
       if (result.success) {
@@ -83,10 +109,10 @@ export default function Confirmation() {
         }, 300);
       }
     } catch (error) {
-      console.error('Error confirming guest:', error);
+      console.error("Error confirming guest:", error);
       setConfirmationResult({
         success: false,
-        message: 'Erro ao confirmar presença. Tente novamente.'
+        message: "Erro ao confirmar presença. Tente novamente.",
       });
     } finally {
       setConfirming(false);
@@ -100,7 +126,9 @@ export default function Confirmation() {
           <CardContent className="flex items-center justify-center py-12">
             <div className="flex items-center gap-3">
               <div className="w-6 h-6 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
-              <span className="text-muted-foreground">Carregando momento especial...</span>
+              <span className="text-muted-foreground">
+                Carregando momento especial...
+              </span>
             </div>
           </CardContent>
         </Card>
@@ -116,9 +144,12 @@ export default function Confirmation() {
             <div className="w-16 h-16 bg-destructive/10 rounded-full flex items-center justify-center mx-auto">
               <AlertCircle className="w-8 h-8 text-destructive" />
             </div>
-            <CardTitle className="text-2xl font-bold">Momento Não Encontrado</CardTitle>
+            <CardTitle className="text-2xl font-bold">
+              Momento Não Encontrado
+            </CardTitle>
             <CardDescription>
-              {eventData?.error || 'O link do evento pode estar incorreto ou expirado.'}
+              {eventData?.error ||
+                "O link do evento pode estar incorreto ou expirado."}
             </CardDescription>
           </CardHeader>
         </Card>
@@ -135,8 +166,12 @@ export default function Confirmation() {
     const today = new Date();
 
     // Converter para fuso horário de São Paulo
-    const eventSaoPaulo = new Date(eventDate.toLocaleString('en-US', { timeZone: 'America/Sao_Paulo' }));
-    const todaySaoPaulo = new Date(today.toLocaleString('en-US', { timeZone: 'America/Sao_Paulo' }));
+    const eventSaoPaulo = new Date(
+      eventDate.toLocaleString("en-US", { timeZone: "America/Sao_Paulo" }),
+    );
+    const todaySaoPaulo = new Date(
+      today.toLocaleString("en-US", { timeZone: "America/Sao_Paulo" }),
+    );
 
     eventSaoPaulo.setHours(0, 0, 0, 0); // Reset time to start of day
     todaySaoPaulo.setHours(0, 0, 0, 0); // Reset time to start of day
@@ -151,7 +186,7 @@ export default function Confirmation() {
 
   const getDaysRemainingText = (days: number) => {
     if (days < 0) {
-      return `Momento já aconteceu (${Math.abs(days)} dia${Math.abs(days) !== 1 ? 's' : ''} atrás)`;
+      return `Momento já aconteceu (${Math.abs(days)} dia${Math.abs(days) !== 1 ? "s" : ""} atrás)`;
     } else if (days === 0) {
       return "O momento especial é hoje! 🍓";
     } else if (days === 1) {
@@ -178,30 +213,38 @@ export default function Confirmation() {
             </CardDescription>
 
             {/* Days Remaining */}
-            <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold ${
-              daysRemaining < 0
-                ? 'bg-muted text-muted-foreground'
-                : daysRemaining === 0
-                ? 'bg-primary text-primary-foreground animate-pulse'
-                : daysRemaining <= 7
-                ? 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200'
-                : 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
-            }`}>
+            <div
+              className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold ${
+                daysRemaining < 0
+                  ? "bg-muted text-muted-foreground"
+                  : daysRemaining === 0
+                    ? "bg-primary text-primary-foreground animate-pulse"
+                    : daysRemaining <= 7
+                      ? "bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200"
+                      : "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200"
+              }`}
+            >
               <Calendar className="w-4 h-4" />
               {getDaysRemainingText(daysRemaining)}
             </div>
           </CardHeader>
-          
+
           <CardContent className="space-y-4">
             {/* Ultra-Minimal Event Details */}
             <div className="space-y-3">
-              <h3 className="font-semibold text-foreground text-base">Detalhes do Momento:</h3>
+              <h3 className="font-semibold text-foreground text-base">
+                Detalhes do Momento:
+              </h3>
 
               {/* Essential Info - Minimal */}
               <div className="space-y-2">
                 <div className="flex items-center gap-2 text-sm">
                   <Clock className="w-4 h-4 text-primary" />
-                  <span>{new Date(event.date_time).toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })}</span>
+                  <span>
+                    {new Date(event.date_time).toLocaleString("pt-BR", {
+                      timeZone: "America/Sao_Paulo",
+                    })}
+                  </span>
                 </div>
 
                 <div className="flex items-center gap-2 text-sm">
@@ -228,7 +271,7 @@ export default function Confirmation() {
                           Ligar
                         </a>
                         <a
-                          href={`https://wa.me/${event.phone.replace(/\D/g, '')}`}
+                          href={`https://wa.me/${event.phone.replace(/\D/g, "")}`}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="flex items-center gap-1 text-green-600 hover:text-green-700 text-xs"
@@ -269,12 +312,17 @@ export default function Confirmation() {
                     <span className="inline-flex items-center gap-2">
                       <Users className="w-4 h-4" />
                       Ver lista de confirmados ({confirmations.length})
-                      <span className="group-open:rotate-180 transition-transform">▼</span>
+                      <span className="group-open:rotate-180 transition-transform">
+                        ▼
+                      </span>
                     </span>
                   </summary>
                   <div className="mt-3 space-y-1 max-h-32 overflow-y-auto">
                     {confirmations.slice(0, 20).map((confirmation, index) => (
-                      <div key={confirmation.id} className="flex items-center gap-2 text-xs text-muted-foreground">
+                      <div
+                        key={confirmation.id}
+                        className="flex items-center gap-2 text-xs text-muted-foreground"
+                      >
                         <span className="w-4 h-4 flex items-center justify-center bg-green-100 text-green-700 rounded-full text-[10px] font-bold dark:bg-green-900 dark:text-green-300">
                           ✓
                         </span>
@@ -316,61 +364,71 @@ export default function Confirmation() {
                   <Label htmlFor="guest_name" className="font-semibold">
                     {isSimilarNameError
                       ? "Por favor, digite seu nome completo:"
-                      : `Confirme sua presença para "${event.title}":`
-                    }
+                      : `Confirme sua presença para "${event.title}":`}
                   </Label>
                   <div className="space-y-1">
                     <Input
                       id="guest_name"
-                      placeholder={isSimilarNameError
-                        ? "Ex: João Silva Santos (nome e sobrenome completo)"
-                        : "Digite seu nome completo"
+                      placeholder={
+                        isSimilarNameError
+                          ? "Ex: João Silva Santos (nome e sobrenome completo)"
+                          : "Digite seu nome completo"
                       }
                       value={guestName}
                       onChange={(e) => {
                         setGuestName(e.target.value);
                         // Limpar estado de erro ao digitar
-                        if (isSimilarNameError && e.target.value.trim().split(' ').length > 1) {
+                        if (
+                          isSimilarNameError &&
+                          e.target.value.trim().split(" ").length > 1
+                        ) {
                           setIsSimilarNameError(false);
                           setConfirmationResult(null);
                         }
                       }}
                       required
-                      className={`h-11 ${isSimilarNameError ? 'border-orange-300 focus:border-orange-500 bg-orange-50 dark:bg-orange-950/20' : ''}`}
+                      className={`h-11 ${isSimilarNameError ? "border-orange-300 focus:border-orange-500 bg-orange-50 dark:bg-orange-950/20" : ""}`}
                     />
                     {/* Indicador de progresso do nome */}
                     {guestName.trim().length > 0 && (
                       <div className="flex items-center gap-2 text-xs">
-                        <div className={`w-2 h-2 rounded-full ${
-                          guestName.trim().split(' ').length >= 2
-                            ? 'bg-green-500'
-                            : 'bg-yellow-500'
-                        }`} />
-                        <span className={`${
-                          guestName.trim().split(' ').length >= 2
-                            ? 'text-green-600 dark:text-green-400'
-                            : 'text-yellow-600 dark:text-yellow-400'
-                        }`}>
-                          {guestName.trim().split(' ').length >= 2
-                            ? '✓ Nome completo'
-                            : 'Adicione sobrenome'
-                          }
+                        <div
+                          className={`w-2 h-2 rounded-full ${
+                            guestName.trim().split(" ").length >= 2
+                              ? "bg-green-500"
+                              : "bg-yellow-500"
+                          }`}
+                        />
+                        <span
+                          className={`${
+                            guestName.trim().split(" ").length >= 2
+                              ? "text-green-600 dark:text-green-400"
+                              : "text-yellow-600 dark:text-yellow-400"
+                          }`}
+                        >
+                          {guestName.trim().split(" ").length >= 2
+                            ? "✓ Nome completo"
+                            : "Adicione sobrenome"}
                         </span>
                       </div>
                     )}
                   </div>
 
                   {confirmationResult && !confirmationResult.success && (
-                    <div className={`p-3 border rounded-lg ${
-                      isSimilarNameError
-                        ? 'bg-orange-50 border-orange-200 dark:bg-orange-950/20 dark:border-orange-800'
-                        : 'bg-destructive/10 border-destructive/20'
-                    }`}>
-                      <p className={`text-sm ${
+                    <div
+                      className={`p-3 border rounded-lg ${
                         isSimilarNameError
-                          ? 'text-orange-800 dark:text-orange-200'
-                          : 'text-destructive'
-                      }`}>
+                          ? "bg-orange-50 border-orange-200 dark:bg-orange-950/20 dark:border-orange-800"
+                          : "bg-destructive/10 border-destructive/20"
+                      }`}
+                    >
+                      <p
+                        className={`text-sm ${
+                          isSimilarNameError
+                            ? "text-orange-800 dark:text-orange-200"
+                            : "text-destructive"
+                        }`}
+                      >
                         {isSimilarNameError && (
                           <span className="inline-flex items-center gap-1 mr-2">
                             ⚠️
@@ -380,20 +438,24 @@ export default function Confirmation() {
                       </p>
                       {isSimilarNameError && (
                         <p className="text-xs text-orange-600 dark:text-orange-300 mt-2">
-                          💡 Dica: Digite nome e sobrenome para distinguir de outras pessoas com o mesmo primeiro nome.
+                          💡 Dica: Digite nome e sobrenome para distinguir de
+                          outras pessoas com o mesmo primeiro nome.
                         </p>
                       )}
                     </div>
                   )}
 
                   {/* Dica proativa para nomes curtos */}
-                  {guestName.trim().length > 0 && guestName.trim().split(' ').length === 1 && !confirmationResult && (
-                    <div className="p-2 bg-blue-50 border border-blue-200 rounded-lg dark:bg-blue-950/20 dark:border-blue-800">
-                      <p className="text-xs text-blue-700 dark:text-blue-300">
-                        💡 Recomendado: Digite nome e sobrenome (ex: "João Silva") para evitar confusão com outros convidados.
-                      </p>
-                    </div>
-                  )}
+                  {guestName.trim().length > 0 &&
+                    guestName.trim().split(" ").length === 1 &&
+                    !confirmationResult && (
+                      <div className="p-2 bg-blue-50 border border-blue-200 rounded-lg dark:bg-blue-950/20 dark:border-blue-800">
+                        <p className="text-xs text-blue-700 dark:text-blue-300">
+                          💡 Recomendado: Digite nome e sobrenome (ex: "João
+                          Silva") para evitar confusão com outros convidados.
+                        </p>
+                      </div>
+                    )}
 
                   <Button
                     type="submit"
@@ -414,8 +476,6 @@ export default function Confirmation() {
             </div>
           </CardContent>
         </Card>
-
-
       </div>
     </div>
   );

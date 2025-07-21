@@ -170,8 +170,8 @@ export const confirmGuest: RequestHandler = async (req, res) => {
       }
 
       // Check for similar names (first name match) to suggest full name
-      const inputFirstName = guest_name.trim().split(' ')[0].toLowerCase();
-      const inputWordCount = guest_name.trim().split(' ').length;
+      const inputFirstName = guest_name.trim().split(" ")[0].toLowerCase();
+      const inputWordCount = guest_name.trim().split(" ").length;
 
       const [similarNamesRows] = (await connection.execute(
         "SELECT guest_name FROM confirmations WHERE event_id = ?",
@@ -179,12 +179,14 @@ export const confirmGuest: RequestHandler = async (req, res) => {
       )) as any;
 
       const similarNames = similarNamesRows.filter((row: any) => {
-        const existingFirstName = row.guest_name.split(' ')[0].toLowerCase();
+        const existingFirstName = row.guest_name.split(" ")[0].toLowerCase();
         const existingName = row.guest_name.trim().toLowerCase();
         const inputName = guest_name.trim().toLowerCase();
 
         // Verifica se o primeiro nome é igual mas o nome completo é diferente
-        return existingFirstName === inputFirstName && existingName !== inputName;
+        return (
+          existingFirstName === inputFirstName && existingName !== inputName
+        );
       });
 
       // Se tem nome similar e o usuário digitou apenas um nome, pedir nome completo
@@ -202,13 +204,16 @@ export const confirmGuest: RequestHandler = async (req, res) => {
         const inputFullName = guest_name.trim().toLowerCase();
         const veryCloseMatches = similarNames.filter((row: any) => {
           const existingFullName = row.guest_name.trim().toLowerCase();
-          const inputWords = inputFullName.split(' ');
-          const existingWords = existingFullName.split(' ');
+          const inputWords = inputFullName.split(" ");
+          const existingWords = existingFullName.split(" ");
 
           // Se primeiro e segundo nome são iguais mas há diferenças sutis
-          return inputWords[0] === existingWords[0] &&
-                 inputWords[1] && existingWords[1] &&
-                 inputWords[1].substring(0, 3) === existingWords[1].substring(0, 3);
+          return (
+            inputWords[0] === existingWords[0] &&
+            inputWords[1] &&
+            existingWords[1] &&
+            inputWords[1].substring(0, 3) === existingWords[1].substring(0, 3)
+          );
         });
 
         if (veryCloseMatches.length > 0) {
