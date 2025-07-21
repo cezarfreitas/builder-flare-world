@@ -49,41 +49,7 @@ export default function Index() {
     }
   }, [createdEvent]);
 
-  const fireEventCreatedConfetti = () => {
-    // Confete especial para criação de eventos com cores de morango
-    const colors = ['#E91E63', '#F8BBD9', '#FCE4EC', '#FF6B9D', '#C2185B', '#FFB6C1'];
 
-    // Explosão central
-    confetti({
-      particleCount: 120,
-      spread: 80,
-      origin: { y: 0.5 },
-      colors: colors
-    });
-
-    // Chuva de confete
-    setTimeout(() => {
-      confetti({
-        particleCount: 200,
-        spread: 100,
-        origin: { y: 0.3 },
-        colors: colors,
-        gravity: 0.8
-      });
-    }, 300);
-
-    // Confete em formato de coração (simulado com shapes)
-    setTimeout(() => {
-      confetti({
-        particleCount: 50,
-        spread: 60,
-        origin: { y: 0.7 },
-        colors: ['#E91E63', '#FF1744'],
-        shapes: ['circle'],
-        scalar: 1.2
-      });
-    }, 600);
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
