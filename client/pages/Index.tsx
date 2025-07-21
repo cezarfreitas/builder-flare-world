@@ -96,6 +96,31 @@ export default function Index() {
                   <MapPin className="w-5 h-5 text-primary" />
                   <span>{createdEvent.event.location}</span>
                 </div>
+                {createdEvent.event.full_address && (
+                  <div className="flex items-start gap-3">
+                    <Building className="w-5 h-5 text-primary mt-0.5" />
+                    <span>{createdEvent.event.full_address}</span>
+                  </div>
+                )}
+                {createdEvent.event.phone && (
+                  <div className="flex items-center gap-3">
+                    <Phone className="w-5 h-5 text-primary" />
+                    <span>{createdEvent.event.phone}</span>
+                  </div>
+                )}
+                {createdEvent.event.maps_link && (
+                  <div className="flex items-center gap-3">
+                    <Navigation className="w-5 h-5 text-primary" />
+                    <a
+                      href={createdEvent.event.maps_link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-primary hover:underline"
+                    >
+                      Ver no Google Maps
+                    </a>
+                  </div>
+                )}
                 {createdEvent.event.message && (
                   <div className="flex items-start gap-3">
                     <MessageSquare className="w-5 h-5 text-primary mt-0.5" />
