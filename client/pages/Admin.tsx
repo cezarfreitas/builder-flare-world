@@ -195,9 +195,9 @@ export default function Admin() {
             {confirmations.length === 0 ? (
               <div className="text-center py-8">
                 <Users className="w-16 h-16 text-muted-foreground mx-auto mb-4 opacity-50" />
-                <p className="text-muted-foreground">Ainda não há confirmações para este evento.</p>
+                <p className="text-muted-foreground">Ainda não há confirmações para este momento especial.</p>
                 <p className="text-sm text-muted-foreground mt-2">
-                  Compartilhe o link do evento para que os convidados possam confirmar presença.
+                  Compartilhe o link para que seus queridos possam confirmar presença.
                 </p>
               </div>
             ) : (
