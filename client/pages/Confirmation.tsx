@@ -309,8 +309,28 @@ export default function Confirmation() {
                   />
 
                   {confirmationResult && !confirmationResult.success && (
-                    <div className="p-3 bg-destructive/10 border border-destructive/20 rounded-lg">
-                      <p className="text-destructive text-sm">{confirmationResult.message}</p>
+                    <div className={`p-3 border rounded-lg ${
+                      isSimilarNameError
+                        ? 'bg-orange-50 border-orange-200 dark:bg-orange-950/20 dark:border-orange-800'
+                        : 'bg-destructive/10 border-destructive/20'
+                    }`}>
+                      <p className={`text-sm ${
+                        isSimilarNameError
+                          ? 'text-orange-800 dark:text-orange-200'
+                          : 'text-destructive'
+                      }`}>
+                        {isSimilarNameError && (
+                          <span className="inline-flex items-center gap-1 mr-2">
+                            ⚠️
+                          </span>
+                        )}
+                        {confirmationResult.message}
+                      </p>
+                      {isSimilarNameError && (
+                        <p className="text-xs text-orange-600 dark:text-orange-300 mt-2">
+                          💡 Dica: Digite nome e sobrenome para distinguir de outras pessoas com o mesmo primeiro nome.
+                        </p>
+                      )}
                     </div>
                   )}
 
