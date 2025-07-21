@@ -1,35 +1,40 @@
-# Dockerfile simplificado para resolver problemas de dependências
+# Dockerfile robusto para produção
 FROM node:20-alpine
 
-# Instalar dependências do sistema necessárias
-RUN apk add --no-cache python3 make g++ && \
-    apk add --no-cache dumb-init
-
-# Criar usuário não-root
-RUN addgroup -g 1001 -S nodejs && \
-    adduser -S nodejs -u 1001
+# Instalar dependências do sistema
+RUN apk add --no-cache \
+    python3 \
+    make \
+    g++ \
+    dumb-init
 
 # Definir diretório de trabalho
 WORKDIR /app
 
-# Copiar todos os arquivos (incluindo package-lock.json)
-COPY . .
+# Copiar package files primeiro para cache layer
+COPY package*.json ./
 
-# Configurar npm e instalar todas as dependências
-RUN npm config set registry https://registry.npmjs.org/ && \
-    npm install --no-optional
+# Limpar cache npm e instalar dependências
+RUN npm cache clean --force && \
+    npm install --production=false --no-optional
+
+# Copiar resto do código
+COPY . .
 
 # Build da aplicação
 RUN npm run build
 
-# Remover devDependencies e limpar cache
-RUN npm prune --production && \
+# Limpar node_modules e reinstalar apenas produção
+RUN rm -rf node_modules && \
+    npm install --production --no-optional && \
     npm cache clean --force
 
-# Mudar proprietário dos arquivos
-RUN chown -R nodejs:nodejs /app
+# Criar usuário não-root
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S nodejs -u 1001 && \
+    chown -R nodejs:nodejs /app
 
-# Mudar para usuário não-root
+# Mudar para usuário n��o-root
 USER nodejs
 
 # Expor porta
