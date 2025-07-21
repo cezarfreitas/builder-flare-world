@@ -21,6 +21,14 @@ export default function Confirmation() {
     }
   }, [code]);
 
+  useEffect(() => {
+    if (eventData?.success && eventData.event?.title) {
+      document.title = `${eventData.event.title} - Confirmação`;
+    } else {
+      document.title = "Confirmação de Presença";
+    }
+  }, [eventData]);
+
   const fetchEventData = async () => {
     try {
       const response = await fetch(`/api/events/${code}`);
