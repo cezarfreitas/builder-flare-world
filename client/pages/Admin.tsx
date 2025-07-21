@@ -88,7 +88,7 @@ export default function Admin() {
     if (!eventData?.event || !code) return;
 
     const confirmed = window.confirm(
-      `Tem certeza que deseja limpar TODA a lista de confirmados? Esta ação não pode ser desfeita.\n\nAtualmente há ${eventData.confirmations?.length || 0} confirmação(ões).`
+      `Tem certeza que deseja limpar TODA a lista de confirmados? Esta ação não pode ser desfeita.\n\nAtualmente há ${eventData.confirmations?.length || 0} confirmação(ões).`,
     );
 
     if (!confirmed) return;
@@ -96,9 +96,12 @@ export default function Admin() {
     setClearingConfirmations(true);
 
     try {
-      const response = await fetch(`/api/admin/${eventData.event.id}/confirmations`, {
-        method: "DELETE",
-      });
+      const response = await fetch(
+        `/api/admin/${eventData.event.id}/confirmations`,
+        {
+          method: "DELETE",
+        },
+      );
 
       const result: ClearConfirmationsResponse = await response.json();
 
