@@ -14,9 +14,9 @@ WORKDIR /app
 # Copiar package files primeiro para cache layer
 COPY package*.json ./
 
-# Limpar cache npm e instalar dependências
+# Limpar cache npm e instalar dependências com resolução de conflitos
 RUN npm cache clean --force && \
-    npm install --production=false --no-optional
+    npm install --production=false --no-optional --legacy-peer-deps
 
 # Copiar resto do código
 COPY . .
@@ -34,7 +34,7 @@ RUN addgroup -g 1001 -S nodejs && \
     adduser -S nodejs -u 1001 && \
     chown -R nodejs:nodejs /app
 
-# Mudar para usuário n��o-root
+# Mudar para usuário não-root
 USER nodejs
 
 # Expor porta
