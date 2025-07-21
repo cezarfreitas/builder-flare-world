@@ -156,7 +156,7 @@ export default function Confirmation() {
             <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
               <Heart className="w-8 h-8 text-primary fill-primary" />
             </div>
-            <CardTitle className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
+            <CardTitle className="text-2xl sm:text-3xl lg:text-4xl font-bold text-primary text-center leading-tight">
               {event.title}
             </CardTitle>
             <CardDescription className="text-base sm:text-lg text-muted-foreground">
