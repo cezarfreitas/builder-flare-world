@@ -40,7 +40,7 @@ export default function Index() {
       setCreatedEvent(result);
       
       if (result.success) {
-        setFormData({ date_time: "", location: "", message: "" });
+        setFormData({ date: "", time: "", location: "", message: "" });
       }
     } catch (error) {
       console.error('Error creating event:', error);
@@ -151,7 +151,7 @@ export default function Index() {
             Sistema de Confirmação
           </CardTitle>
           <CardDescription className="text-base sm:text-lg text-muted-foreground">
-            Crie seu evento e gere um link para confirma��ão de convidados
+            Crie seu evento e gere um link para confirmação de convidados
           </CardDescription>
         </CardHeader>
         
