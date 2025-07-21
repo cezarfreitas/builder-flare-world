@@ -20,14 +20,20 @@ export default function Index() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    
+
     try {
+      const eventData: CreateEventRequest = {
+        date_time: `${formData.date}T${formData.time}`,
+        location: formData.location,
+        message: formData.message
+      };
+
       const response = await fetch('/api/events', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(eventData),
       });
       
       const result: CreateEventResponse = await response.json();
@@ -145,7 +151,7 @@ export default function Index() {
             Sistema de Confirmação
           </CardTitle>
           <CardDescription className="text-base sm:text-lg text-muted-foreground">
-            Crie seu evento e gere um link para confirmação de convidados
+            Crie seu evento e gere um link para confirma��ão de convidados
           </CardDescription>
         </CardHeader>
         
