@@ -284,15 +284,28 @@ export default function Confirmation() {
               ) : (
                 <form onSubmit={handleConfirmation} className="space-y-3">
                   <Label htmlFor="guest_name" className="font-semibold">
-                    Confirme sua presença para "{event.title}":
+                    {isSimilarNameError
+                      ? "Por favor, digite seu nome completo:"
+                      : `Confirme sua presença para "${event.title}":`
+                    }
                   </Label>
                   <Input
                     id="guest_name"
-                    placeholder="Digite seu nome completo"
+                    placeholder={isSimilarNameError
+                      ? "Ex: João Silva Santos (nome e sobrenome completo)"
+                      : "Digite seu nome completo"
+                    }
                     value={guestName}
-                    onChange={(e) => setGuestName(e.target.value)}
+                    onChange={(e) => {
+                      setGuestName(e.target.value);
+                      // Limpar estado de erro ao digitar
+                      if (isSimilarNameError && e.target.value.trim().split(' ').length > 1) {
+                        setIsSimilarNameError(false);
+                        setConfirmationResult(null);
+                      }
+                    }}
                     required
-                    className="h-11"
+                    className={`h-11 ${isSimilarNameError ? 'border-orange-300 focus:border-orange-500 bg-orange-50 dark:bg-orange-950/20' : ''}`}
                   />
 
                   {confirmationResult && !confirmationResult.success && (
