@@ -108,8 +108,8 @@ export default function Confirmation() {
   const confirmations = eventData.confirmations || [];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-accent/30 to-primary/10 flex items-center justify-center p-4">
-      <div className="w-full max-w-2xl space-y-6">
+    <div className="min-h-screen bg-gradient-to-br from-background via-accent/30 to-primary/10 flex items-center justify-center p-4 sm:p-6">
+      <div className="w-full max-w-2xl space-y-4 sm:space-y-6">
         {/* Event Details Card */}
         <Card className="shadow-2xl border-0">
           <CardHeader className="text-center space-y-4 pb-6">
