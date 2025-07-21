@@ -151,17 +151,22 @@ export default function Index() {
 
     return (
       <div className="min-h-screen bg-gradient-to-br from-background via-accent/30 to-primary/10 flex items-center justify-center p-4 sm:p-6">
-        <Card className="w-full max-w-2xl shadow-2xl border-0">
+        <Card className="w-full max-w-2xl shadow-2xl border-0 animate-in fade-in slide-in-from-bottom-8 duration-1000">
           <CardHeader className="text-center space-y-4 pb-8">
-            <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
-              <Heart className="w-8 h-8 text-primary fill-primary" />
+            <div className="relative w-20 h-20 bg-gradient-to-r from-primary/20 to-primary/10 rounded-full flex items-center justify-center mx-auto animate-in zoom-in duration-700">
+              <Heart className="w-10 h-10 text-primary fill-primary animate-pulse" />
+              <div className="absolute inset-0 w-20 h-20 rounded-full bg-primary/10 animate-ping" />
             </div>
-            <CardTitle className="text-2xl sm:text-3xl font-bold text-foreground">
+            <CardTitle className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent animate-in slide-in-from-bottom-4 duration-1000">
               {createdEvent.event.title}
             </CardTitle>
-            <CardDescription className="text-base sm:text-lg text-muted-foreground">
-              Seu momento especial foi criado com sucesso! 🍓
+            <CardDescription className="text-base sm:text-lg text-muted-foreground animate-in slide-in-from-bottom-2 duration-1200">
+              ✨ Seu momento especial foi criado com sucesso! 🍓
             </CardDescription>
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-semibold dark:bg-green-900 dark:text-green-200 animate-in fade-in duration-1500">
+              <CheckCircle className="w-4 h-4" />
+              Pronto para compartilhar!
+            </div>
           </CardHeader>
 
           <CardContent className="space-y-6">
