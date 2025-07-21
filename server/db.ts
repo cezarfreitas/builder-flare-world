@@ -1,12 +1,12 @@
-import mysql from 'mysql2/promise';
+import mysql from "mysql2/promise";
 
 const DB_CONFIG = {
-  host: process.env.DB_HOST || '5.161.52.206',
-  port: parseInt(process.env.DB_PORT || '3566'),
-  user: process.env.DB_USER || 'convite',
-  password: process.env.DB_PASSWORD || 'a247d38c3ef256d11e77',
-  database: process.env.DB_NAME || 'convite',
-  timezone: '-03:00'
+  host: process.env.DB_HOST || "5.161.52.206",
+  port: parseInt(process.env.DB_PORT || "3566"),
+  user: process.env.DB_USER || "convite",
+  password: process.env.DB_PASSWORD || "a247d38c3ef256d11e77",
+  database: process.env.DB_NAME || "convite",
+  timezone: "-03:00",
 };
 
 export async function getConnection() {
@@ -32,38 +32,44 @@ export async function initializeDatabase() {
 
     // Add new columns if they don't exist
     try {
-      await connection.execute(`ALTER TABLE events ADD COLUMN full_address TEXT`);
-      console.log('Added full_address column');
+      await connection.execute(
+        `ALTER TABLE events ADD COLUMN full_address TEXT`,
+      );
+      console.log("Added full_address column");
     } catch (error: any) {
-      if (error.code !== 'ER_DUP_FIELDNAME') {
-        console.error('Error adding full_address column:', error);
+      if (error.code !== "ER_DUP_FIELDNAME") {
+        console.error("Error adding full_address column:", error);
       }
     }
 
     try {
-      await connection.execute(`ALTER TABLE events ADD COLUMN phone VARCHAR(20)`);
-      console.log('Added phone column');
+      await connection.execute(
+        `ALTER TABLE events ADD COLUMN phone VARCHAR(20)`,
+      );
+      console.log("Added phone column");
     } catch (error: any) {
-      if (error.code !== 'ER_DUP_FIELDNAME') {
-        console.error('Error adding phone column:', error);
+      if (error.code !== "ER_DUP_FIELDNAME") {
+        console.error("Error adding phone column:", error);
       }
     }
 
     try {
       await connection.execute(`ALTER TABLE events ADD COLUMN maps_link TEXT`);
-      console.log('Added maps_link column');
+      console.log("Added maps_link column");
     } catch (error: any) {
-      if (error.code !== 'ER_DUP_FIELDNAME') {
-        console.error('Error adding maps_link column:', error);
+      if (error.code !== "ER_DUP_FIELDNAME") {
+        console.error("Error adding maps_link column:", error);
       }
     }
 
     try {
-      await connection.execute(`ALTER TABLE events ADD COLUMN title VARCHAR(255) NOT NULL DEFAULT 'Momento Especial'`);
-      console.log('Added title column');
+      await connection.execute(
+        `ALTER TABLE events ADD COLUMN title VARCHAR(255) NOT NULL DEFAULT 'Momento Especial'`,
+      );
+      console.log("Added title column");
     } catch (error: any) {
-      if (error.code !== 'ER_DUP_FIELDNAME') {
-        console.error('Error adding title column:', error);
+      if (error.code !== "ER_DUP_FIELDNAME") {
+        console.error("Error adding title column:", error);
       }
     }
 
@@ -78,9 +84,9 @@ export async function initializeDatabase() {
       )
     `);
 
-    console.log('Database initialized successfully');
+    console.log("Database initialized successfully");
   } catch (error) {
-    console.error('Error initializing database:', error);
+    console.error("Error initializing database:", error);
   } finally {
     await connection.end();
   }

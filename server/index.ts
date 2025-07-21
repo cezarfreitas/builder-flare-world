@@ -1,7 +1,16 @@
 import express from "express";
 import cors from "cors";
 import { handleDemo } from "./routes/demo";
-import { createEvent, getEventByCode, confirmGuest, getAdminEvent, masterAdminLogin, getMasterAdminData, deleteEvent, updateEvent } from "./routes/events";
+import {
+  createEvent,
+  getEventByCode,
+  confirmGuest,
+  getAdminEvent,
+  masterAdminLogin,
+  getMasterAdminData,
+  deleteEvent,
+  updateEvent,
+} from "./routes/events";
 import { initializeDatabase } from "./db";
 
 export function createServer() {
@@ -25,7 +34,7 @@ export function createServer() {
       status: "ok",
       timestamp: new Date().toISOString(),
       environment: process.env.NODE_ENV || "development",
-      version: "1.0.0"
+      version: "1.0.0",
     });
   });
 

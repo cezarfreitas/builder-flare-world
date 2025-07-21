@@ -36,12 +36,14 @@ CMD ["npm", "start"]
 Configure as seguintes variáveis no EasyPanel:
 
 #### Obrigatórias:
+
 ```env
 NODE_ENV=production
 PORT=8080
 ```
 
 #### Banco de Dados (se usar MySQL externo):
+
 ```env
 DB_HOST=seu_host_mysql
 DB_PORT=3306
@@ -53,12 +55,14 @@ DB_NAME=convite
 ### 4. Configuração de Banco de Dados
 
 #### Opção A: MySQL Interno (Recomendado)
+
 1. No EasyPanel, adicione um serviço MySQL
 2. Configure as variáveis de ambiente apontando para o MySQL interno
 
 #### Opção B: Banco Existente
+
 - Use as configurações atuais (já funcionando)
-- Não precisa configurar variáveis DB_* 
+- Não precisa configurar variáveis DB\_\*
 
 ### 5. Configuração de Rede
 
@@ -69,24 +73,29 @@ DB_NAME=convite
 ## 🔧 Configurações Avançadas
 
 ### Health Check
+
 URL: `/api/ping`
 Resposta esperada: `{"message": "Hello from Express server v2!"}`
 
 ### Volumes (Opcional)
+
 Não são necessários volumes persistentes, a aplicação é stateless.
 
 ### Domínio Personalizado
+
 Configure seu domínio personalizado nas configurações do EasyPanel.
 
 ## 📱 Funcionalidades da Aplicação
 
 ### URLs Principais:
+
 - `/` - Página principal (criar momentos)
 - `/convite/{codigo}` - Página de confirmação de presença
 - `/admin/{codigo}` - Administração do evento
 - `/master-admin` - Painel master (senha: `morango2024`)
 
 ### API Endpoints:
+
 - `GET /api/ping` - Health check
 - `POST /api/events` - Criar evento
 - `GET /api/events/{codigo}` - Detalhes do evento
@@ -95,16 +104,19 @@ Configure seu domínio personalizado nas configurações do EasyPanel.
 ## 🛠️ Troubleshooting
 
 ### Problema: Aplicação não inicia
+
 - Verifique se a porta 8080 está configurada
 - Confirme as variáveis de ambiente
 - Verifique os logs do container
 
 ### Problema: Erro de banco de dados
+
 - Verifique as credenciais MySQL
 - Confirme se o banco está acessível
 - Verifique a conectividade de rede
 
 ### Problema: Build falha
+
 - Verifique se tem memória suficiente para o build
 - Confirme se o Node.js 20 está disponível
 

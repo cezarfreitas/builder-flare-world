@@ -1,8 +1,26 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, Clock, MapPin, MessageSquare, Users, Download, Heart, Building, Phone, Navigation, AlertCircle } from "lucide-react";
+import {
+  Calendar,
+  Clock,
+  MapPin,
+  MessageSquare,
+  Users,
+  Download,
+  Heart,
+  Building,
+  Phone,
+  Navigation,
+  AlertCircle,
+} from "lucide-react";
 import { AdminEventResponse } from "@shared/api";
 import { Button } from "@/components/ui/button";
 
@@ -31,10 +49,10 @@ export default function Admin() {
       const data: AdminEventResponse = await response.json();
       setEventData(data);
     } catch (error) {
-      console.error('Error fetching admin event:', error);
+      console.error("Error fetching admin event:", error);
       setEventData({
         success: false,
-        error: 'Erro ao carregar dados do evento'
+        error: "Erro ao carregar dados do evento",
       });
     } finally {
       setLoading(false);
@@ -43,21 +61,23 @@ export default function Admin() {
 
   const exportToCSV = () => {
     if (!eventData?.confirmations) return;
-    
+
     const csvContent = [
-      ['Nome', 'Data de Confirmação'],
-      ...eventData.confirmations.map(conf => [
+      ["Nome", "Data de Confirmação"],
+      ...eventData.confirmations.map((conf) => [
         conf.guest_name,
-        new Date(conf.confirmed_at).toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })
-      ])
+        new Date(conf.confirmed_at).toLocaleString("pt-BR", {
+          timeZone: "America/Sao_Paulo",
+        }),
+      ]),
     ];
-    
-    const csvString = csvContent.map(row => row.join(',')).join('\n');
-    const blob = new Blob([csvString], { type: 'text/csv' });
+
+    const csvString = csvContent.map((row) => row.join(",")).join("\n");
+    const blob = new Blob([csvString], { type: "text/csv" });
     const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
+    const a = document.createElement("a");
     a.href = url;
-    a.download = `confirmados-${eventData.event?.title || 'evento'}.csv`;
+    a.download = `confirmados-${eventData.event?.title || "evento"}.csv`;
     a.click();
     window.URL.revokeObjectURL(url);
   };
@@ -85,9 +105,12 @@ export default function Admin() {
             <div className="w-16 h-16 bg-destructive/10 rounded-full flex items-center justify-center mx-auto">
               <AlertCircle className="w-8 h-8 text-destructive" />
             </div>
-            <CardTitle className="text-2xl font-bold">Momento Não Encontrado</CardTitle>
+            <CardTitle className="text-2xl font-bold">
+              Momento Não Encontrado
+            </CardTitle>
             <CardDescription>
-              {eventData?.error || 'O link pode estar incorreto ou você pode não ter permissão para acessar.'}
+              {eventData?.error ||
+                "O link pode estar incorreto ou você pode não ter permissão para acessar."}
             </CardDescription>
           </CardHeader>
         </Card>
@@ -122,7 +145,8 @@ export default function Admin() {
             <CardTitle className="flex items-center justify-between">
               <span>Detalhes do Momento</span>
               <Badge variant="secondary" className="text-sm">
-                {confirmations.length} confirmado{confirmations.length !== 1 ? 's' : ''}
+                {confirmations.length} confirmado
+                {confirmations.length !== 1 ? "s" : ""}
               </Badge>
             </CardTitle>
           </CardHeader>
@@ -131,7 +155,11 @@ export default function Admin() {
               <div className="space-y-3">
                 <div className="flex items-center gap-3">
                   <Clock className="w-5 h-5 text-primary flex-shrink-0" />
-                  <span className="text-base">{new Date(event.date_time).toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })}</span>
+                  <span className="text-base">
+                    {new Date(event.date_time).toLocaleString("pt-BR", {
+                      timeZone: "America/Sao_Paulo",
+                    })}
+                  </span>
                 </div>
                 <div className="flex items-center gap-3">
                   <MapPin className="w-5 h-5 text-primary flex-shrink-0" />
@@ -152,9 +180,9 @@ export default function Admin() {
                 {event.maps_link && (
                   <div className="flex items-center gap-3">
                     <Navigation className="w-5 h-5 text-primary flex-shrink-0" />
-                    <a 
-                      href={event.maps_link} 
-                      target="_blank" 
+                    <a
+                      href={event.maps_link}
+                      target="_blank"
                       rel="noopener noreferrer"
                       className="text-base text-primary hover:underline"
                     >
@@ -170,16 +198,18 @@ export default function Admin() {
                 )}
               </div>
             </div>
-            
+
             <div className="flex gap-3">
-              <Button 
-                onClick={() => window.open(`/convite/${event.link_code}`, '_blank')}
+              <Button
+                onClick={() =>
+                  window.open(`/convite/${event.link_code}`, "_blank")
+                }
                 variant="outline"
                 className="flex-1"
               >
                 Ver Página de Confirmação
               </Button>
-              <Button 
+              <Button
                 onClick={exportToCSV}
                 disabled={confirmations.length === 0}
                 className="flex-1"
@@ -203,16 +233,19 @@ export default function Admin() {
             {confirmations.length === 0 ? (
               <div className="text-center py-8">
                 <Users className="w-16 h-16 text-muted-foreground mx-auto mb-4 opacity-50" />
-                <p className="text-muted-foreground">Ainda não há confirmações para este momento especial.</p>
+                <p className="text-muted-foreground">
+                  Ainda não há confirmações para este momento especial.
+                </p>
                 <p className="text-sm text-muted-foreground mt-2">
-                  Compartilhe o link para que seus queridos possam confirmar presença.
+                  Compartilhe o link para que seus queridos possam confirmar
+                  presença.
                 </p>
               </div>
             ) : (
               <div className="space-y-3">
                 {confirmations.map((confirmation, index) => (
-                  <div 
-                    key={confirmation.id} 
+                  <div
+                    key={confirmation.id}
                     className="flex items-center justify-between p-4 bg-muted/30 rounded-lg hover:bg-muted/50 transition-colors"
                   >
                     <div className="flex items-center gap-3">
@@ -221,18 +254,26 @@ export default function Admin() {
                           {index + 1}
                         </span>
                       </div>
-                      <span className="font-medium text-base">{confirmation.guest_name}</span>
+                      <span className="font-medium text-base">
+                        {confirmation.guest_name}
+                      </span>
                     </div>
                     <div className="text-right">
                       <p className="text-sm text-muted-foreground">
-                        {new Date(confirmation.confirmed_at).toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' })}
+                        {new Date(confirmation.confirmed_at).toLocaleDateString(
+                          "pt-BR",
+                          { timeZone: "America/Sao_Paulo" },
+                        )}
                       </p>
                       <p className="text-xs text-muted-foreground">
-                        {new Date(confirmation.confirmed_at).toLocaleTimeString('pt-BR', {
-                          hour: '2-digit',
-                          minute: '2-digit',
-                          timeZone: 'America/Sao_Paulo'
-                        })}
+                        {new Date(confirmation.confirmed_at).toLocaleTimeString(
+                          "pt-BR",
+                          {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                            timeZone: "America/Sao_Paulo",
+                          },
+                        )}
                       </p>
                     </div>
                   </div>
