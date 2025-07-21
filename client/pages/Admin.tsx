@@ -84,6 +84,43 @@ export default function Admin() {
     window.URL.revokeObjectURL(url);
   };
 
+  const handleClearConfirmations = async () => {
+    if (!eventData?.event || !code) return;
+
+    const confirmed = window.confirm(
+      `Tem certeza que deseja limpar TODA a lista de confirmados? Esta ação não pode ser desfeita.\n\nAtualmente há ${eventData.confirmations?.length || 0} confirmação(ões).`
+    );
+
+    if (!confirmed) return;
+
+    setClearingConfirmations(true);
+
+    try {
+      const response = await fetch(`/api/admin/${eventData.event.id}/confirmations`, {
+        method: "DELETE",
+      });
+
+      const result: ClearConfirmationsResponse = await response.json();
+
+      if (result.success) {
+        // Atualizar dados localmente
+        setEventData({
+          ...eventData,
+          confirmations: [],
+        });
+
+        alert("Lista de confirmados limpa com sucesso!");
+      } else {
+        alert(`Erro ao limpar lista: ${result.error}`);
+      }
+    } catch (error) {
+      console.error("Error clearing confirmations:", error);
+      alert("Erro de conexão ao limpar a lista.");
+    } finally {
+      setClearingConfirmations(false);
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-background via-accent/30 to-primary/10 flex items-center justify-center p-4 sm:p-6">
