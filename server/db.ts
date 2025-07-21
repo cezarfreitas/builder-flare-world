@@ -6,7 +6,7 @@ const DB_CONFIG = {
   user: 'convite',
   password: 'a247d38c3ef256d11e77',
   database: 'convite',
-  timezone: 'America/Sao_Paulo'
+  timezone: '-03:00'
 };
 
 export async function getConnection() {
