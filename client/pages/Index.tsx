@@ -9,6 +9,7 @@ import { CreateEventRequest, CreateEventResponse } from "@shared/api";
 
 export default function Index() {
   const [formData, setFormData] = useState({
+    title: "",
     date: "",
     time: "",
     location: "",
