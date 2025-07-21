@@ -97,7 +97,7 @@ export default function Admin() {
         <Card className="shadow-2xl border-0">
           <CardHeader className="text-center space-y-4 pb-6">
             <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
-              <PartyPopper className="w-8 h-8 text-primary" />
+              <Heart className="w-8 h-8 text-primary fill-primary" />
             </div>
             <CardTitle className="text-2xl sm:text-3xl font-bold text-foreground">
               Administração do Evento
