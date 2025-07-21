@@ -1,6 +1,6 @@
 import { RequestHandler } from "express";
 import { getConnection } from "../db";
-import { CreateEventRequest, CreateEventResponse, EventDetailsResponse, ConfirmGuestRequest, ConfirmGuestResponse } from "@shared/api";
+import { CreateEventRequest, CreateEventResponse, EventDetailsResponse, ConfirmGuestRequest, ConfirmGuestResponse, AdminEventResponse } from "@shared/api";
 
 function generateLinkCode(): string {
   return Math.random().toString(36).substring(2, 8) + Date.now().toString(36);
