@@ -104,3 +104,8 @@ export interface UpdateEventResponse {
   event?: Event;
   error?: string;
 }
+
+export interface ClearConfirmationsResponse {
+  success: boolean;
+  error?: string;
+}
