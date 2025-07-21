@@ -484,3 +484,46 @@ export const updateEvent: RequestHandler = async (req, res) => {
     res.status(500).json(response);
   }
 };
+
+export const clearConfirmations: RequestHandler = async (req, res) => {
+  try {
+    const { eventId } = req.params;
+    const connection = await getConnection();
+
+    try {
+      // Verificar se o evento existe
+      const [eventRows] = (await connection.execute(
+        "SELECT id FROM events WHERE id = ?",
+        [eventId],
+      )) as any;
+
+      if (eventRows.length === 0) {
+        const response: ClearConfirmationsResponse = {
+          success: false,
+          error: "Evento não encontrado",
+        };
+        return res.status(404).json(response);
+      }
+
+      // Deletar todas as confirmações do evento
+      await connection.execute("DELETE FROM confirmations WHERE event_id = ?", [
+        eventId,
+      ]);
+
+      const response: ClearConfirmationsResponse = {
+        success: true,
+      };
+
+      res.json(response);
+    } finally {
+      await connection.end();
+    }
+  } catch (error) {
+    console.error("Error clearing confirmations:", error);
+    const response: ClearConfirmationsResponse = {
+      success: false,
+      error: "Erro interno do servidor",
+    };
+    res.status(500).json(response);
+  }
+};
