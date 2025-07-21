@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Calendar, Clock, MapPin, MessageSquare, CheckCircle, AlertCircle, Heart, Building, Phone, Navigation } from "lucide-react";
 import { EventDetailsResponse, ConfirmGuestRequest, ConfirmGuestResponse } from "@shared/api";
-import confetti from 'canvas-confetti';
+import { fireConfirmationConfetti } from '@/lib/confetti-utils';
 
 export default function Confirmation() {
   const { code } = useParams<{ code: string }>();
