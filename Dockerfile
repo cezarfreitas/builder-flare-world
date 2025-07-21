@@ -26,7 +26,7 @@ RUN npm run build
 
 # Limpar node_modules e reinstalar apenas produção
 RUN rm -rf node_modules && \
-    npm install --production --no-optional && \
+    npm install --production --no-optional --legacy-peer-deps && \
     npm cache clean --force
 
 # Criar usuário não-root
