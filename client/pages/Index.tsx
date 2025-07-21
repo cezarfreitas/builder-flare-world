@@ -12,6 +12,9 @@ export default function Index() {
     date: "",
     time: "",
     location: "",
+    full_address: "",
+    phone: "",
+    maps_link: "",
     message: ""
   });
   const [loading, setLoading] = useState(false);
