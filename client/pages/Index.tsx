@@ -211,6 +211,50 @@ export default function Index() {
             </div>
 
             <div className="space-y-2">
+              <Label htmlFor="full_address" className="flex items-center gap-2">
+                <Building className="w-4 h-4 text-primary" />
+                Endereço Completo
+              </Label>
+              <Input
+                id="full_address"
+                placeholder="Ex: Rua das Flores, 123 - Centro - São Paulo/SP"
+                value={formData.full_address}
+                onChange={(e) => setFormData({ ...formData, full_address: e.target.value })}
+                className="text-base"
+              />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="phone" className="flex items-center gap-2">
+                  <Phone className="w-4 h-4 text-primary" />
+                  Telefone para Contato
+                </Label>
+                <Input
+                  id="phone"
+                  placeholder="Ex: (11) 99999-9999"
+                  value={formData.phone}
+                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                  className="text-base"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="maps_link" className="flex items-center gap-2">
+                  <Navigation className="w-4 h-4 text-primary" />
+                  Link do Google Maps
+                </Label>
+                <Input
+                  id="maps_link"
+                  placeholder="Cole o link do Google Maps aqui"
+                  value={formData.maps_link}
+                  onChange={(e) => setFormData({ ...formData, maps_link: e.target.value })}
+                  className="text-base"
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2">
               <Label htmlFor="message" className="flex items-center gap-2">
                 <MessageSquare className="w-4 h-4 text-primary" />
                 Mensagem (Opcional)
