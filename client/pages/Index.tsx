@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Calendar, Clock, MapPin, MessageSquare, Share2, CheckCircle } from "lucide-react";
+import { Calendar, Clock, MapPin, MessageSquare, Share2, CheckCircle, PartyPopper } from "lucide-react";
 import { CreateEventRequest, CreateEventResponse } from "@shared/api";
 
 export default function Index() {
