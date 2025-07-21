@@ -15,6 +15,7 @@ export default function Confirmation() {
   const [loading, setLoading] = useState(true);
   const [confirming, setConfirming] = useState(false);
   const [confirmationResult, setConfirmationResult] = useState<ConfirmGuestResponse | null>(null);
+  const [isSimilarNameError, setIsSimilarNameError] = useState(false);
 
   useEffect(() => {
     if (code) {
