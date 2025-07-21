@@ -227,7 +227,7 @@ export default function Confirmation() {
                 )}
 
                 {event.message && (
-                  <div className="text-xs text-muted-foreground border-l-2 border-muted pl-3 ml-3">
+                  <div className="text-xs sm:text-xs text-muted-foreground border-l-2 border-muted pl-3 ml-3 font-normal sm:font-semibold sm:text-sm">
                     {event.message}
                   </div>
                 )}
