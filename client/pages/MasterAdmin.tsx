@@ -4,8 +4,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, Clock, MapPin, MessageSquare, Users, Heart, Building, Phone, Navigation, AlertCircle, Eye, Shield, Loader2 } from "lucide-react";
-import { MasterAdminLoginRequest, MasterAdminLoginResponse, MasterAdminResponse, EventWithStats } from "@shared/api";
+import { Calendar, Clock, MapPin, MessageSquare, Users, Heart, Building, Phone, Navigation, AlertCircle, Eye, Shield, Loader2, Trash2 } from "lucide-react";
+import { MasterAdminLoginRequest, MasterAdminLoginResponse, MasterAdminResponse, EventWithStats, DeleteEventResponse } from "@shared/api";
 
 export default function MasterAdmin() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
