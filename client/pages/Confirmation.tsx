@@ -173,7 +173,7 @@ export default function Confirmation() {
                   />
                 </div>
 
-                {confirmationResult?.error && (
+                {confirmationResult && !confirmationResult.success && (
                   <div className="p-4 bg-destructive/10 border border-destructive/20 rounded-lg">
                     <p className="text-destructive text-sm">{confirmationResult.message}</p>
                   </div>
