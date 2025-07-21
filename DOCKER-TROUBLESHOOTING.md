@@ -1,133 +1,125 @@
-# Docker Build Troubleshooting
+# Docker Build Troubleshooting - ATUALIZADO
 
-## Problema: npm ci falha no Docker build
+## Problemas: npm ci/install falha no Docker build
 
-### Soluções por ordem de preferência:
+### ⚡ SOLUÇÕES RÁPIDAS (por ordem de preferência):
 
-## 1. Dockerfile Principal (Recomendado)
+## 1. 🎯 Dockerfile Principal (ATUALIZADO - Recomendado)
+O `Dockerfile` foi simplificado para resolver problemas de dependências:
+- ✅ Single-stage build mais robusto  
+- ✅ Reinstalação limpa de node_modules
+- ✅ Package-lock.json regenerado
+- ✅ Usuário não-root para segurança
 
-Use o `Dockerfile` principal que já está corrigido com:
-
-- Multi-stage build
-- Dependências Alpine necessárias
-- Usuário não-root para segurança
-
-## 2. Dockerfile Simplificado (Se o principal falhar)
-
-Se o build principal falhar, use:
-
+## 2. 🚀 Dockerfile Ultra-Simples (Para casos extremos)
+Se ainda falhar, use a versão mais compatível:
 ```bash
-# Renomear arquivos
+# No EasyPanel, ou localmente:
 mv Dockerfile Dockerfile.main
-mv Dockerfile.simple Dockerfile
-
-# Fazer deploy normalmente
+mv Dockerfile.ultra-simple Dockerfile
+# Deploy novamente
 ```
 
-## 3. Configurações Alternativas
+**Características do ultra-simples:**
+- Usa `node:20-slim` (Debian ao invés de Alpine)
+- Build em uma única camada
+- Máxima compatibilidade
 
-### Para EasyPanel:
+## 3. 🔧 Dockerfile.simple (Backup)
+Versão intermediária para testes.
 
-Se ainda houver problemas, configure:
+---
 
-**Build Command:**
+## 🔍 PROBLEMAS ESPECÍFICOS E SOLUÇÕES:
 
+### Erro: "eresolve" ou conflitos de dependências
+**Solução:** Package-lock.json foi regenerado
 ```bash
-npm install && npm run build
+# Se necessário fazer localmente:
+rm package-lock.json
+npm install
 ```
 
-**Start Command:**
+### Erro: "canvas-confetti" ou dependências nativas
+**Status:** ✅ Já corrigido
+- canvas-confetti movido para devDependencies
+- Dependências Alpine adicionadas
 
-```bash
-npm start
+### Erro: Multi-stage build problems
+**Solução:** Dockerfile simplificado para single-stage
+
+---
+
+## 📋 CONFIGURAÇÕES ALTERNATIVAS
+
+### Para EasyPanel (se Docker falhar):
+
+**1. Build Manual:**
+```
+Build Command: npm install && npm run build
+Start Command: npm start
+Port: 8080
 ```
 
-**Environment Variables:**
-
+**2. Variáveis de Ambiente:**
 ```
 NODE_ENV=production
 PORT=8080
 ```
 
-## 4. Soluções Específicas
-
-### Se erro persiste com canvas-confetti:
-
-```bash
-# Remover da imagem Docker se necessário
-npm uninstall canvas-confetti
+### Para MySQL externo:
+```
+DB_HOST=seu_host
+DB_PORT=3306
+DB_USER=usuario
+DB_PASSWORD=senha
+DB_NAME=convite
 ```
 
-### Se erro com mysql2:
+---
 
-Adicionar ao Dockerfile:
-
-```dockerfile
-RUN apk add --no-cache mysql-client
-```
-
-### Se erro de memória:
-
-No EasyPanel, aumentar:
-
-- Memory Limit: 1GB
-- Build Memory: 2GB
-
-## 5. Verificação Local
-
-Testar localmente:
+## 🧪 TESTE LOCAL
 
 ```bash
-# Build da imagem
+# Testar Dockerfile principal
 docker build -t test-app .
 
-# Se falhar, usar versão simples
-docker build -f Dockerfile.simple -t test-app .
+# Se falhar, testar ultra-simples
+mv Dockerfile Dockerfile.main
+mv Dockerfile.ultra-simple Dockerfile
+docker build -t test-app .
 
 # Executar
 docker run -p 8080:8080 test-app
 ```
 
-## 6. Logs de Debug
+---
 
-Para mais informações:
+## 📊 STATUS DAS CORREÇÕES
 
-```bash
-# Build com verbose
-docker build --progress=plain --no-cache -t test-app .
+✅ **Fixado (v2):**
+- Package-lock.json regenerado
+- Dockerfile simplificado (single-stage)
+- canvas-confetti em devDependencies
+- Dependências Alpine otimizadas
+- Dockerfile.ultra-simple para casos extremos
 
-# Ver logs da aplicação
-docker logs <container-id>
-```
-
-## 7. Configuração de Fallback
-
-Se nada funcionar, use deploy simples:
-
-1. **EasyPanel > Source > GitHub**
-2. **Build Command:** `npm install && npm run build`
-3. **Start Command:** `npm start`
-4. **Port:** `8080`
-
-## 8. Dependências Problemáticas
-
-Estas dependências podem causar problemas no Alpine:
-
-- `canvas-confetti` (movido para devDependencies)
-- `sharp` (se adicionado)
-- `sqlite3` (se usado)
-
-## Status Atual
-
-✅ **Fixado:**
-
-- canvas-confetti movido para devDependencies
-- Dockerfile otimizado com multi-stage
-- Dependências Alpine adicionadas
-- Usuário não-root configurado
-
-🔧 **Em caso de problema:**
-
-1. Use Dockerfile.simple
+🔧 **Se ainda não funcionar:**
+1. Use Dockerfile.ultra-simple
 2. Configure build manual no EasyPanel
-3. Verifique logs detalhados
+3. Reporte o problema com logs completos
+
+---
+
+## 🚨 ÚLTIMO RECURSO
+
+Se nada funcionar, configure no EasyPanel:
+
+**Source:** GitHub Repository  
+**Build:** Custom  
+**Install Command:** `npm install`  
+**Build Command:** `npm run build`  
+**Start Command:** `npm start`  
+**Port:** `8080`
+
+Isso evita completamente o Docker e usa build nativo do EasyPanel.
