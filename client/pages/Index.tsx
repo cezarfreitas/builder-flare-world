@@ -157,7 +157,7 @@ export default function Index() {
                   variant="outline"
                   className="flex-1"
                 >
-                  Criar Outro Evento
+                  Criar Outro Momento
                 </Button>
                 <Button
                   onClick={() => window.open(confirmationLink, '_blank')}
