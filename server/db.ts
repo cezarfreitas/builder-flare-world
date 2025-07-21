@@ -22,6 +22,9 @@ export async function initializeDatabase() {
         id INT AUTO_INCREMENT PRIMARY KEY,
         date_time DATETIME NOT NULL,
         location VARCHAR(255) NOT NULL,
+        full_address TEXT,
+        phone VARCHAR(20),
+        maps_link TEXT,
         message TEXT,
         link_code VARCHAR(50) UNIQUE NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
