@@ -90,7 +90,7 @@ export default function Index() {
               <div className="space-y-3">
                 <div className="flex items-center gap-3">
                   <Calendar className="w-5 h-5 text-primary" />
-                  <span>{new Date(createdEvent.event.date_time).toLocaleString('pt-BR')}</span>
+                  <span>{new Date(createdEvent.event.date_time).toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })}</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <MapPin className="w-5 h-5 text-primary" />
