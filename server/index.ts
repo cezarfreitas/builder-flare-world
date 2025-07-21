@@ -52,6 +52,7 @@ export function createServer() {
   app.get("/api/master-admin/events", getMasterAdminData);
   app.put("/api/master-admin/events/:id", updateEvent);
   app.delete("/api/master-admin/events/:id", deleteEvent);
+  app.delete("/api/admin/:eventId/confirmations", clearConfirmations);
 
   return app;
 }
