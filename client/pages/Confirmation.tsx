@@ -166,56 +166,69 @@ export default function Confirmation() {
           </CardHeader>
           
           <CardContent className="space-y-4">
-            {/* Compact Event Details */}
+            {/* Ultra-Minimal Event Details */}
             <div className="space-y-3">
               <h3 className="font-semibold text-foreground text-base">Detalhes do Evento:</h3>
 
-              {/* Essential Info Only */}
-              <div className="space-y-2 text-sm">
-                <div className="flex items-center gap-2">
-                  <Clock className="w-4 h-4 text-primary flex-shrink-0" />
+              {/* Essential Info - Minimal */}
+              <div className="space-y-2">
+                <div className="flex items-center gap-2 text-sm">
+                  <Clock className="w-4 h-4 text-primary" />
                   <span>{new Date(event.date_time).toLocaleString('pt-BR')}</span>
                 </div>
 
-                <div className="flex items-start gap-2">
-                  <MapPin className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
-                  <div>
-                    <div className="font-medium">{event.location}</div>
-                    {event.full_address && (
-                      <div className="text-muted-foreground text-xs">{event.full_address}</div>
+                <div className="flex items-center gap-2 text-sm">
+                  <MapPin className="w-4 h-4 text-primary" />
+                  <span className="font-medium">{event.location}</span>
+                </div>
+
+                {event.full_address && (
+                  <div className="text-xs text-muted-foreground ml-6">
+                    {event.full_address}
+                  </div>
+                )}
+
+                {/* Action Links with Text */}
+                {(event.phone || event.maps_link) && (
+                  <div className="flex gap-2 ml-6">
+                    {event.phone && (
+                      <>
+                        <a
+                          href={`tel:${event.phone}`}
+                          className="flex items-center gap-1 text-green-600 hover:text-green-700 text-xs"
+                        >
+                          <Phone className="w-3 h-3" />
+                          Ligar
+                        </a>
+                        <a
+                          href={`https://wa.me/${event.phone.replace(/\D/g, '')}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-1 text-green-600 hover:text-green-700 text-xs"
+                        >
+                          <MessageSquare className="w-3 h-3" />
+                          WhatsApp
+                        </a>
+                      </>
+                    )}
+
+                    {event.maps_link && (
+                      <a
+                        href={event.maps_link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-1 text-blue-600 hover:text-blue-700 text-xs"
+                      >
+                        <Navigation className="w-3 h-3" />
+                        Como chegar
+                      </a>
                     )}
                   </div>
-                </div>
-
-                {/* Compact Action Buttons */}
-                <div className="flex gap-2 pt-1">
-                  {event.phone && (
-                    <a
-                      href={`tel:${event.phone}`}
-                      className="flex items-center gap-1 px-2 py-1 bg-green-100 text-green-700 rounded text-xs hover:bg-green-200 dark:bg-green-900 dark:text-green-300"
-                    >
-                      <Phone className="w-3 h-3" />
-                      <span className="hidden sm:inline">Ligar</span>
-                    </a>
-                  )}
-
-                  {event.maps_link && (
-                    <a
-                      href={event.maps_link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-1 px-2 py-1 bg-blue-100 text-blue-700 rounded text-xs hover:bg-blue-200 dark:bg-blue-900 dark:text-blue-300"
-                    >
-                      <Navigation className="w-3 h-3" />
-                      <span className="hidden sm:inline">Maps</span>
-                    </a>
-                  )}
-                </div>
+                )}
 
                 {event.message && (
-                  <div className="flex items-start gap-2 pt-1">
-                    <MessageSquare className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
-                    <p className="text-xs text-muted-foreground">{event.message}</p>
+                  <div className="text-xs text-muted-foreground border-l-2 border-muted pl-3 ml-3">
+                    {event.message}
                   </div>
                 )}
               </div>
