@@ -14,8 +14,8 @@ WORKDIR /app
 # Copiar tudo
 COPY . .
 
-# Instalar dependências e fazer build em uma única camada
-RUN npm install --legacy-peer-deps && \
+# Instalar dependências e fazer build em uma única camada (.npmrc resolve conflitos)
+RUN npm install && \
     npm run build && \
     npm prune --production
 
