@@ -323,7 +323,7 @@ export default function MasterAdmin() {
                           </div>
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2 mb-2">
-                              <h3 className="font-semibold text-lg truncate">{event.location}</h3>
+                              <h3 className="font-semibold text-lg truncate">{event.title}</h3>
                               <Badge variant={status.variant} className="text-xs">
                                 {status.label}
                               </Badge>
