@@ -319,24 +319,46 @@ export default function Confirmation() {
                       : `Confirme sua presença para "${event.title}":`
                     }
                   </Label>
-                  <Input
-                    id="guest_name"
-                    placeholder={isSimilarNameError
-                      ? "Ex: João Silva Santos (nome e sobrenome completo)"
-                      : "Digite seu nome completo"
-                    }
-                    value={guestName}
-                    onChange={(e) => {
-                      setGuestName(e.target.value);
-                      // Limpar estado de erro ao digitar
-                      if (isSimilarNameError && e.target.value.trim().split(' ').length > 1) {
-                        setIsSimilarNameError(false);
-                        setConfirmationResult(null);
+                  <div className="space-y-1">
+                    <Input
+                      id="guest_name"
+                      placeholder={isSimilarNameError
+                        ? "Ex: João Silva Santos (nome e sobrenome completo)"
+                        : "Digite seu nome completo"
                       }
-                    }}
-                    required
-                    className={`h-11 ${isSimilarNameError ? 'border-orange-300 focus:border-orange-500 bg-orange-50 dark:bg-orange-950/20' : ''}`}
-                  />
+                      value={guestName}
+                      onChange={(e) => {
+                        setGuestName(e.target.value);
+                        // Limpar estado de erro ao digitar
+                        if (isSimilarNameError && e.target.value.trim().split(' ').length > 1) {
+                          setIsSimilarNameError(false);
+                          setConfirmationResult(null);
+                        }
+                      }}
+                      required
+                      className={`h-11 ${isSimilarNameError ? 'border-orange-300 focus:border-orange-500 bg-orange-50 dark:bg-orange-950/20' : ''}`}
+                    />
+                    {/* Indicador de progresso do nome */}
+                    {guestName.trim().length > 0 && (
+                      <div className="flex items-center gap-2 text-xs">
+                        <div className={`w-2 h-2 rounded-full ${
+                          guestName.trim().split(' ').length >= 2
+                            ? 'bg-green-500'
+                            : 'bg-yellow-500'
+                        }`} />
+                        <span className={`${
+                          guestName.trim().split(' ').length >= 2
+                            ? 'text-green-600 dark:text-green-400'
+                            : 'text-yellow-600 dark:text-yellow-400'
+                        }`}>
+                          {guestName.trim().split(' ').length >= 2
+                            ? '✓ Nome completo'
+                            : 'Adicione sobrenome'
+                          }
+                        </span>
+                      </div>
+                    )}
+                  </div>
 
                   {confirmationResult && !confirmationResult.success && (
                     <div className={`p-3 border rounded-lg ${
