@@ -136,6 +136,36 @@ export default function Confirmation() {
                   <MapPin className="w-5 h-5 text-primary flex-shrink-0" />
                   <span className="text-base">{event.location}</span>
                 </div>
+                {event.full_address && (
+                  <div className="flex items-start gap-3">
+                    <Building className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                    <span className="text-base">{event.full_address}</span>
+                  </div>
+                )}
+                {event.phone && (
+                  <div className="flex items-center gap-3">
+                    <Phone className="w-5 h-5 text-primary flex-shrink-0" />
+                    <a
+                      href={`tel:${event.phone}`}
+                      className="text-base text-primary hover:underline"
+                    >
+                      {event.phone}
+                    </a>
+                  </div>
+                )}
+                {event.maps_link && (
+                  <div className="flex items-center gap-3">
+                    <Navigation className="w-5 h-5 text-primary flex-shrink-0" />
+                    <a
+                      href={event.maps_link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-base text-primary hover:underline"
+                    >
+                      Como chegar (Google Maps)
+                    </a>
+                  </div>
+                )}
                 {event.message && (
                   <div className="flex items-start gap-3">
                     <MessageSquare className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
