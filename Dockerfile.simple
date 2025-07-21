@@ -8,14 +8,14 @@ RUN apt-get update && apt-get install -y \
     g++ \
     && rm -rf /var/lib/apt/lists/*
 
-# Definir diretório de trabalho
+# Definir diret��rio de trabalho
 WORKDIR /app
 
 # Copiar todos os arquivos
 COPY . .
 
-# Instalar dependências e fazer build
-RUN npm install --legacy-peer-deps && npm run build
+# Instalar dependências e fazer build (.npmrc resolve conflitos)
+RUN npm install && npm run build
 
 # Limpar dependências de desenvolvimento
 RUN npm prune --production
