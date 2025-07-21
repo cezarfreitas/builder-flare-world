@@ -116,10 +116,10 @@ export default function Confirmation() {
             <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
               <Calendar className="w-8 h-8 text-primary" />
             </div>
-            <CardTitle className="text-3xl font-bold text-foreground">
+            <CardTitle className="text-2xl sm:text-3xl font-bold text-foreground">
               Confirmação de Presença
             </CardTitle>
-            <CardDescription className="text-lg text-muted-foreground">
+            <CardDescription className="text-base sm:text-lg text-muted-foreground">
               Você foi convidado para um evento especial
             </CardDescription>
           </CardHeader>
