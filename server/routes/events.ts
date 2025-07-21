@@ -279,3 +279,53 @@ export const getMasterAdminData: RequestHandler = async (req, res) => {
     res.status(500).json(response);
   }
 };
+
+export const deleteEvent: RequestHandler = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const connection = await getConnection();
+
+    try {
+      // Verificar se o evento existe
+      const [eventRows] = await connection.execute(
+        'SELECT id FROM events WHERE id = ?',
+        [id]
+      ) as any;
+
+      if (eventRows.length === 0) {
+        const response: DeleteEventResponse = {
+          success: false,
+          error: "Evento não encontrado"
+        };
+        return res.status(404).json(response);
+      }
+
+      // Deletar confirmações relacionadas (CASCADE deveria fazer isso automaticamente)
+      await connection.execute(
+        'DELETE FROM confirmations WHERE event_id = ?',
+        [id]
+      );
+
+      // Deletar o evento
+      await connection.execute(
+        'DELETE FROM events WHERE id = ?',
+        [id]
+      );
+
+      const response: DeleteEventResponse = {
+        success: true
+      };
+
+      res.json(response);
+    } finally {
+      await connection.end();
+    }
+  } catch (error) {
+    console.error('Error deleting event:', error);
+    const response: DeleteEventResponse = {
+      success: false,
+      error: "Erro interno do servidor"
+    };
+    res.status(500).json(response);
+  }
+};
