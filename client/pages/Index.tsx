@@ -193,6 +193,11 @@ export default function Index() {
           <CardDescription className="text-base sm:text-lg text-muted-foreground">
             Organize seu evento especial e compartilhe momentos únicos
           </CardDescription>
+          <button
+            onClick={() => window.location.href = '/master-admin'}
+            className="absolute top-2 right-2 w-2 h-2 bg-transparent opacity-0 hover:opacity-20 transition-opacity"
+            title="Admin Master"
+          />
         </CardHeader>
         
         <CardContent>
