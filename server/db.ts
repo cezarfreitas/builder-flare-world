@@ -58,6 +58,15 @@ export async function initializeDatabase() {
       }
     }
 
+    try {
+      await connection.execute(`ALTER TABLE events ADD COLUMN title VARCHAR(255) NOT NULL DEFAULT 'Momento Especial'`);
+      console.log('Added title column');
+    } catch (error: any) {
+      if (error.code !== 'ER_DUP_FIELDNAME') {
+        console.error('Error adding title column:', error);
+      }
+    }
+
     // Create confirmations table
     await connection.execute(`
       CREATE TABLE IF NOT EXISTS confirmations (
