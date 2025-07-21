@@ -63,12 +63,12 @@ export default function Index() {
             <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
               <CheckCircle className="w-8 h-8 text-primary" />
             </div>
-            <CardTitle className="text-3xl font-bold text-foreground">
-              Evento Criado com Sucesso!
-            </CardTitle>
-            <CardDescription className="text-lg text-muted-foreground">
-              Seu link de confirmação está pronto para ser compartilhado
-            </CardDescription>
+            <CardTitle className="text-2xl sm:text-3xl font-bold text-foreground">
+            Evento Criado com Sucesso!
+          </CardTitle>
+          <CardDescription className="text-base sm:text-lg text-muted-foreground">
+            Seu link de confirmação está pronto para ser compartilhado
+          </CardDescription>
           </CardHeader>
           
           <CardContent className="space-y-6">
