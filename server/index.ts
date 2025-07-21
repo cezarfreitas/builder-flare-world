@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import { handleDemo } from "./routes/demo";
-import { createEvent, getEventByCode, confirmGuest } from "./routes/events";
+import { createEvent, getEventByCode, confirmGuest, getAdminEvent } from "./routes/events";
 import { initializeDatabase } from "./db";
 
 export function createServer() {
