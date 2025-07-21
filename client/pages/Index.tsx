@@ -57,7 +57,7 @@ export default function Index() {
     const confirmationLink = `${window.location.origin}/convite/${createdEvent.event.link_code}`;
     
     return (
-      <div className="min-h-screen bg-gradient-to-br from-background via-accent/30 to-primary/10 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-gradient-to-br from-background via-accent/30 to-primary/10 flex items-center justify-center p-4 sm:p-6">
         <Card className="w-full max-w-2xl shadow-2xl border-0">
           <CardHeader className="text-center space-y-4 pb-8">
             <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
