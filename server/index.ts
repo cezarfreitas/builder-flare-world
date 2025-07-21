@@ -10,6 +10,7 @@ import {
   getMasterAdminData,
   deleteEvent,
   updateEvent,
+  clearConfirmations,
 } from "./routes/events";
 import { initializeDatabase } from "./db";
 
