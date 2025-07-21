@@ -55,7 +55,7 @@ docker build -f Dockerfile.robust -t app .
 **Use Dockerfile.debian** - mais estável e compatível:
 - Sem problemas de binários nativos Alpine
 - Tamanho maior mas funcionamento garantido
-- Melhor para produção crítica
+- Melhor para produ��ão crítica
 
 ### 🔧 CONFIGURAÇÃO EASYPANEL
 
@@ -89,4 +89,4 @@ DB_PORT=3306
 2. **Ou**: Tentar Dockerfile principal (fixado)
 3. **Ou**: Usar Dockerfile.robust (mais robusto)
 
-**Status**: ✅ CÓDIGO PRONTO - DOCKERFILE FIXADO PARA ALPINE/DEBIAN
+**Status**: ✅ CÓDIGO PRONTO - CORS DEPENDENCY CORRIGIDA + DOCKERFILE FIXADO
