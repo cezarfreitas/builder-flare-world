@@ -324,3 +324,64 @@ export const deleteEvent: RequestHandler = async (req, res) => {
     res.status(500).json(response);
   }
 };
+
+export const updateEvent: RequestHandler = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title, date_time, location, full_address, phone, maps_link, message }: UpdateEventRequest = req.body;
+
+    if (!title || !date_time || !location) {
+      const response: UpdateEventResponse = {
+        success: false,
+        error: "Título, data/hora e local são obrigatórios"
+      };
+      return res.status(400).json(response);
+    }
+
+    const connection = await getConnection();
+
+    try {
+      // Verificar se o evento existe
+      const [eventRows] = await connection.execute(
+        'SELECT id FROM events WHERE id = ?',
+        [id]
+      ) as any;
+
+      if (eventRows.length === 0) {
+        const response: UpdateEventResponse = {
+          success: false,
+          error: "Evento não encontrado"
+        };
+        return res.status(404).json(response);
+      }
+
+      // Atualizar o evento
+      await connection.execute(
+        'UPDATE events SET title = ?, date_time = ?, location = ?, full_address = ?, phone = ?, maps_link = ?, message = ? WHERE id = ?',
+        [title, date_time, location, full_address || null, phone || null, maps_link || null, message || null, id]
+      );
+
+      // Buscar o evento atualizado
+      const [updatedEventRows] = await connection.execute(
+        'SELECT * FROM events WHERE id = ?',
+        [id]
+      ) as any;
+
+      const response: UpdateEventResponse = {
+        success: true,
+        event: updatedEventRows[0]
+      };
+
+      res.json(response);
+    } finally {
+      await connection.end();
+    }
+  } catch (error) {
+    console.error('Error updating event:', error);
+    const response: UpdateEventResponse = {
+      success: false,
+      error: "Erro interno do servidor"
+    };
+    res.status(500).json(response);
+  }
+};
