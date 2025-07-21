@@ -34,7 +34,7 @@ export const createEvent: RequestHandler = async (req, res) => {
     if (!title || !date_time || !location) {
       const response: CreateEventResponse = {
         success: false,
-        error: "Título, data/hora e local são obrigatórios",
+        error: "T��tulo, data/hora e local são obrigatórios",
       };
       return res.status(400).json(response);
     }
@@ -155,7 +155,7 @@ export const confirmGuest: RequestHandler = async (req, res) => {
         return res.status(404).json(response);
       }
 
-      // Check if guest already confirmed
+      // Check if guest already confirmed (exact match)
       const [existingRows] = (await connection.execute(
         "SELECT id FROM confirmations WHERE event_id = ? AND guest_name = ?",
         [eventRows[0].id, guest_name.trim()],
@@ -165,6 +165,26 @@ export const confirmGuest: RequestHandler = async (req, res) => {
         const response: ConfirmGuestResponse = {
           success: false,
           message: "Você já confirmou presença para este evento",
+        };
+        return res.status(400).json(response);
+      }
+
+      // Check for similar names (first name match) to suggest full name
+      const inputFirstName = guest_name.trim().split(' ')[0].toLowerCase();
+      const [similarNamesRows] = (await connection.execute(
+        "SELECT guest_name FROM confirmations WHERE event_id = ?",
+        [eventRows[0].id],
+      )) as any;
+
+      const similarNames = similarNamesRows.filter((row: any) => {
+        const existingFirstName = row.guest_name.split(' ')[0].toLowerCase();
+        return existingFirstName === inputFirstName && row.guest_name.trim().toLowerCase() !== guest_name.trim().toLowerCase();
+      });
+
+      if (similarNames.length > 0 && guest_name.trim().split(' ').length === 1) {
+        const response: ConfirmGuestResponse = {
+          success: false,
+          message: `Já existe "${similarNames[0].guest_name}" na lista. Por favor, digite seu nome completo para evitar confusão.`,
         };
         return res.status(400).json(response);
       }
