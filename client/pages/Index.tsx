@@ -204,6 +204,21 @@ export default function Index() {
         
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="space-y-2">
+              <Label htmlFor="title" className="flex items-center gap-2">
+                <Heart className="w-4 h-4 text-primary fill-primary" />
+                Título do Momento
+              </Label>
+              <Input
+                id="title"
+                placeholder="Ex: Festa de Aniversário da Maria"
+                value={formData.title}
+                onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                required
+                className="text-base"
+              />
+            </div>
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="date" className="flex items-center gap-2">
