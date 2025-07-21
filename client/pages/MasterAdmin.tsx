@@ -505,6 +505,162 @@ export default function MasterAdmin() {
             )}
           </CardContent>
         </Card>
+
+        {/* Modal de Edição */}
+        <Dialog open={editOpen} onOpenChange={setEditOpen}>
+          <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle className="flex items-center gap-2">
+                <Edit className="w-5 h-5 text-primary" />
+                Editar Momento Especial
+              </DialogTitle>
+              <DialogDescription>
+                Faça as alterações necessárias no seu momento especial
+              </DialogDescription>
+            </DialogHeader>
+
+            <form onSubmit={handleSaveEdit} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="edit-title" className="flex items-center gap-2">
+                  <Heart className="w-4 h-4 text-primary fill-primary" />
+                  Título do Momento
+                </Label>
+                <Input
+                  id="edit-title"
+                  value={editForm.title}
+                  onChange={(e) => setEditForm({ ...editForm, title: e.target.value })}
+                  required
+                  className="text-base"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="edit-date" className="flex items-center gap-2">
+                    <Calendar className="w-4 h-4 text-primary" />
+                    Data do Momento
+                  </Label>
+                  <Input
+                    id="edit-date"
+                    type="date"
+                    value={editForm.date}
+                    onChange={(e) => setEditForm({ ...editForm, date: e.target.value })}
+                    required
+                    className="text-base"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="edit-time" className="flex items-center gap-2">
+                    <Clock className="w-4 h-4 text-primary" />
+                    Hora do Momento
+                  </Label>
+                  <Input
+                    id="edit-time"
+                    type="time"
+                    value={editForm.time}
+                    onChange={(e) => setEditForm({ ...editForm, time: e.target.value })}
+                    required
+                    className="text-base"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="edit-location" className="flex items-center gap-2">
+                  <MapPin className="w-4 h-4 text-primary" />
+                  Local do Momento
+                </Label>
+                <Input
+                  id="edit-location"
+                  value={editForm.location}
+                  onChange={(e) => setEditForm({ ...editForm, location: e.target.value })}
+                  required
+                  className="text-base"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="edit-full_address" className="flex items-center gap-2">
+                  <Building className="w-4 h-4 text-primary" />
+                  Endereço Completo
+                </Label>
+                <Input
+                  id="edit-full_address"
+                  value={editForm.full_address}
+                  onChange={(e) => setEditForm({ ...editForm, full_address: e.target.value })}
+                  className="text-base"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="edit-phone" className="flex items-center gap-2">
+                    <Phone className="w-4 h-4 text-primary" />
+                    Telefone para Contato
+                  </Label>
+                  <Input
+                    id="edit-phone"
+                    value={editForm.phone}
+                    onChange={(e) => setEditForm({ ...editForm, phone: e.target.value })}
+                    className="text-base"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="edit-maps_link" className="flex items-center gap-2">
+                    <Navigation className="w-4 h-4 text-primary" />
+                    Link do Google Maps
+                  </Label>
+                  <Input
+                    id="edit-maps_link"
+                    value={editForm.maps_link}
+                    onChange={(e) => setEditForm({ ...editForm, maps_link: e.target.value })}
+                    className="text-base"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="edit-message" className="flex items-center gap-2">
+                  <MessageSquare className="w-4 h-4 text-primary" />
+                  Mensagem (Opcional)
+                </Label>
+                <Textarea
+                  id="edit-message"
+                  value={editForm.message}
+                  onChange={(e) => setEditForm({ ...editForm, message: e.target.value })}
+                  className="min-h-20 text-base resize-none"
+                />
+              </div>
+
+              <div className="flex gap-3 pt-4">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => setEditOpen(false)}
+                  className="flex-1"
+                >
+                  Cancelar
+                </Button>
+                <Button
+                  type="submit"
+                  disabled={editLoading}
+                  className="flex-1"
+                >
+                  {editLoading ? (
+                    <div className="flex items-center gap-2">
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      Salvando...
+                    </div>
+                  ) : (
+                    "Salvar Alterações"
+                  )}
+                </Button>
+              </div>
+            </form>
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );
