@@ -67,8 +67,13 @@ export default function Confirmation() {
       const result: ConfirmGuestResponse = await response.json();
       setConfirmationResult(result);
 
+      // Detectar se é erro de nome similar
+      const isSimilarError = !result.success && result.message?.includes('Já existe') && result.message?.includes('nome completo');
+      setIsSimilarNameError(isSimilarError);
+
       if (result.success) {
         setGuestName("");
+        setIsSimilarNameError(false);
         // Refresh event data to show updated confirmations
         fetchEventData();
 
