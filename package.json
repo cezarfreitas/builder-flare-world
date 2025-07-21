@@ -18,7 +18,10 @@
     "start": "node dist/server/node-build.mjs",
     "test": "vitest --run",
     "format.fix": "prettier --write .",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "verify-build": "node scripts/verify-build.js",
+    "docker:build": "docker build -t encontros-doces .",
+    "docker:run": "docker run -p 8080:8080 encontros-doces"
   },
   "dependencies": {
     "express": "^4.18.2",
