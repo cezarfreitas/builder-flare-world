@@ -29,6 +29,7 @@ export default function Admin() {
   const { code } = useParams<{ code: string }>();
   const [eventData, setEventData] = useState<AdminEventResponse | null>(null);
   const [loading, setLoading] = useState(true);
+  const [clearingConfirmations, setClearingConfirmations] = useState(false);
 
   useEffect(() => {
     if (code) {
