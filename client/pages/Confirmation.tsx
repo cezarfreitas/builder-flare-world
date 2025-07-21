@@ -221,81 +221,53 @@ export default function Confirmation() {
               </div>
             </div>
 
-            {/* Confirmation Section */}
-            <div className="border-t border-border pt-6">
+            {/* Simple Confirmation */}
+            <div className="border-t border-border pt-4">
               {confirmationResult?.success ? (
-                <div className="text-center space-y-6 p-6 bg-green-50 border border-green-200 rounded-xl dark:bg-green-950 dark:border-green-800">
-                  <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto dark:bg-green-800">
-                    <CheckCircle className="w-10 h-10 text-green-600 dark:text-green-300" />
-                  </div>
-                  <div className="space-y-2">
-                    <h3 className="text-xl sm:text-2xl font-bold text-green-800 dark:text-green-200">
-                      Presença Confirmada! 🎉
-                    </h3>
-                    <p className="text-green-700 dark:text-green-300 text-base">
-                      {confirmationResult.message}
-                    </p>
-                    <p className="text-sm text-green-600 dark:text-green-400">
-                      Aguardamos você no evento!
-                    </p>
-                  </div>
+                <div className="text-center space-y-3 p-4 bg-green-50 rounded-lg dark:bg-green-950">
+                  <CheckCircle className="w-8 h-8 text-green-600 mx-auto dark:text-green-400" />
+                  <h3 className="font-semibold text-green-800 dark:text-green-200">
+                    Presença Confirmada! 🎉
+                  </h3>
+                  <p className="text-sm text-green-700 dark:text-green-300">
+                    Aguardamos você no evento!
+                  </p>
                 </div>
               ) : (
-                <div className="space-y-4">
-                  <div className="text-center pb-4">
-                    <h3 className="text-lg font-bold text-foreground mb-2">
-                      Confirme sua presença:
-                    </h3>
-                    <p className="text-sm text-muted-foreground">
-                      Digite seu nome para confirmar que irá participar
-                    </p>
-                  </div>
+                <form onSubmit={handleConfirmation} className="space-y-3">
+                  <Label htmlFor="guest_name" className="font-semibold">
+                    Confirme sua presença:
+                  </Label>
+                  <Input
+                    id="guest_name"
+                    placeholder="Digite seu nome completo"
+                    value={guestName}
+                    onChange={(e) => setGuestName(e.target.value)}
+                    required
+                    className="h-11"
+                  />
 
-                  <form onSubmit={handleConfirmation} className="space-y-4">
-                    <div className="space-y-3">
-                      <Label htmlFor="guest_name" className="text-base font-semibold">
-                        Seu nome completo:
-                      </Label>
-                      <Input
-                        id="guest_name"
-                        placeholder="Ex: João Silva"
-                        value={guestName}
-                        onChange={(e) => setGuestName(e.target.value)}
-                        required
-                        className="text-base h-14 px-4 border-2 focus:border-primary"
-                      />
+                  {confirmationResult && !confirmationResult.success && (
+                    <div className="p-3 bg-destructive/10 border border-destructive/20 rounded-lg">
+                      <p className="text-destructive text-sm">{confirmationResult.message}</p>
                     </div>
+                  )}
 
-                    {confirmationResult && !confirmationResult.success && (
-                      <div className="p-4 bg-destructive/10 border border-destructive/20 rounded-xl">
-                        <div className="flex items-center gap-2">
-                          <AlertCircle className="w-4 h-4 text-destructive" />
-                          <p className="text-destructive text-sm font-medium">
-                            {confirmationResult.message}
-                          </p>
-                        </div>
-                      </div>
+                  <Button
+                    type="submit"
+                    disabled={confirming || !guestName.trim()}
+                    className="w-full h-11 font-semibold"
+                  >
+                    {confirming ? (
+                      <>
+                        <div className="w-4 h-4 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin mr-2" />
+                        Confirmando...
+                      </>
+                    ) : (
+                      "Confirmar Presença"
                     )}
-
-                    <Button
-                      type="submit"
-                      disabled={confirming || !guestName.trim()}
-                      className="w-full h-14 text-base font-bold rounded-xl bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-lg hover:shadow-xl transition-all"
-                    >
-                      {confirming ? (
-                        <div className="flex items-center gap-2">
-                          <div className="w-5 h-5 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
-                          Confirmando...
-                        </div>
-                      ) : (
-                        <div className="flex items-center gap-2">
-                          <CheckCircle className="w-5 h-5" />
-                          Confirmar Presença
-                        </div>
-                      )}
-                    </Button>
-                  </form>
-                </div>
+                  </Button>
+                </form>
               )}
             </div>
           </CardContent>
