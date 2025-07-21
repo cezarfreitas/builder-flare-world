@@ -15,7 +15,7 @@ WORKDIR /app
 COPY . .
 
 # Instalar dependências e fazer build
-RUN npm install && npm run build
+RUN npm install --legacy-peer-deps && npm run build
 
 # Limpar dependências de desenvolvimento
 RUN npm prune --production
