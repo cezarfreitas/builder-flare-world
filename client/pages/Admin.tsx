@@ -17,6 +17,14 @@ export default function Admin() {
     }
   }, [code]);
 
+  useEffect(() => {
+    if (eventData?.success && eventData.event?.title) {
+      document.title = `${eventData.event.title} - Admin`;
+    } else {
+      document.title = "Administração";
+    }
+  }, [eventData]);
+
   const fetchEventData = async () => {
     try {
       const response = await fetch(`/api/admin/${code}`);
