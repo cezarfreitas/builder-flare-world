@@ -319,7 +319,7 @@ export default function Index() {
                   Criando Evento...
                 </div>
               ) : (
-                "Criar Evento"
+                "Criar Momento Especial"
               )}
             </Button>
           </form>
