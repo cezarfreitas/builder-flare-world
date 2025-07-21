@@ -14,7 +14,7 @@ WORKDIR /app
 # Copiar package files primeiro para cache layer
 COPY package*.json ./
 
-# Limpar cache npm e instalar dependências (.npmrc resolve conflitos)
+# Limpar cache npm e instalar dependências
 RUN npm cache clean --force && \
     npm install --production=false --no-optional
 
