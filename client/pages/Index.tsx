@@ -157,19 +157,36 @@ export default function Index() {
         
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="space-y-2">
-              <Label htmlFor="date_time" className="flex items-center gap-2">
-                <Clock className="w-4 h-4 text-primary" />
-                Data e Hora do Evento
-              </Label>
-              <Input
-                id="date_time"
-                type="datetime-local"
-                value={formData.date_time}
-                onChange={(e) => setFormData({ ...formData, date_time: e.target.value })}
-                required
-                className="text-base"
-              />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="date" className="flex items-center gap-2">
+                  <Calendar className="w-4 h-4 text-primary" />
+                  Data do Evento
+                </Label>
+                <Input
+                  id="date"
+                  type="date"
+                  value={formData.date}
+                  onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                  required
+                  className="text-base"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="time" className="flex items-center gap-2">
+                  <Clock className="w-4 h-4 text-primary" />
+                  Hora do Evento
+                </Label>
+                <Input
+                  id="time"
+                  type="time"
+                  value={formData.time}
+                  onChange={(e) => setFormData({ ...formData, time: e.target.value })}
+                  required
+                  className="text-base"
+                />
+              </div>
             </div>
 
             <div className="space-y-2">
