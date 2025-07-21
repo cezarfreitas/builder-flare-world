@@ -1,14 +1,17 @@
 # Usar Node.js LTS
 FROM node:20-alpine
 
+# Instalar dependências do sistema necessárias para build
+RUN apk add --no-cache python3 make g++
+
 # Definir diretório de trabalho
 WORKDIR /app
 
 # Copiar arquivos de dependências
 COPY package*.json ./
 
-# Instalar dependências (incluindo devDependencies para build)
-RUN npm ci
+# Limpar cache npm e instalar dependências
+RUN npm cache clean --force && npm ci
 
 # Copiar código fonte
 COPY . .
