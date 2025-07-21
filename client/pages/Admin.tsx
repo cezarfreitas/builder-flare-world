@@ -40,7 +40,7 @@ export default function Admin() {
       ['Nome', 'Data de Confirmação'],
       ...eventData.confirmations.map(conf => [
         conf.guest_name,
-        new Date(conf.confirmed_at).toLocaleString('pt-BR')
+        new Date(conf.confirmed_at).toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })
       ])
     ];
     
