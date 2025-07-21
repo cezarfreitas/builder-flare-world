@@ -5,7 +5,9 @@
 ### ⚡ SOLUÇÕES v3 (por ordem de preferência):
 
 ## 1. 🎯 Dockerfile Principal (v3 - CORRIGIDO)
+
 O `Dockerfile` foi atualizado para resolver conflitos de peer dependencies:
+
 - ✅ Single-stage build robusto
 - ✅ **.npmrc** adicionado para resolver conflitos automaticamente
 - ✅ `legacy-peer-deps=true` configurado
@@ -13,7 +15,9 @@ O `Dockerfile` foi atualizado para resolver conflitos de peer dependencies:
 - ✅ Usuário não-root para segurança
 
 ## 2. 🚀 Dockerfile Ultra-Simples (Backup)
+
 Se ainda falhar, use a versão mais compatível:
+
 ```bash
 mv Dockerfile Dockerfile.main
 mv Dockerfile.ultra-simple Dockerfile
@@ -21,6 +25,7 @@ mv Dockerfile.ultra-simple Dockerfile
 ```
 
 ## 3. 🔧 Dockerfile.simple (Alternativo)
+
 Versão intermediária também atualizada com .npmrc.
 
 ---
@@ -28,6 +33,7 @@ Versão intermediária também atualizada com .npmrc.
 ## 🆕 NOVA SOLUÇÃO: .npmrc
 
 **Arquivo criado:** `.npmrc`
+
 ```
 legacy-peer-deps=true
 fund=false
@@ -35,6 +41,7 @@ audit=false
 ```
 
 **O que resolve:**
+
 - ✅ Conflitos de @react-three/drei
 - ✅ Conflitos de peer dependencies
 - ✅ Warnings de audit/fund
@@ -44,12 +51,15 @@ audit=false
 ## 🔍 PROBLEMAS ESPECÍFICOS RESOLVIDOS:
 
 ### ✅ Erro: "Fix the upstream dependency conflict"
+
 **Status:** Resolvido com .npmrc
 
 ### ✅ Erro: @react-three/drei peer dependency
+
 **Status:** Resolvido com legacy-peer-deps
 
 ### ✅ Erro: eresolve conflicts
+
 **Status:** Resolvido automaticamente
 
 ---
@@ -59,6 +69,7 @@ audit=false
 ### Para EasyPanel (se Docker falhar):
 
 **1. Build Manual:**
+
 ```
 Build Command: npm install && npm run build
 Start Command: npm start
@@ -66,6 +77,7 @@ Port: 8080
 ```
 
 **2. Variáveis de Ambiente:**
+
 ```
 NODE_ENV=production
 PORT=8080
@@ -92,6 +104,7 @@ docker build -t test-app .
 ## 📊 STATUS DAS CORREÇÕES v3
 
 ✅ **Fixado (v3):**
+
 - **.npmrc criado** para resolver peer dependencies
 - **Todos os Dockerfiles atualizados**
 - legacy-peer-deps configurado automaticamente
@@ -99,6 +112,7 @@ docker build -t test-app .
 - Build testado localmente
 
 🔧 **Se ainda não funcionar:**
+
 1. Use Dockerfile.ultra-simple
 2. Configure build manual no EasyPanel
 3. Verifique se .npmrc está sendo copiado
@@ -123,6 +137,6 @@ npm uninstall three @types/three
 **Problema:** Conflitos de peer dependencies com @react-three/drei  
 **Solução:** .npmrc com legacy-peer-deps=true  
 **Status:** ✅ Resolvido e testado  
-**Fallbacks:** ✅ Ultra-simple e manual build disponíveis  
+**Fallbacks:** ✅ Ultra-simple e manual build disponíveis
 
 **Ready to Deploy v3!** 🚀🍓
