@@ -1,0 +1,59 @@
+# Multi-stage Dockerfile robusto para Rollup no Alpine
+FROM node:20-alpine as builder
+
+# Instalar dependências do sistema necessárias para build
+RUN apk add --no-cache \
+    python3 \
+    make \
+    g++ \
+    git
+
+WORKDIR /app
+
+# Copiar package files
+COPY package*.json ./
+
+# Forçar limpeza e reinstalação completa das dependências
+RUN rm -f package-lock.json && \
+    npm cache clean --force && \
+    npm install --ignore-engines && \
+    npm ls || true
+
+# Copiar código fonte
+COPY . .
+
+# Build da aplicação
+RUN npm run build
+
+# Produção stage
+FROM node:20-alpine as production
+
+# Instalar apenas dumb-init para produção
+RUN apk add --no-cache dumb-init
+
+WORKDIR /app
+
+# Copiar package files
+COPY package*.json ./
+
+# Instalar apenas dependências de produção
+RUN npm cache clean --force && \
+    npm install --production --ignore-engines && \
+    npm cache clean --force
+
+# Copiar build da stage anterior
+COPY --from=builder /app/dist ./dist
+
+# Criar usuário não-root
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S nodejs -u 1001 && \
+    chown -R nodejs:nodejs /app
+
+USER nodejs
+
+EXPOSE 8080
+
+ENV NODE_ENV=production
+ENV PORT=8080
+
+CMD ["dumb-init", "node", "dist/server/node-build.mjs"]
