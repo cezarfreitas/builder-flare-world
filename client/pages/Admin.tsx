@@ -217,12 +217,13 @@ export default function Admin() {
                     </div>
                     <div className="text-right">
                       <p className="text-sm text-muted-foreground">
-                        {new Date(confirmation.confirmed_at).toLocaleDateString('pt-BR')}
+                        {new Date(confirmation.confirmed_at).toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' })}
                       </p>
                       <p className="text-xs text-muted-foreground">
-                        {new Date(confirmation.confirmed_at).toLocaleTimeString('pt-BR', { 
-                          hour: '2-digit', 
-                          minute: '2-digit' 
+                        {new Date(confirmation.confirmed_at).toLocaleTimeString('pt-BR', {
+                          hour: '2-digit',
+                          minute: '2-digit',
+                          timeZone: 'America/Sao_Paulo'
                         })}
                       </p>
                     </div>
