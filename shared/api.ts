@@ -4,6 +4,7 @@ export interface DemoResponse {
 
 export interface Event {
   id: number;
+  title: string;
   date_time: string;
   location: string;
   full_address?: string;
@@ -15,6 +16,7 @@ export interface Event {
 }
 
 export interface CreateEventRequest {
+  title: string;
   date_time: string;
   location: string;
   full_address?: string;
