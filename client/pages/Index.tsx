@@ -150,19 +150,28 @@ export default function Index() {
               </p>
             </div>
 
-            <div className="flex gap-3">
-              <Button 
-                onClick={() => setCreatedEvent(null)} 
-                variant="outline" 
-                className="flex-1"
+            <div className="space-y-3">
+              <div className="flex gap-3">
+                <Button
+                  onClick={() => setCreatedEvent(null)}
+                  variant="outline"
+                  className="flex-1"
+                >
+                  Criar Outro Evento
+                </Button>
+                <Button
+                  onClick={() => window.open(confirmationLink, '_blank')}
+                  className="flex-1"
+                >
+                  Ver Página de Confirmação
+                </Button>
+              </div>
+              <Button
+                onClick={() => window.open(`/admin/${createdEvent.event.link_code}`, '_blank')}
+                variant="secondary"
+                className="w-full"
               >
-                Criar Outro Evento
-              </Button>
-              <Button 
-                onClick={() => window.open(confirmationLink, '_blank')} 
-                className="flex-1"
-              >
-                Ver Página de Confirmação
+                Administrar Lista de Convidados
               </Button>
             </div>
           </CardContent>
