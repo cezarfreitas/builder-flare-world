@@ -70,9 +70,9 @@ export default function MasterAdmin() {
     }
   };
 
-  const handleDeleteEvent = async (eventId: number, eventLocation: string) => {
+  const handleDeleteEvent = async (eventId: number, eventTitle: string) => {
     const confirmed = window.confirm(
-      `Tem certeza que deseja excluir o momento "${eventLocation}"?\n\nEsta ação não pode ser desfeita e todas as confirmações também serão removidas.`
+      `Tem certeza que deseja excluir o momento "${eventTitle}"?\n\nEsta ação não pode ser desfeita e todas as confirmações também serão removidas.`
     );
 
     if (!confirmed) return;
