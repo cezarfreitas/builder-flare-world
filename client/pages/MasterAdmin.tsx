@@ -372,6 +372,20 @@ export default function MasterAdmin() {
                             >
                               Ver Convite
                             </Button>
+                            <Button
+                              onClick={() => handleDeleteEvent(event.id, event.location)}
+                              disabled={deletingEventId === event.id}
+                              size="sm"
+                              variant="destructive"
+                              className="w-full"
+                            >
+                              {deletingEventId === event.id ? (
+                                <Loader2 className="w-3 h-3 mr-1 animate-spin" />
+                              ) : (
+                                <Trash2 className="w-3 h-3 mr-1" />
+                              )}
+                              {deletingEventId === event.id ? 'Excluindo...' : 'Excluir'}
+                            </Button>
                           </div>
                         </div>
                       </div>
@@ -380,7 +394,7 @@ export default function MasterAdmin() {
                         <span>Código: {event.link_code}</span>
                         <span>Criado: {new Date(event.created_at).toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' })}</span>
                         {event.last_confirmation && (
-                          <span>Última confirma��ão: {new Date(event.last_confirmation).toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' })}</span>
+                          <span>Última confirmação: {new Date(event.last_confirmation).toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' })}</span>
                         )}
                       </div>
                     </div>
