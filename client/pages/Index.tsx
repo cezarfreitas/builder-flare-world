@@ -28,6 +28,9 @@ export default function Index() {
       const eventData: CreateEventRequest = {
         date_time: `${formData.date}T${formData.time}`,
         location: formData.location,
+        full_address: formData.full_address,
+        phone: formData.phone,
+        maps_link: formData.maps_link,
         message: formData.message
       };
 
