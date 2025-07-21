@@ -26,6 +26,7 @@ export function createServer() {
   app.post("/api/events", createEvent);
   app.get("/api/events/:code", getEventByCode);
   app.post("/api/events/:code/confirm", confirmGuest);
+  app.get("/api/admin/:code", getAdminEvent);
 
   return app;
 }
