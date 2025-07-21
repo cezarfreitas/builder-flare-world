@@ -8,12 +8,12 @@ function generateLinkCode(): string {
 
 export const createEvent: RequestHandler = async (req, res) => {
   try {
-    const { date_time, location, full_address, phone, maps_link, message }: CreateEventRequest = req.body;
+    const { title, date_time, location, full_address, phone, maps_link, message }: CreateEventRequest = req.body;
 
-    if (!date_time || !location) {
+    if (!title || !date_time || !location) {
       const response: CreateEventResponse = {
         success: false,
-        error: "Data/hora e local são obrigatórios"
+        error: "Título, data/hora e local são obrigatórios"
       };
       return res.status(400).json(response);
     }
