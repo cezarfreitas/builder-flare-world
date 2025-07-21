@@ -14,22 +14,47 @@ export async function getConnection() {
 
 export async function initializeDatabase() {
   const connection = await getConnection();
-  
+
   try {
-    // Create events table
+    // Create events table with basic structure first
     await connection.execute(`
       CREATE TABLE IF NOT EXISTS events (
         id INT AUTO_INCREMENT PRIMARY KEY,
         date_time DATETIME NOT NULL,
         location VARCHAR(255) NOT NULL,
-        full_address TEXT,
-        phone VARCHAR(20),
-        maps_link TEXT,
         message TEXT,
         link_code VARCHAR(50) UNIQUE NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
     `);
+
+    // Add new columns if they don't exist
+    try {
+      await connection.execute(`ALTER TABLE events ADD COLUMN full_address TEXT`);
+      console.log('Added full_address column');
+    } catch (error: any) {
+      if (error.code !== 'ER_DUP_FIELDNAME') {
+        console.error('Error adding full_address column:', error);
+      }
+    }
+
+    try {
+      await connection.execute(`ALTER TABLE events ADD COLUMN phone VARCHAR(20)`);
+      console.log('Added phone column');
+    } catch (error: any) {
+      if (error.code !== 'ER_DUP_FIELDNAME') {
+        console.error('Error adding phone column:', error);
+      }
+    }
+
+    try {
+      await connection.execute(`ALTER TABLE events ADD COLUMN maps_link TEXT`);
+      console.log('Added maps_link column');
+    } catch (error: any) {
+      if (error.code !== 'ER_DUP_FIELDNAME') {
+        console.error('Error adding maps_link column:', error);
+      }
+    }
 
     // Create confirmations table
     await connection.execute(`
