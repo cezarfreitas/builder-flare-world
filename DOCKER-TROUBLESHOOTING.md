@@ -1,63 +1,56 @@
-# Docker Build Troubleshooting - ATUALIZADO
+# Docker Build Troubleshooting - v3 (PEER DEPENDENCIES)
 
-## Problemas: npm ci/install falha no Docker build
+## Problemas: npm install falha com conflitos de peer dependencies
 
-### ⚡ SOLUÇÕES RÁPIDAS (por ordem de preferência):
+### ⚡ SOLUÇÕES v3 (por ordem de preferência):
 
-## 1. 🎯 Dockerfile Principal (ATUALIZADO - Recomendado)
-
-O `Dockerfile` foi simplificado para resolver problemas de dependências:
-
-- ✅ Single-stage build mais robusto
-- ✅ Reinstalação limpa de node_modules
+## 1. 🎯 Dockerfile Principal (v3 - CORRIGIDO)
+O `Dockerfile` foi atualizado para resolver conflitos de peer dependencies:
+- ✅ Single-stage build robusto
+- ✅ **.npmrc** adicionado para resolver conflitos automaticamente
+- ✅ `legacy-peer-deps=true` configurado
 - ✅ Package-lock.json regenerado
 - ✅ Usuário não-root para segurança
 
-## 2. 🚀 Dockerfile Ultra-Simples (Para casos extremos)
-
+## 2. 🚀 Dockerfile Ultra-Simples (Backup)
 Se ainda falhar, use a versão mais compatível:
-
 ```bash
-# No EasyPanel, ou localmente:
 mv Dockerfile Dockerfile.main
 mv Dockerfile.ultra-simple Dockerfile
 # Deploy novamente
 ```
 
-**Características do ultra-simples:**
-
-- Usa `node:20-slim` (Debian ao invés de Alpine)
-- Build em uma única camada
-- Máxima compatibilidade
-
-## 3. 🔧 Dockerfile.simple (Backup)
-
-Versão intermediária para testes.
+## 3. 🔧 Dockerfile.simple (Alternativo)
+Versão intermediária também atualizada com .npmrc.
 
 ---
 
-## 🔍 PROBLEMAS ESPECÍFICOS E SOLUÇÕES:
+## 🆕 NOVA SOLUÇÃO: .npmrc
 
-### Erro: "eresolve" ou conflitos de dependências
-
-**Solução:** Package-lock.json foi regenerado
-
-```bash
-# Se necessário fazer localmente:
-rm package-lock.json
-npm install
+**Arquivo criado:** `.npmrc`
+```
+legacy-peer-deps=true
+fund=false
+audit=false
 ```
 
-### Erro: "canvas-confetti" ou dependências nativas
+**O que resolve:**
+- ✅ Conflitos de @react-three/drei
+- ✅ Conflitos de peer dependencies
+- ✅ Warnings de audit/fund
 
-**Status:** ✅ Já corrigido
+---
 
-- canvas-confetti movido para devDependencies
-- Dependências Alpine adicionadas
+## 🔍 PROBLEMAS ESPECÍFICOS RESOLVIDOS:
 
-### Erro: Multi-stage build problems
+### ✅ Erro: "Fix the upstream dependency conflict"
+**Status:** Resolvido com .npmrc
 
-**Solução:** Dockerfile simplificado para single-stage
+### ✅ Erro: @react-three/drei peer dependency
+**Status:** Resolvido com legacy-peer-deps
+
+### ✅ Erro: eresolve conflicts
+**Status:** Resolvido automaticamente
 
 ---
 
@@ -66,7 +59,6 @@ npm install
 ### Para EasyPanel (se Docker falhar):
 
 **1. Build Manual:**
-
 ```
 Build Command: npm install && npm run build
 Start Command: npm start
@@ -74,20 +66,9 @@ Port: 8080
 ```
 
 **2. Variáveis de Ambiente:**
-
 ```
 NODE_ENV=production
 PORT=8080
-```
-
-### Para MySQL externo:
-
-```
-DB_HOST=seu_host
-DB_PORT=3306
-DB_USER=usuario
-DB_PASSWORD=senha
-DB_NAME=convite
 ```
 
 ---
@@ -95,47 +76,53 @@ DB_NAME=convite
 ## 🧪 TESTE LOCAL
 
 ```bash
-# Testar Dockerfile principal
+# Testar Dockerfile principal (v3)
 docker build -t test-app .
 
-# Se falhar, testar ultra-simples
-mv Dockerfile Dockerfile.main
+# Verificar se .npmrc está incluído
+docker run --rm test-app cat .npmrc
+
+# Se falhar, usar ultra-simples
 mv Dockerfile.ultra-simple Dockerfile
 docker build -t test-app .
-
-# Executar
-docker run -p 8080:8080 test-app
 ```
 
 ---
 
-## 📊 STATUS DAS CORREÇÕES
+## 📊 STATUS DAS CORREÇÕES v3
 
-✅ **Fixado (v2):**
-
-- Package-lock.json regenerado
-- Dockerfile simplificado (single-stage)
-- canvas-confetti em devDependencies
-- Dependências Alpine otimizadas
-- Dockerfile.ultra-simple para casos extremos
+✅ **Fixado (v3):**
+- **.npmrc criado** para resolver peer dependencies
+- **Todos os Dockerfiles atualizados**
+- legacy-peer-deps configurado automaticamente
+- @react-three/drei conflicts resolvidos
+- Build testado localmente
 
 🔧 **Se ainda não funcionar:**
-
 1. Use Dockerfile.ultra-simple
 2. Configure build manual no EasyPanel
-3. Reporte o problema com logs completos
+3. Verifique se .npmrc está sendo copiado
 
 ---
 
 ## 🚨 ÚLTIMO RECURSO
 
-Se nada funcionar, configure no EasyPanel:
+Se nada funcionar, remover dependências problemáticas:
 
-**Source:** GitHub Repository  
-**Build:** Custom  
-**Install Command:** `npm install`  
-**Build Command:** `npm run build`  
-**Start Command:** `npm start`  
-**Port:** `8080`
+```bash
+# Temporariamente remover @react-three
+npm uninstall @react-three/drei @react-three/fiber
+npm uninstall three @types/three
+# Deploy e reinstalar depois se necessário
+```
 
-Isso evita completamente o Docker e usa build nativo do EasyPanel.
+---
+
+## ✅ RESUMO v3
+
+**Problema:** Conflitos de peer dependencies com @react-three/drei  
+**Solução:** .npmrc com legacy-peer-deps=true  
+**Status:** ✅ Resolvido e testado  
+**Fallbacks:** ✅ Ultra-simple e manual build disponíveis  
+
+**Ready to Deploy v3!** 🚀🍓
