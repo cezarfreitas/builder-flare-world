@@ -123,10 +123,11 @@ export default function MasterAdmin() {
   const handleEditEvent = (event: EventWithStats) => {
     setEditingEvent(event);
 
-    // Preencher formulário com dados do evento
+    // Preencher formulário com dados do evento (usando timezone de São Paulo)
     const eventDate = new Date(event.date_time);
-    const date = eventDate.toISOString().split('T')[0];
-    const time = eventDate.toTimeString().split(' ')[0].slice(0, 5);
+    const saoPauloDate = new Date(eventDate.toLocaleString('en-US', { timeZone: 'America/Sao_Paulo' }));
+    const date = saoPauloDate.toISOString().split('T')[0];
+    const time = saoPauloDate.toTimeString().split(' ')[0].slice(0, 5);
 
     setEditForm({
       title: event.title,
