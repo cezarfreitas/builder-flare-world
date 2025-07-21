@@ -122,6 +122,11 @@ export default function Index() {
           maps_link: "",
           message: "",
         });
+
+        // 🎉 CONFETE quando evento é criado!
+        setTimeout(() => {
+          fireEventCreatedConfetti();
+        }, 500);
       }
     } catch (error) {
       console.error("Error creating event:", error);
