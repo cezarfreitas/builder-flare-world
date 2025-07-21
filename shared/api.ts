@@ -81,3 +81,8 @@ export interface MasterAdminResponse {
   total_events?: number;
   error?: string;
 }
+
+export interface DeleteEventResponse {
+  success: boolean;
+  error?: string;
+}
