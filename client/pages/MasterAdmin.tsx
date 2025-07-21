@@ -58,6 +58,16 @@ export default function MasterAdmin() {
       if (result.success) {
         setIsAuthenticated(true);
         setPassword("");
+
+        // 🎉 Confete para o admin master!
+        setTimeout(() => {
+          confetti({
+            particleCount: 80,
+            spread: 60,
+            origin: { y: 0.6 },
+            colors: ['#E91E63', '#9C27B0', '#3F51B5', '#2196F3', '#FF5722']
+          });
+        }, 400);
       } else {
         setLoginError(result.error || 'Erro ao fazer login');
       }
