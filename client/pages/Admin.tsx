@@ -263,10 +263,28 @@ export default function Admin() {
         {/* Confirmations List */}
         <Card className="shadow-2xl border-0">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Users className="w-5 h-5 text-primary" />
-              Lista de Confirmados ({confirmations.length})
-            </CardTitle>
+            <div className="flex items-center justify-between">
+              <CardTitle className="flex items-center gap-2">
+                <Users className="w-5 h-5 text-primary" />
+                Lista de Confirmados ({confirmations.length})
+              </CardTitle>
+              {confirmations.length > 0 && (
+                <Button
+                  variant="destructive"
+                  size="sm"
+                  onClick={handleClearConfirmations}
+                  disabled={clearingConfirmations}
+                  className="gap-2"
+                >
+                  {clearingConfirmations ? (
+                    <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  ) : (
+                    <Trash2 className="w-4 h-4" />
+                  )}
+                  {clearingConfirmations ? "Limpando..." : "Limpar Lista"}
+                </Button>
+              )}
+            </div>
           </CardHeader>
           <CardContent>
             {confirmations.length === 0 ? (
