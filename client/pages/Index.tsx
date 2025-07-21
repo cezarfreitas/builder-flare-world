@@ -27,6 +27,7 @@ export default function Index() {
 
     try {
       const eventData: CreateEventRequest = {
+        title: formData.title,
         date_time: `${formData.date}T${formData.time}`,
         location: formData.location,
         full_address: formData.full_address,
