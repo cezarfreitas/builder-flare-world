@@ -21,6 +21,14 @@ export default function Index() {
   const [loading, setLoading] = useState(false);
   const [createdEvent, setCreatedEvent] = useState<CreateEventResponse | null>(null);
 
+  useEffect(() => {
+    if (createdEvent?.success && createdEvent.event?.title) {
+      document.title = `${createdEvent.event.title} - Criado`;
+    } else {
+      document.title = "Encontros Doces - Criar Momento";
+    }
+  }, [createdEvent]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
