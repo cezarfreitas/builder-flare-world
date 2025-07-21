@@ -465,6 +465,15 @@ export default function MasterAdmin() {
                               Ver Convite
                             </Button>
                             <Button
+                              onClick={() => handleEditEvent(event)}
+                              size="sm"
+                              variant="secondary"
+                              className="w-full"
+                            >
+                              <Edit className="w-3 h-3 mr-1" />
+                              Editar
+                            </Button>
+                            <Button
                               onClick={() => handleDeleteEvent(event.id, event.title)}
                               disabled={deletingEventId === event.id}
                               size="sm"
