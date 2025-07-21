@@ -256,7 +256,7 @@ export default function Confirmation() {
                     Presença Confirmada! 🎉
                   </h3>
                   <p className="text-sm text-green-700 dark:text-green-300">
-                    Mal podemos esperar para compartilhar este momento com você!
+                    Obrigado por confirmar! Nos vemos em "{event.title}" 🍓
                   </p>
                 </div>
               ) : (
