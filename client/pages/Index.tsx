@@ -23,7 +23,7 @@ import {
   Navigation,
 } from "lucide-react";
 import { CreateEventRequest, CreateEventResponse } from "@shared/api";
-import confetti from 'canvas-confetti';
+import { fireEventCreatedConfetti } from '@/lib/confetti-utils';
 
 export default function Index() {
   const [formData, setFormData] = useState({
