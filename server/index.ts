@@ -31,6 +31,7 @@ export function createServer() {
   // Master admin routes
   app.post("/api/master-admin/login", masterAdminLogin);
   app.get("/api/master-admin/events", getMasterAdminData);
+  app.put("/api/master-admin/events/:id", updateEvent);
   app.delete("/api/master-admin/events/:id", deleteEvent);
 
   return app;
