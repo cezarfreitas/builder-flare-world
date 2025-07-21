@@ -126,7 +126,7 @@ export default function Confirmation() {
     if (days < 0) {
       return `Evento já aconteceu (${Math.abs(days)} dia${Math.abs(days) !== 1 ? 's' : ''} atrás)`;
     } else if (days === 0) {
-      return "Evento é hoje! 🎉";
+      return "O momento especial é hoje! 🍓";
     } else if (days === 1) {
       return "Falta apenas 1 dia!";
     } else {
