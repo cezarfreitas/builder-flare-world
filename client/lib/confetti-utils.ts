@@ -1,15 +1,15 @@
-import confetti from 'canvas-confetti';
+import confetti from "canvas-confetti";
 
 // Cores do tema morango
 const STRAWBERRY_COLORS = [
-  '#E91E63', // Rosa morango principal
-  '#F8BBD9', // Rosa claro
-  '#FCE4EC', // Rosa muito claro  
-  '#FF6B9D', // Rosa vibrante
-  '#C2185B', // Rosa escuro
-  '#FFB6C1', // Rosa bebê
-  '#FF1744', // Vermelho morango
-  '#E57373', // Vermelho claro
+  "#E91E63", // Rosa morango principal
+  "#F8BBD9", // Rosa claro
+  "#FCE4EC", // Rosa muito claro
+  "#FF6B9D", // Rosa vibrante
+  "#C2185B", // Rosa escuro
+  "#FFB6C1", // Rosa bebê
+  "#FF1744", // Vermelho morango
+  "#E57373", // Vermelho claro
 ];
 
 // Confete padrão do tema morango
@@ -18,7 +18,7 @@ export const fireStrawberryConfetti = () => {
     particleCount: 100,
     spread: 70,
     origin: { y: 0.6 },
-    colors: STRAWBERRY_COLORS
+    colors: STRAWBERRY_COLORS,
   });
 };
 
@@ -29,7 +29,7 @@ export const fireConfirmationConfetti = () => {
     particleCount: 100,
     spread: 70,
     origin: { y: 0.6 },
-    colors: STRAWBERRY_COLORS
+    colors: STRAWBERRY_COLORS,
   });
 
   // Confete lateral esquerdo
@@ -39,18 +39,18 @@ export const fireConfirmationConfetti = () => {
       angle: 60,
       spread: 55,
       origin: { x: 0 },
-      colors: STRAWBERRY_COLORS
+      colors: STRAWBERRY_COLORS,
     });
   }, 200);
 
-  // Confete lateral direito  
+  // Confete lateral direito
   setTimeout(() => {
     confetti({
       particleCount: 50,
       angle: 120,
       spread: 55,
       origin: { x: 1 },
-      colors: STRAWBERRY_COLORS
+      colors: STRAWBERRY_COLORS,
     });
   }, 400);
 
@@ -61,7 +61,7 @@ export const fireConfirmationConfetti = () => {
       spread: 120,
       origin: { y: 0.7 },
       colors: STRAWBERRY_COLORS,
-      gravity: 0.8
+      gravity: 0.8,
     });
   }, 600);
 };
@@ -73,7 +73,7 @@ export const fireEventCreatedConfetti = () => {
     particleCount: 120,
     spread: 80,
     origin: { y: 0.5 },
-    colors: STRAWBERRY_COLORS
+    colors: STRAWBERRY_COLORS,
   });
 
   // Chuva de confete
@@ -83,7 +83,7 @@ export const fireEventCreatedConfetti = () => {
       spread: 100,
       origin: { y: 0.3 },
       colors: STRAWBERRY_COLORS,
-      gravity: 0.8
+      gravity: 0.8,
     });
   }, 300);
 
@@ -94,15 +94,15 @@ export const fireEventCreatedConfetti = () => {
       angle: 45,
       spread: 60,
       origin: { x: 0.1, y: 0.8 },
-      colors: STRAWBERRY_COLORS
+      colors: STRAWBERRY_COLORS,
     });
-    
+
     confetti({
       particleCount: 50,
       angle: 135,
       spread: 60,
       origin: { x: 0.9, y: 0.8 },
-      colors: STRAWBERRY_COLORS
+      colors: STRAWBERRY_COLORS,
     });
   }, 600);
 
@@ -112,8 +112,8 @@ export const fireEventCreatedConfetti = () => {
       particleCount: 100,
       spread: 160,
       origin: { y: 0.4 },
-      colors: ['#E91E63', '#FF1744'],
-      scalar: 1.3
+      colors: ["#E91E63", "#FF1744"],
+      scalar: 1.3,
     });
   }, 900);
 };
@@ -124,7 +124,7 @@ export const fireAdminConfetti = () => {
     particleCount: 40,
     spread: 45,
     origin: { y: 0.7 },
-    colors: ['#4CAF50', '#8BC34A', '#CDDC39', ...STRAWBERRY_COLORS.slice(0, 2)]
+    colors: ["#4CAF50", "#8BC34A", "#CDDC39", ...STRAWBERRY_COLORS.slice(0, 2)],
   });
 };
 
@@ -134,17 +134,17 @@ export const fireMasterAdminConfetti = () => {
     particleCount: 80,
     spread: 60,
     origin: { y: 0.6 },
-    colors: ['#E91E63', '#9C27B0', '#3F51B5', '#2196F3', '#FF5722', '#FFD700']
+    colors: ["#E91E63", "#9C27B0", "#3F51B5", "#2196F3", "#FF5722", "#FFD700"],
   });
-  
+
   // Segundo round com cores douradas (VIP)
   setTimeout(() => {
     confetti({
       particleCount: 60,
       spread: 80,
       origin: { y: 0.4 },
-      colors: ['#FFD700', '#FFA000', '#FF8F00', '#E91E63'],
-      scalar: 1.1
+      colors: ["#FFD700", "#FFA000", "#FF8F00", "#E91E63"],
+      scalar: 1.1,
     });
   }, 300);
 };
@@ -160,21 +160,21 @@ export const fireRainConfetti = () => {
       angle: 60,
       spread: 55,
       origin: { x: 0 },
-      colors: STRAWBERRY_COLORS
+      colors: STRAWBERRY_COLORS,
     });
-    
+
     confetti({
       particleCount: 2,
       angle: 120,
       spread: 55,
       origin: { x: 1 },
-      colors: STRAWBERRY_COLORS
+      colors: STRAWBERRY_COLORS,
     });
 
     if (Date.now() < end) {
       requestAnimationFrame(frame);
     }
   };
-  
+
   frame();
 };

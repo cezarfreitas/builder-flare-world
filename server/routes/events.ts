@@ -170,18 +170,25 @@ export const confirmGuest: RequestHandler = async (req, res) => {
       }
 
       // Check for similar names (first name match) to suggest full name
-      const inputFirstName = guest_name.trim().split(' ')[0].toLowerCase();
+      const inputFirstName = guest_name.trim().split(" ")[0].toLowerCase();
       const [similarNamesRows] = (await connection.execute(
         "SELECT guest_name FROM confirmations WHERE event_id = ?",
         [eventRows[0].id],
       )) as any;
 
       const similarNames = similarNamesRows.filter((row: any) => {
-        const existingFirstName = row.guest_name.split(' ')[0].toLowerCase();
-        return existingFirstName === inputFirstName && row.guest_name.trim().toLowerCase() !== guest_name.trim().toLowerCase();
+        const existingFirstName = row.guest_name.split(" ")[0].toLowerCase();
+        return (
+          existingFirstName === inputFirstName &&
+          row.guest_name.trim().toLowerCase() !==
+            guest_name.trim().toLowerCase()
+        );
       });
 
-      if (similarNames.length > 0 && guest_name.trim().split(' ').length === 1) {
+      if (
+        similarNames.length > 0 &&
+        guest_name.trim().split(" ").length === 1
+      ) {
         const response: ConfirmGuestResponse = {
           success: false,
           message: `Já existe "${similarNames[0].guest_name}" na lista. Por favor, digite seu nome completo para evitar confusão.`,

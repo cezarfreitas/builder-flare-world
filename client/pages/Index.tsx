@@ -23,7 +23,7 @@ import {
   Navigation,
 } from "lucide-react";
 import { CreateEventRequest, CreateEventResponse } from "@shared/api";
-import { fireEventCreatedConfetti } from '@/lib/confetti-utils';
+import { fireEventCreatedConfetti } from "@/lib/confetti-utils";
 
 export default function Index() {
   const [formData, setFormData] = useState({
@@ -48,8 +48,6 @@ export default function Index() {
       document.title = "Encontros Doces - Criar Momento";
     }
   }, [createdEvent]);
-
-
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
