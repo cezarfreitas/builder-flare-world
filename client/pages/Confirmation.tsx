@@ -174,7 +174,7 @@ export default function Confirmation() {
               <div className="space-y-2">
                 <div className="flex items-center gap-2 text-sm">
                   <Clock className="w-4 h-4 text-primary" />
-                  <span>{new Date(event.date_time).toLocaleString('pt-BR')}</span>
+                  <span>{new Date(event.date_time).toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })}</span>
                 </div>
 
                 <div className="flex items-center gap-2 text-sm">
