@@ -73,7 +73,7 @@ export default function Confirmation() {
 
         // 🎉 CONFETE!
         setTimeout(() => {
-          fireConfetti();
+          fireConfirmationConfetti();
         }, 300);
       }
     } catch (error) {
