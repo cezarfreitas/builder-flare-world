@@ -20,8 +20,9 @@ import {
   Phone,
   Navigation,
   AlertCircle,
+  Trash2,
 } from "lucide-react";
-import { AdminEventResponse } from "@shared/api";
+import { AdminEventResponse, ClearConfirmationsResponse } from "@shared/api";
 import { Button } from "@/components/ui/button";
 
 export default function Admin() {
