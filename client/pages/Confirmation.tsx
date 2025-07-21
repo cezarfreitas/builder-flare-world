@@ -73,7 +73,7 @@ export default function Confirmation() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-background via-accent/30 to-primary/10 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-gradient-to-br from-background via-accent/30 to-primary/10 flex items-center justify-center p-4 sm:p-6">
         <Card className="w-full max-w-lg">
           <CardContent className="flex items-center justify-center py-12">
             <div className="flex items-center gap-3">
