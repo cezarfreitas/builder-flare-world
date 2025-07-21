@@ -8,8 +8,9 @@ import { Calendar, Clock, MapPin, MessageSquare, Share2, CheckCircle } from "luc
 import { CreateEventRequest, CreateEventResponse } from "@shared/api";
 
 export default function Index() {
-  const [formData, setFormData] = useState<CreateEventRequest>({
-    date_time: "",
+  const [formData, setFormData] = useState({
+    date: "",
+    time: "",
     location: "",
     message: ""
   });
