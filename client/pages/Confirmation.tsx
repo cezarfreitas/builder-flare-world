@@ -165,82 +165,37 @@ export default function Confirmation() {
             </div>
           </CardHeader>
           
-          <CardContent className="space-y-6">
-            {/* Event Details - Mobile Optimized */}
-            <div className="space-y-4">
-              <h3 className="font-bold text-foreground text-lg sm:text-xl border-b border-border pb-2">
-                Detalhes do Evento:
-              </h3>
+          <CardContent className="space-y-4">
+            {/* Compact Event Details */}
+            <div className="space-y-3">
+              <h3 className="font-semibold text-foreground text-base">Detalhes do Evento:</h3>
 
-              {/* Date and Time - Prominent */}
-              <div className="bg-primary/5 border border-primary/20 p-4 rounded-xl">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
-                    <Clock className="w-5 h-5 text-primary" />
-                  </div>
-                  <div className="flex-1">
-                    <p className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
-                      Data e Hora
-                    </p>
-                    <p className="text-lg font-semibold text-foreground">
-                      {new Date(event.date_time).toLocaleDateString('pt-BR', {
-                        weekday: 'long',
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric'
-                      })}
-                    </p>
-                    <p className="text-base font-medium text-primary">
-                      {new Date(event.date_time).toLocaleTimeString('pt-BR', {
-                        hour: '2-digit',
-                        minute: '2-digit'
-                      })}
-                    </p>
-                  </div>
+              {/* Essential Info Only */}
+              <div className="space-y-2 text-sm">
+                <div className="flex items-center gap-2">
+                  <Clock className="w-4 h-4 text-primary flex-shrink-0" />
+                  <span>{new Date(event.date_time).toLocaleString('pt-BR')}</span>
                 </div>
-              </div>
 
-              {/* Location */}
-              <div className="bg-muted/30 p-4 rounded-xl">
-                <div className="flex items-start gap-3">
-                  <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center mt-1">
-                    <MapPin className="w-5 h-5 text-primary" />
-                  </div>
-                  <div className="flex-1">
-                    <p className="text-sm font-medium text-muted-foreground uppercase tracking-wide mb-1">
-                      Local
-                    </p>
-                    <p className="text-base font-semibold text-foreground mb-2">
-                      {event.location}
-                    </p>
+                <div className="flex items-start gap-2">
+                  <MapPin className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
+                  <div>
+                    <div className="font-medium">{event.location}</div>
                     {event.full_address && (
-                      <p className="text-sm text-muted-foreground leading-relaxed">
-                        {event.full_address}
-                      </p>
+                      <div className="text-muted-foreground text-xs">{event.full_address}</div>
                     )}
                   </div>
                 </div>
-              </div>
 
-              {/* Contact and Navigation - Mobile Grid */}
-              {(event.phone || event.maps_link) && (
-                <div className="grid grid-cols-1 gap-3">
+                {/* Compact Action Buttons */}
+                <div className="flex gap-2 pt-1">
                   {event.phone && (
                     <a
                       href={`tel:${event.phone}`}
-                      className="flex items-center gap-3 p-4 bg-green-50 border border-green-200 rounded-xl hover:bg-green-100 transition-colors dark:bg-green-950 dark:border-green-800 dark:hover:bg-green-900"
+                      className="flex items-center gap-1 px-2 py-1 bg-green-100 text-green-700 rounded text-xs hover:bg-green-200 dark:bg-green-900 dark:text-green-300"
                     >
-                      <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center dark:bg-green-800">
-                        <Phone className="w-5 h-5 text-green-600 dark:text-green-300" />
-                      </div>
-                      <div className="flex-1">
-                        <p className="text-sm font-medium text-green-700 dark:text-green-300 uppercase tracking-wide">
-                          Ligar
-                        </p>
-                        <p className="text-base font-semibold text-green-800 dark:text-green-200">
-                          {event.phone}
-                        </p>
-                      </div>
+                      <Phone className="w-3 h-3" />
+                      <span className="hidden sm:inline">Ligar</span>
                     </a>
                   )}
 
@@ -249,42 +204,21 @@ export default function Confirmation() {
                       href={event.maps_link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-3 p-4 bg-blue-50 border border-blue-200 rounded-xl hover:bg-blue-100 transition-colors dark:bg-blue-950 dark:border-blue-800 dark:hover:bg-blue-900"
+                      className="flex items-center gap-1 px-2 py-1 bg-blue-100 text-blue-700 rounded text-xs hover:bg-blue-200 dark:bg-blue-900 dark:text-blue-300"
                     >
-                      <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center dark:bg-blue-800">
-                        <Navigation className="w-5 h-5 text-blue-600 dark:text-blue-300" />
-                      </div>
-                      <div className="flex-1">
-                        <p className="text-sm font-medium text-blue-700 dark:text-blue-300 uppercase tracking-wide">
-                          Como Chegar
-                        </p>
-                        <p className="text-base font-semibold text-blue-800 dark:text-blue-200">
-                          Google Maps
-                        </p>
-                      </div>
+                      <Navigation className="w-3 h-3" />
+                      <span className="hidden sm:inline">Maps</span>
                     </a>
                   )}
                 </div>
-              )}
 
-              {/* Message */}
-              {event.message && (
-                <div className="bg-accent/30 p-4 rounded-xl border border-accent/50">
-                  <div className="flex items-start gap-3">
-                    <div className="w-10 h-10 bg-accent/50 rounded-full flex items-center justify-center mt-1">
-                      <MessageSquare className="w-5 h-5 text-accent-foreground" />
-                    </div>
-                    <div className="flex-1">
-                      <p className="text-sm font-medium text-muted-foreground uppercase tracking-wide mb-2">
-                        Mensagem do Organizador
-                      </p>
-                      <p className="text-base text-foreground leading-relaxed">
-                        {event.message}
-                      </p>
-                    </div>
+                {event.message && (
+                  <div className="flex items-start gap-2 pt-1">
+                    <MessageSquare className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
+                    <p className="text-xs text-muted-foreground">{event.message}</p>
                   </div>
-                </div>
-              )}
+                )}
+              </div>
             </div>
 
             {/* Confirmation Section */}
