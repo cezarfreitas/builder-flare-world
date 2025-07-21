@@ -1,32 +1,12 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Calendar,
-  Clock,
-  MapPin,
-  MessageSquare,
-  CheckCircle,
-  AlertCircle,
-  Heart,
-  Building,
-  Phone,
-  Navigation,
-} from "lucide-react";
-import {
-  EventDetailsResponse,
-  ConfirmGuestRequest,
-  ConfirmGuestResponse,
-} from "@shared/api";
+import { Calendar, Clock, MapPin, MessageSquare, CheckCircle, AlertCircle, Heart, Building, Phone, Navigation } from "lucide-react";
+import { EventDetailsResponse, ConfirmGuestRequest, ConfirmGuestResponse } from "@shared/api";
+import confetti from 'canvas-confetti';
 
 export default function Confirmation() {
   const { code } = useParams<{ code: string }>();
@@ -34,8 +14,7 @@ export default function Confirmation() {
   const [guestName, setGuestName] = useState("");
   const [loading, setLoading] = useState(true);
   const [confirming, setConfirming] = useState(false);
-  const [confirmationResult, setConfirmationResult] =
-    useState<ConfirmGuestResponse | null>(null);
+  const [confirmationResult, setConfirmationResult] = useState<ConfirmGuestResponse | null>(null);
 
   useEffect(() => {
     if (code) {
@@ -57,10 +36,10 @@ export default function Confirmation() {
       const data: EventDetailsResponse = await response.json();
       setEventData(data);
     } catch (error) {
-      console.error("Error fetching event:", error);
+      console.error('Error fetching event:', error);
       setEventData({
         success: false,
-        error: "Erro ao carregar evento",
+        error: 'Erro ao carregar evento'
       });
     } finally {
       setLoading(false);
@@ -70,33 +49,31 @@ export default function Confirmation() {
   const handleConfirmation = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!guestName.trim()) return;
-
+    
     setConfirming(true);
-
+    
     try {
       const response = await fetch(`/api/events/${code}/confirm`, {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          guest_name: guestName.trim(),
-        } as ConfirmGuestRequest),
+        body: JSON.stringify({ guest_name: guestName.trim() } as ConfirmGuestRequest),
       });
-
+      
       const result: ConfirmGuestResponse = await response.json();
       setConfirmationResult(result);
-
+      
       if (result.success) {
         setGuestName("");
         // Refresh event data to show updated confirmations
         fetchEventData();
       }
     } catch (error) {
-      console.error("Error confirming guest:", error);
+      console.error('Error confirming guest:', error);
       setConfirmationResult({
         success: false,
-        message: "Erro ao confirmar presença. Tente novamente.",
+        message: 'Erro ao confirmar presença. Tente novamente.'
       });
     } finally {
       setConfirming(false);
@@ -110,9 +87,7 @@ export default function Confirmation() {
           <CardContent className="flex items-center justify-center py-12">
             <div className="flex items-center gap-3">
               <div className="w-6 h-6 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
-              <span className="text-muted-foreground">
-                Carregando momento especial...
-              </span>
+              <span className="text-muted-foreground">Carregando momento especial...</span>
             </div>
           </CardContent>
         </Card>
@@ -128,12 +103,9 @@ export default function Confirmation() {
             <div className="w-16 h-16 bg-destructive/10 rounded-full flex items-center justify-center mx-auto">
               <AlertCircle className="w-8 h-8 text-destructive" />
             </div>
-            <CardTitle className="text-2xl font-bold">
-              Momento Não Encontrado
-            </CardTitle>
+            <CardTitle className="text-2xl font-bold">Momento Não Encontrado</CardTitle>
             <CardDescription>
-              {eventData?.error ||
-                "O link do evento pode estar incorreto ou expirado."}
+              {eventData?.error || 'O link do evento pode estar incorreto ou expirado.'}
             </CardDescription>
           </CardHeader>
         </Card>
@@ -150,12 +122,8 @@ export default function Confirmation() {
     const today = new Date();
 
     // Converter para fuso horário de São Paulo
-    const eventSaoPaulo = new Date(
-      eventDate.toLocaleString("en-US", { timeZone: "America/Sao_Paulo" }),
-    );
-    const todaySaoPaulo = new Date(
-      today.toLocaleString("en-US", { timeZone: "America/Sao_Paulo" }),
-    );
+    const eventSaoPaulo = new Date(eventDate.toLocaleString('en-US', { timeZone: 'America/Sao_Paulo' }));
+    const todaySaoPaulo = new Date(today.toLocaleString('en-US', { timeZone: 'America/Sao_Paulo' }));
 
     eventSaoPaulo.setHours(0, 0, 0, 0); // Reset time to start of day
     todaySaoPaulo.setHours(0, 0, 0, 0); // Reset time to start of day
@@ -170,7 +138,7 @@ export default function Confirmation() {
 
   const getDaysRemainingText = (days: number) => {
     if (days < 0) {
-      return `Momento já aconteceu (${Math.abs(days)} dia${Math.abs(days) !== 1 ? "s" : ""} atrás)`;
+      return `Momento já aconteceu (${Math.abs(days)} dia${Math.abs(days) !== 1 ? 's' : ''} atrás)`;
     } else if (days === 0) {
       return "O momento especial é hoje! 🍓";
     } else if (days === 1) {
@@ -197,38 +165,30 @@ export default function Confirmation() {
             </CardDescription>
 
             {/* Days Remaining */}
-            <div
-              className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold ${
-                daysRemaining < 0
-                  ? "bg-muted text-muted-foreground"
-                  : daysRemaining === 0
-                    ? "bg-primary text-primary-foreground animate-pulse"
-                    : daysRemaining <= 7
-                      ? "bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200"
-                      : "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200"
-              }`}
-            >
+            <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold ${
+              daysRemaining < 0
+                ? 'bg-muted text-muted-foreground'
+                : daysRemaining === 0
+                ? 'bg-primary text-primary-foreground animate-pulse'
+                : daysRemaining <= 7
+                ? 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200'
+                : 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
+            }`}>
               <Calendar className="w-4 h-4" />
               {getDaysRemainingText(daysRemaining)}
             </div>
           </CardHeader>
-
+          
           <CardContent className="space-y-4">
             {/* Ultra-Minimal Event Details */}
             <div className="space-y-3">
-              <h3 className="font-semibold text-foreground text-base">
-                Detalhes do Momento:
-              </h3>
+              <h3 className="font-semibold text-foreground text-base">Detalhes do Momento:</h3>
 
               {/* Essential Info - Minimal */}
               <div className="space-y-2">
                 <div className="flex items-center gap-2 text-sm">
                   <Clock className="w-4 h-4 text-primary" />
-                  <span>
-                    {new Date(event.date_time).toLocaleString("pt-BR", {
-                      timeZone: "America/Sao_Paulo",
-                    })}
-                  </span>
+                  <span>{new Date(event.date_time).toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })}</span>
                 </div>
 
                 <div className="flex items-center gap-2 text-sm">
@@ -255,7 +215,7 @@ export default function Confirmation() {
                           Ligar
                         </a>
                         <a
-                          href={`https://wa.me/${event.phone.replace(/\D/g, "")}`}
+                          href={`https://wa.me/${event.phone.replace(/\D/g, '')}`}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="flex items-center gap-1 text-green-600 hover:text-green-700 text-xs"
@@ -316,9 +276,7 @@ export default function Confirmation() {
 
                   {confirmationResult && !confirmationResult.success && (
                     <div className="p-3 bg-destructive/10 border border-destructive/20 rounded-lg">
-                      <p className="text-destructive text-sm">
-                        {confirmationResult.message}
-                      </p>
+                      <p className="text-destructive text-sm">{confirmationResult.message}</p>
                     </div>
                   )}
 
@@ -341,6 +299,8 @@ export default function Confirmation() {
             </div>
           </CardContent>
         </Card>
+
+
       </div>
     </div>
   );
