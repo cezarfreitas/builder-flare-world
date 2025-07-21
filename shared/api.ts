@@ -6,6 +6,9 @@ export interface Event {
   id: number;
   date_time: string;
   location: string;
+  full_address?: string;
+  phone?: string;
+  maps_link?: string;
   message?: string;
   link_code: string;
   created_at: string;
@@ -14,6 +17,9 @@ export interface Event {
 export interface CreateEventRequest {
   date_time: string;
   location: string;
+  full_address?: string;
+  phone?: string;
+  maps_link?: string;
   message?: string;
 }
 
