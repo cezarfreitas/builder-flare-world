@@ -89,6 +89,7 @@ DB_PORT=3306
 - ✅ Títulos de eventos funcionando
 - ✅ Confetti effects implementados
 - ✅ Validação nomes duplicados
+- ✅ Função limpar lista de convidados
 - ✅ Build local funcionando: `npm run build`
 - ✅ Dependências limpas (sem @react-three)
 - ✅ Múltiplas opções Docker preparadas
