@@ -188,10 +188,10 @@ export default function Index() {
             <Heart className="w-8 h-8 text-primary fill-primary" />
           </div>
           <CardTitle className="text-2xl sm:text-3xl font-bold text-foreground">
-            Sistema de Confirmação
+            Encontros Doces
           </CardTitle>
           <CardDescription className="text-base sm:text-lg text-muted-foreground">
-            Crie seu evento e gere um link para confirmação de convidados
+            Organize seu evento especial e compartilhe momentos únicos
           </CardDescription>
         </CardHeader>
         
