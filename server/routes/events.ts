@@ -1,0 +1,165 @@
+import { RequestHandler } from "express";
+import { getConnection } from "../db";
+import { CreateEventRequest, CreateEventResponse, EventDetailsResponse, ConfirmGuestRequest, ConfirmGuestResponse } from "@shared/api";
+
+function generateLinkCode(): string {
+  return Math.random().toString(36).substring(2, 8) + Date.now().toString(36);
+}
+
+export const createEvent: RequestHandler = async (req, res) => {
+  try {
+    const { date_time, location, message }: CreateEventRequest = req.body;
+    
+    if (!date_time || !location) {
+      const response: CreateEventResponse = {
+        success: false,
+        error: "Data/hora e local são obrigatórios"
+      };
+      return res.status(400).json(response);
+    }
+
+    const linkCode = generateLinkCode();
+    const connection = await getConnection();
+
+    try {
+      const [result] = await connection.execute(
+        'INSERT INTO events (date_time, location, message, link_code) VALUES (?, ?, ?, ?)',
+        [date_time, location, message || null, linkCode]
+      ) as any;
+
+      const [rows] = await connection.execute(
+        'SELECT * FROM events WHERE id = ?',
+        [result.insertId]
+      ) as any;
+
+      const response: CreateEventResponse = {
+        success: true,
+        event: rows[0]
+      };
+      
+      res.json(response);
+    } finally {
+      await connection.end();
+    }
+  } catch (error) {
+    console.error('Error creating event:', error);
+    const response: CreateEventResponse = {
+      success: false,
+      error: "Erro interno do servidor"
+    };
+    res.status(500).json(response);
+  }
+};
+
+export const getEventByCode: RequestHandler = async (req, res) => {
+  try {
+    const { code } = req.params;
+    const connection = await getConnection();
+
+    try {
+      const [eventRows] = await connection.execute(
+        'SELECT * FROM events WHERE link_code = ?',
+        [code]
+      ) as any;
+
+      if (eventRows.length === 0) {
+        const response: EventDetailsResponse = {
+          success: false,
+          error: "Evento não encontrado"
+        };
+        return res.status(404).json(response);
+      }
+
+      const [confirmationRows] = await connection.execute(
+        'SELECT id, guest_name, confirmed_at FROM confirmations WHERE event_id = ? ORDER BY confirmed_at DESC',
+        [eventRows[0].id]
+      ) as any;
+
+      const response: EventDetailsResponse = {
+        success: true,
+        event: eventRows[0],
+        confirmations: confirmationRows
+      };
+      
+      res.json(response);
+    } finally {
+      await connection.end();
+    }
+  } catch (error) {
+    console.error('Error getting event:', error);
+    const response: EventDetailsResponse = {
+      success: false,
+      error: "Erro interno do servidor"
+    };
+    res.status(500).json(response);
+  }
+};
+
+export const confirmGuest: RequestHandler = async (req, res) => {
+  try {
+    const { code } = req.params;
+    const { guest_name }: ConfirmGuestRequest = req.body;
+    
+    if (!guest_name || guest_name.trim().length === 0) {
+      const response: ConfirmGuestResponse = {
+        success: false,
+        message: "Nome é obrigatório"
+      };
+      return res.status(400).json(response);
+    }
+
+    const connection = await getConnection();
+
+    try {
+      // Check if event exists
+      const [eventRows] = await connection.execute(
+        'SELECT id FROM events WHERE link_code = ?',
+        [code]
+      ) as any;
+
+      if (eventRows.length === 0) {
+        const response: ConfirmGuestResponse = {
+          success: false,
+          message: "Evento não encontrado"
+        };
+        return res.status(404).json(response);
+      }
+
+      // Check if guest already confirmed
+      const [existingRows] = await connection.execute(
+        'SELECT id FROM confirmations WHERE event_id = ? AND guest_name = ?',
+        [eventRows[0].id, guest_name.trim()]
+      ) as any;
+
+      if (existingRows.length > 0) {
+        const response: ConfirmGuestResponse = {
+          success: false,
+          message: "Você já confirmou presença para este evento"
+        };
+        return res.status(400).json(response);
+      }
+
+      // Add confirmation
+      await connection.execute(
+        'INSERT INTO confirmations (event_id, guest_name) VALUES (?, ?)',
+        [eventRows[0].id, guest_name.trim()]
+      );
+
+      const response: ConfirmGuestResponse = {
+        success: true,
+        message: "Presença confirmada com sucesso!"
+      };
+      
+      res.json(response);
+    } finally {
+      await connection.end();
+    }
+  } catch (error) {
+    console.error('Error confirming guest:', error);
+    const response: ConfirmGuestResponse = {
+      success: false,
+      message: "Erro interno do servidor"
+    };
+    res.status(500).json(response);
+  }
+};
