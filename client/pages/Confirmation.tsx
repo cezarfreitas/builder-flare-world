@@ -23,9 +23,9 @@ export default function Confirmation() {
 
   useEffect(() => {
     if (eventData?.success && eventData.event?.title) {
-      document.title = `${eventData.event.title} - Confirmação`;
+      document.title = `🍓 ${eventData.event.title} - Confirmação`;
     } else {
-      document.title = "Confirmação de Presença";
+      document.title = "🍓 Confirmação de Presença";
     }
   }, [eventData]);
 
