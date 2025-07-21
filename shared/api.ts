@@ -60,3 +60,24 @@ export interface AdminEventResponse {
   total_confirmations?: number;
   error?: string;
 }
+
+export interface MasterAdminLoginRequest {
+  password: string;
+}
+
+export interface MasterAdminLoginResponse {
+  success: boolean;
+  error?: string;
+}
+
+export interface EventWithStats extends Event {
+  total_confirmations: number;
+  last_confirmation?: string;
+}
+
+export interface MasterAdminResponse {
+  success: boolean;
+  events?: EventWithStats[];
+  total_events?: number;
+  error?: string;
+}
