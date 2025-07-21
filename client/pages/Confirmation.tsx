@@ -295,14 +295,22 @@ export default function Confirmation() {
             {/* Simple Confirmation */}
             <div className="border-t border-border pt-4">
               {confirmationResult?.success ? (
-                <div className="text-center space-y-3 p-4 bg-green-50 rounded-lg dark:bg-green-950">
-                  <CheckCircle className="w-8 h-8 text-green-600 mx-auto dark:text-green-400" />
-                  <h3 className="font-semibold text-green-800 dark:text-green-200">
+                <div className="text-center space-y-3 p-6 bg-gradient-to-r from-green-50 to-primary/5 rounded-xl border border-green-200 dark:from-green-950 dark:to-primary/10 dark:border-green-800 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                  <div className="relative">
+                    <CheckCircle className="w-12 h-12 text-green-600 mx-auto dark:text-green-400 animate-in zoom-in duration-300" />
+                    <div className="absolute inset-0 w-12 h-12 mx-auto rounded-full bg-green-500/20 animate-ping" />
+                  </div>
+                  <h3 className="font-bold text-xl text-green-800 dark:text-green-200 animate-in slide-in-from-bottom-2 duration-700">
                     Presença Confirmada! 🎉
                   </h3>
-                  <p className="text-sm text-green-700 dark:text-green-300">
+                  <p className="text-base text-green-700 dark:text-green-300 animate-in slide-in-from-bottom-1 duration-1000">
                     Obrigado por confirmar! Nos vemos em "{event.title}" 🍓
                   </p>
+                  <div className="mt-4 p-3 bg-primary/10 rounded-lg">
+                    <p className="text-sm text-primary font-medium">
+                      ✨ Prepare-se para um momento especial!
+                    </p>
+                  </div>
                 </div>
               ) : (
                 <form onSubmit={handleConfirmation} className="space-y-3">
