@@ -1,0 +1,32 @@
+# Configuração para EasyPanel
+# Este arquivo é opcional, mas pode ajudar na configuração
+
+name: encontros-doces
+services:
+  - name: app
+    type: app
+    image:
+      type: build
+      dockerfile: Dockerfile
+    domains:
+      - host: encontros-doces.exemplo.com
+    env:
+      - name: NODE_ENV
+        value: production
+      - name: PORT
+        value: "8080"
+    ports:
+      - published: 8080
+        target: 8080
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          memory: 512M
+          cpus: "0.5"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
