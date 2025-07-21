@@ -14,9 +14,11 @@ WORKDIR /app
 # Copiar package files primeiro para cache layer
 COPY package*.json ./
 
-# Limpar cache npm e instalar dependências
+# Limpar cache npm e instalar dependências com rebuild de optional dependencies
 RUN npm cache clean --force && \
-    npm install --production=false --no-optional
+    rm -f package-lock.json && \
+    npm install --production=false && \
+    npm rebuild
 
 # Copiar resto do código
 COPY . .
@@ -26,7 +28,7 @@ RUN npm run build
 
 # Limpar node_modules e reinstalar apenas produção
 RUN rm -rf node_modules && \
-    npm install --production --no-optional && \
+    npm install --production && \
     npm cache clean --force
 
 # Criar usuário não-root
