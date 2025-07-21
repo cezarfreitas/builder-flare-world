@@ -77,10 +77,10 @@ export default function Index() {
               <Heart className="w-8 h-8 text-primary fill-primary" />
             </div>
             <CardTitle className="text-2xl sm:text-3xl font-bold text-foreground">
-            Evento Criado com Sucesso!
+            Seu Momento Especial Foi Criado!
           </CardTitle>
           <CardDescription className="text-base sm:text-lg text-muted-foreground">
-            Seu link de confirmação está pronto para ser compartilhado
+            Compartilhe a doçura deste momento com quem você ama
           </CardDescription>
           </CardHeader>
           
