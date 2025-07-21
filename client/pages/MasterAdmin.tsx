@@ -373,7 +373,7 @@ export default function MasterAdmin() {
                               Ver Convite
                             </Button>
                             <Button
-                              onClick={() => handleDeleteEvent(event.id, event.location)}
+                              onClick={() => handleDeleteEvent(event.id, event.title)}
                               disabled={deletingEventId === event.id}
                               size="sm"
                               variant="destructive"
