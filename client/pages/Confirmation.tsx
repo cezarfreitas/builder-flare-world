@@ -208,7 +208,7 @@ export default function Confirmation() {
             <CardTitle className="text-2xl sm:text-3xl lg:text-4xl font-bold text-primary text-center leading-tight mt-1 sm:mt-4">
               {event.title}
             </CardTitle>
-            <CardDescription className="text-base sm:text-lg text-muted-foreground">
+            <CardDescription className="text-base sm:text-lg text-muted-foreground mt-1 sm:mt-4">
               Você foi convidado para este momento especial 🍓
             </CardDescription>
 
