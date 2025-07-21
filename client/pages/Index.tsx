@@ -46,7 +46,7 @@ export default function Index() {
       setCreatedEvent(result);
       
       if (result.success) {
-        setFormData({ date: "", time: "", location: "", message: "" });
+        setFormData({ date: "", time: "", location: "", full_address: "", phone: "", maps_link: "", message: "" });
       }
     } catch (error) {
       console.error('Error creating event:', error);
