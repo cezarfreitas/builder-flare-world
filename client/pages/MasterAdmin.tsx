@@ -14,6 +14,7 @@ export default function MasterAdmin() {
   const [loginError, setLoginError] = useState("");
   const [eventsData, setEventsData] = useState<MasterAdminResponse | null>(null);
   const [eventsLoading, setEventsLoading] = useState(false);
+  const [deletingEventId, setDeletingEventId] = useState<number | null>(null);
 
   useEffect(() => {
     if (isAuthenticated) {
