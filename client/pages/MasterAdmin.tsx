@@ -70,6 +70,41 @@ export default function MasterAdmin() {
     }
   };
 
+  const handleDeleteEvent = async (eventId: number, eventLocation: string) => {
+    const confirmed = window.confirm(
+      `Tem certeza que deseja excluir o momento "${eventLocation}"?\n\nEsta ação não pode ser desfeita e todas as confirmações também serão removidas.`
+    );
+
+    if (!confirmed) return;
+
+    setDeletingEventId(eventId);
+    try {
+      const response = await fetch(`/api/master-admin/events/${eventId}`, {
+        method: 'DELETE',
+      });
+
+      const result: DeleteEventResponse = await response.json();
+
+      if (result.success) {
+        // Atualizar lista removendo o evento excluído
+        if (eventsData?.events) {
+          setEventsData({
+            ...eventsData,
+            events: eventsData.events.filter(event => event.id !== eventId),
+            total_events: (eventsData.total_events || 1) - 1
+          });
+        }
+      } else {
+        alert(`Erro ao excluir: ${result.error}`);
+      }
+    } catch (error) {
+      console.error('Error deleting event:', error);
+      alert('Erro de conexão ao excluir o evento.');
+    } finally {
+      setDeletingEventId(null);
+    }
+  };
+
   const getEventStatus = (event: EventWithStats) => {
     const eventDate = new Date(event.date_time);
     const today = new Date();
@@ -345,7 +380,7 @@ export default function MasterAdmin() {
                         <span>Código: {event.link_code}</span>
                         <span>Criado: {new Date(event.created_at).toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' })}</span>
                         {event.last_confirmation && (
-                          <span>Última confirmação: {new Date(event.last_confirmation).toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' })}</span>
+                          <span>Última confirma��ão: {new Date(event.last_confirmation).toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' })}</span>
                         )}
                       </div>
                     </div>
