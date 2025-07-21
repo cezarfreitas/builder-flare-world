@@ -57,7 +57,7 @@ export default function Admin() {
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `confirmados-${eventData.event?.location || 'evento'}.csv`;
+    a.download = `confirmados-${eventData.event?.title || 'evento'}.csv`;
     a.click();
     window.URL.revokeObjectURL(url);
   };
