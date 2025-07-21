@@ -5,14 +5,18 @@
 ### ⚡ SOLUÇÕES RÁPIDAS (por ordem de preferência):
 
 ## 1. 🎯 Dockerfile Principal (ATUALIZADO - Recomendado)
+
 O `Dockerfile` foi simplificado para resolver problemas de dependências:
-- ✅ Single-stage build mais robusto  
+
+- ✅ Single-stage build mais robusto
 - ✅ Reinstalação limpa de node_modules
 - ✅ Package-lock.json regenerado
 - ✅ Usuário não-root para segurança
 
 ## 2. 🚀 Dockerfile Ultra-Simples (Para casos extremos)
+
 Se ainda falhar, use a versão mais compatível:
+
 ```bash
 # No EasyPanel, ou localmente:
 mv Dockerfile Dockerfile.main
@@ -21,11 +25,13 @@ mv Dockerfile.ultra-simple Dockerfile
 ```
 
 **Características do ultra-simples:**
+
 - Usa `node:20-slim` (Debian ao invés de Alpine)
 - Build em uma única camada
 - Máxima compatibilidade
 
 ## 3. 🔧 Dockerfile.simple (Backup)
+
 Versão intermediária para testes.
 
 ---
@@ -33,7 +39,9 @@ Versão intermediária para testes.
 ## 🔍 PROBLEMAS ESPECÍFICOS E SOLUÇÕES:
 
 ### Erro: "eresolve" ou conflitos de dependências
+
 **Solução:** Package-lock.json foi regenerado
+
 ```bash
 # Se necessário fazer localmente:
 rm package-lock.json
@@ -41,11 +49,14 @@ npm install
 ```
 
 ### Erro: "canvas-confetti" ou dependências nativas
+
 **Status:** ✅ Já corrigido
+
 - canvas-confetti movido para devDependencies
 - Dependências Alpine adicionadas
 
 ### Erro: Multi-stage build problems
+
 **Solução:** Dockerfile simplificado para single-stage
 
 ---
@@ -55,6 +66,7 @@ npm install
 ### Para EasyPanel (se Docker falhar):
 
 **1. Build Manual:**
+
 ```
 Build Command: npm install && npm run build
 Start Command: npm start
@@ -62,12 +74,14 @@ Port: 8080
 ```
 
 **2. Variáveis de Ambiente:**
+
 ```
 NODE_ENV=production
 PORT=8080
 ```
 
 ### Para MySQL externo:
+
 ```
 DB_HOST=seu_host
 DB_PORT=3306
@@ -98,6 +112,7 @@ docker run -p 8080:8080 test-app
 ## 📊 STATUS DAS CORREÇÕES
 
 ✅ **Fixado (v2):**
+
 - Package-lock.json regenerado
 - Dockerfile simplificado (single-stage)
 - canvas-confetti em devDependencies
@@ -105,6 +120,7 @@ docker run -p 8080:8080 test-app
 - Dockerfile.ultra-simple para casos extremos
 
 🔧 **Se ainda não funcionar:**
+
 1. Use Dockerfile.ultra-simple
 2. Configure build manual no EasyPanel
 3. Reporte o problema com logs completos
