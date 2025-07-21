@@ -228,32 +228,7 @@ export default function Confirmation() {
           </CardContent>
         </Card>
 
-        {/* Confirmations List */}
-        {confirmations.length > 0 && (
-          <Card className="shadow-2xl border-0">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Users className="w-5 h-5 text-primary" />
-                Convidados Confirmados ({confirmations.length})
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-2 max-h-40 overflow-y-auto">
-                {confirmations.map((confirmation, index) => (
-                  <div 
-                    key={confirmation.id} 
-                    className="flex items-center justify-between p-3 bg-muted/30 rounded-lg"
-                  >
-                    <span className="font-medium">{confirmation.guest_name}</span>
-                    <span className="text-sm text-muted-foreground">
-                      {new Date(confirmation.confirmed_at).toLocaleDateString('pt-BR')}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        )}
+
       </div>
     </div>
   );
