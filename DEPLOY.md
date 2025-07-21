@@ -15,35 +15,28 @@ Este guia explica como fazer deploy da aplicação "Encontros Doces" no EasyPane
 
 ### 2. Configuração do Dockerfile
 
-O projeto já inclui um `Dockerfile` otimizado:
+O projeto inclui um `Dockerfile` otimizado com multi-stage build:
 
-```dockerfile
-FROM node:20-alpine
-WORKDIR /app
-COPY package*.json ./
-RUN npm ci
-COPY . .
-RUN npm run build
-RUN npm ci --only=production && npm cache clean --force
-EXPOSE 8080
-ENV NODE_ENV=production
-ENV PORT=8080
-CMD ["npm", "start"]
-```
+**Características:**
+- Multi-stage build para reduzir tamanho final
+- Dependências Alpine necessárias para compilação
+- Usuário não-root para segurança
+- Otimizado para canvas-confetti e outras dependências
+
+**Se houver problemas:**
+Consulte `DOCKER-TROUBLESHOOTING.md` ou use `Dockerfile.simple`
 
 ### 3. Variáveis de Ambiente
 
 Configure as seguintes variáveis no EasyPanel:
 
 #### Obrigatórias:
-
 ```env
 NODE_ENV=production
 PORT=8080
 ```
 
 #### Banco de Dados (se usar MySQL externo):
-
 ```env
 DB_HOST=seu_host_mysql
 DB_PORT=3306
@@ -55,14 +48,12 @@ DB_NAME=convite
 ### 4. Configuração de Banco de Dados
 
 #### Opção A: MySQL Interno (Recomendado)
-
 1. No EasyPanel, adicione um serviço MySQL
 2. Configure as variáveis de ambiente apontando para o MySQL interno
 
 #### Opção B: Banco Existente
-
 - Use as configurações atuais (já funcionando)
-- Não precisa configurar variáveis DB\_\*
+- Não precisa configurar variáveis DB_* 
 
 ### 5. Configuração de Rede
 
@@ -73,29 +64,24 @@ DB_NAME=convite
 ## 🔧 Configurações Avançadas
 
 ### Health Check
-
 URL: `/api/ping`
 Resposta esperada: `{"message": "Hello from Express server v2!"}`
 
 ### Volumes (Opcional)
-
 Não são necessários volumes persistentes, a aplicação é stateless.
 
 ### Domínio Personalizado
-
 Configure seu domínio personalizado nas configurações do EasyPanel.
 
 ## 📱 Funcionalidades da Aplicação
 
 ### URLs Principais:
-
 - `/` - Página principal (criar momentos)
 - `/convite/{codigo}` - Página de confirmação de presença
 - `/admin/{codigo}` - Administração do evento
 - `/master-admin` - Painel master (senha: `morango2024`)
 
 ### API Endpoints:
-
 - `GET /api/ping` - Health check
 - `POST /api/events` - Criar evento
 - `GET /api/events/{codigo}` - Detalhes do evento
@@ -104,19 +90,16 @@ Configure seu domínio personalizado nas configurações do EasyPanel.
 ## 🛠️ Troubleshooting
 
 ### Problema: Aplicação não inicia
-
 - Verifique se a porta 8080 está configurada
 - Confirme as variáveis de ambiente
 - Verifique os logs do container
 
 ### Problema: Erro de banco de dados
-
 - Verifique as credenciais MySQL
 - Confirme se o banco está acessível
 - Verifique a conectividade de rede
 
 ### Problema: Build falha
-
 - Verifique se tem memória suficiente para o build
 - Confirme se o Node.js 20 está disponível
 
