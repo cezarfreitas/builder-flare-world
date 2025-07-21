@@ -295,7 +295,7 @@ export default function Index() {
               </Label>
               <Textarea
                 id="message"
-                placeholder="Ex: Venha celebrar conosco! Traje esporte fino."
+                placeholder="Ex: Venha compartilhar este momento doce conosco! 🍓"
                 value={formData.message}
                 onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                 className="min-h-20 text-base resize-none"
