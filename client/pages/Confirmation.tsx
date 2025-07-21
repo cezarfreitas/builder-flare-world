@@ -107,6 +107,33 @@ export default function Confirmation() {
   const event = eventData.event;
   const confirmations = eventData.confirmations || [];
 
+  // Calculate days remaining
+  const calculateDaysRemaining = (eventDateTime: string) => {
+    const eventDate = new Date(eventDateTime);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Reset time to start of day
+    eventDate.setHours(0, 0, 0, 0); // Reset time to start of day
+
+    const diffTime = eventDate.getTime() - today.getTime();
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    return diffDays;
+  };
+
+  const daysRemaining = calculateDaysRemaining(event.date_time);
+
+  const getDaysRemainingText = (days: number) => {
+    if (days < 0) {
+      return `Evento já aconteceu (${Math.abs(days)} dia${Math.abs(days) !== 1 ? 's' : ''} atrás)`;
+    } else if (days === 0) {
+      return "Evento é hoje! 🎉";
+    } else if (days === 1) {
+      return "Falta apenas 1 dia!";
+    } else {
+      return `Faltam ${days} dias`;
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-accent/30 to-primary/10 flex items-center justify-center p-4 sm:p-6">
       <div className="w-full max-w-2xl space-y-4 sm:space-y-6">
