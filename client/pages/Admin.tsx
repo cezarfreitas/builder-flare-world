@@ -112,7 +112,7 @@ export default function Admin() {
         <Card className="shadow-2xl border-0">
           <CardHeader>
             <CardTitle className="flex items-center justify-between">
-              <span>Detalhes do Evento</span>
+              <span>Detalhes do Momento</span>
               <Badge variant="secondary" className="text-sm">
                 {confirmations.length} confirmado{confirmations.length !== 1 ? 's' : ''}
               </Badge>
