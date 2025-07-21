@@ -77,9 +77,9 @@ export default function Admin() {
             <div className="w-16 h-16 bg-destructive/10 rounded-full flex items-center justify-center mx-auto">
               <AlertCircle className="w-8 h-8 text-destructive" />
             </div>
-            <CardTitle className="text-2xl font-bold">Evento Não Encontrado</CardTitle>
+            <CardTitle className="text-2xl font-bold">Momento Não Encontrado</CardTitle>
             <CardDescription>
-              {eventData?.error || 'O link do evento pode estar incorreto ou você pode não ter permissão para acessar.'}
+              {eventData?.error || 'O link pode estar incorreto ou você pode não ter permissão para acessar.'}
             </CardDescription>
           </CardHeader>
         </Card>
