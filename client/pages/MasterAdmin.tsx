@@ -198,6 +198,16 @@ export default function MasterAdmin() {
 
         setEditOpen(false);
         setEditingEvent(null);
+
+        // 🎉 Pequeno confete para edição bem-sucedida
+        setTimeout(() => {
+          confetti({
+            particleCount: 40,
+            spread: 45,
+            origin: { y: 0.7 },
+            colors: ['#4CAF50', '#8BC34A', '#CDDC39']
+          });
+        }, 200);
       } else {
         alert(`Erro ao atualizar: ${result.error}`);
       }
