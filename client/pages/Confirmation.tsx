@@ -93,7 +93,7 @@ export default function Confirmation() {
       // Detectar se é erro de nome similar
       const isSimilarError =
         !result.success &&
-        result.message?.includes("Já existe") &&
+        result.message?.includes("J�� existe") &&
         result.message?.includes("nome completo");
       setIsSimilarNameError(isSimilarError);
 
@@ -201,7 +201,7 @@ export default function Confirmation() {
       <div className="w-full max-w-2xl space-y-4 sm:space-y-6">
         {/* Event Details Card */}
         <Card className="shadow-2xl border-0">
-          <CardHeader className="text-center space-y-4 pb-2">
+          <CardHeader className="text-center space-y-4 pb-2 pt-3 sm:pt-6">
             <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
               <Heart className="w-8 h-8 text-primary fill-primary" />
             </div>
