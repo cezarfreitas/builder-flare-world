@@ -100,10 +100,10 @@ export default function Admin() {
               <Heart className="w-8 h-8 text-primary fill-primary" />
             </div>
             <CardTitle className="text-2xl sm:text-3xl font-bold text-foreground">
-              Administração do Evento
+              Gestão do Momento Especial
             </CardTitle>
             <CardDescription className="text-base sm:text-lg text-muted-foreground">
-              Gerencie as confirmações e dados do seu evento
+              Acompanhe quem confirmou presença para o seu momento doce
             </CardDescription>
           </CardHeader>
         </Card>
