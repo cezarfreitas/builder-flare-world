@@ -46,44 +46,7 @@ export default function Confirmation() {
     }
   };
 
-  const fireConfetti = () => {
-    // Confete básico
-    confetti({
-      particleCount: 100,
-      spread: 70,
-      origin: { y: 0.6 }
-    });
 
-    // Confete lateral esquerdo
-    setTimeout(() => {
-      confetti({
-        particleCount: 50,
-        angle: 60,
-        spread: 55,
-        origin: { x: 0 }
-      });
-    }, 200);
-
-    // Confete lateral direito
-    setTimeout(() => {
-      confetti({
-        particleCount: 50,
-        angle: 120,
-        spread: 55,
-        origin: { x: 1 }
-      });
-    }, 400);
-
-    // Confete final com cores do morango
-    setTimeout(() => {
-      confetti({
-        particleCount: 150,
-        spread: 120,
-        origin: { y: 0.7 },
-        colors: ['#E91E63', '#F8BBD9', '#FCE4EC', '#FF6B9D', '#C2185B']
-      });
-    }, 600);
-  };
 
   const handleConfirmation = async (e: React.FormEvent) => {
     e.preventDefault();
