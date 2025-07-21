@@ -124,7 +124,7 @@ export default function Confirmation() {
 
   const getDaysRemainingText = (days: number) => {
     if (days < 0) {
-      return `Evento já aconteceu (${Math.abs(days)} dia${Math.abs(days) !== 1 ? 's' : ''} atrás)`;
+      return `Momento já aconteceu (${Math.abs(days)} dia${Math.abs(days) !== 1 ? 's' : ''} atrás)`;
     } else if (days === 0) {
       return "O momento especial é hoje! 🍓";
     } else if (days === 1) {
