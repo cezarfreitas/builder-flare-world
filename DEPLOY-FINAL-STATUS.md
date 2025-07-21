@@ -1,13 +1,20 @@
 # 🍓 STATUS FINAL DO DEPLOY - CONVITES MORANGO
 
-## ❌ ERRO ATUAL - ROLLUP ALPINE LINUX
+## ✅ ERRO CORS CORRIGIDO
 
-### 🚨 Problema Identificado
+### 🚨 Problema Anterior - CORS Missing
+```
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'cors'
+```
+
+**✅ CORRIGIDO**: Movido `cors` de devDependencies para dependencies
+
+### 🚨 Problema Anterior - ROLLUP ALPINE LINUX
 ```
 Error: Cannot find module @rollup/rollup-linux-x64-musl
 ```
 
-**Causa**: Rollup precisa de binários nativos específicos para Alpine Linux, mas o npm não consegue baixar/rebuildar corretamente.
+**✅ SOLUÇÕES**: Múltiplos Dockerfiles preparados para contornar problema Alpine
 
 ### ✅ SOLUÇÕES IMPLEMENTADAS
 
