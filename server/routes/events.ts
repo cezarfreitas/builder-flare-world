@@ -208,3 +208,69 @@ export const getAdminEvent: RequestHandler = async (req, res) => {
     res.status(500).json(response);
   }
 };
+
+export const masterAdminLogin: RequestHandler = async (req, res) => {
+  try {
+    const { password }: MasterAdminLoginRequest = req.body;
+
+    // Senha master hardcoded (em produção seria melhor usar variáveis de ambiente)
+    const MASTER_PASSWORD = "morango2024";
+
+    if (password === MASTER_PASSWORD) {
+      const response: MasterAdminLoginResponse = {
+        success: true
+      };
+      res.json(response);
+    } else {
+      const response: MasterAdminLoginResponse = {
+        success: false,
+        error: "Senha incorreta"
+      };
+      res.status(401).json(response);
+    }
+  } catch (error) {
+    console.error('Error in master admin login:', error);
+    const response: MasterAdminLoginResponse = {
+      success: false,
+      error: "Erro interno do servidor"
+    };
+    res.status(500).json(response);
+  }
+};
+
+export const getMasterAdminData: RequestHandler = async (req, res) => {
+  try {
+    const connection = await getConnection();
+
+    try {
+      // Buscar todos os eventos com estatísticas
+      const [eventRows] = await connection.execute(`
+        SELECT
+          e.*,
+          COUNT(c.id) as total_confirmations,
+          MAX(c.confirmed_at) as last_confirmation
+        FROM events e
+        LEFT JOIN confirmations c ON e.id = c.event_id
+        GROUP BY e.id
+        ORDER BY e.created_at DESC
+      `) as any;
+
+      const response: MasterAdminResponse = {
+        success: true,
+        events: eventRows,
+        total_events: eventRows.length
+      };
+
+      res.json(response);
+    } finally {
+      await connection.end();
+    }
+  } catch (error) {
+    console.error('Error getting master admin data:', error);
+    const response: MasterAdminResponse = {
+      success: false,
+      error: "Erro interno do servidor"
+    };
+    res.status(500).json(response);
+  }
+};
