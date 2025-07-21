@@ -88,7 +88,7 @@ export default function Confirmation() {
 
   if (!eventData?.success || !eventData.event) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-background via-accent/30 to-primary/10 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-gradient-to-br from-background via-accent/30 to-primary/10 flex items-center justify-center p-4 sm:p-6">
         <Card className="w-full max-w-lg shadow-2xl border-0">
           <CardHeader className="text-center space-y-4">
             <div className="w-16 h-16 bg-destructive/10 rounded-full flex items-center justify-center mx-auto">
