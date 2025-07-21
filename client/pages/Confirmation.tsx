@@ -261,6 +261,36 @@ export default function Confirmation() {
               </div>
             </div>
 
+            {/* Lista de confirmados quando há mais de 3 pessoas */}
+            {confirmations.length > 3 && (
+              <div className="border-t border-border pt-4">
+                <details className="group">
+                  <summary className="cursor-pointer text-sm text-muted-foreground hover:text-foreground transition-colors">
+                    <span className="inline-flex items-center gap-2">
+                      <Users className="w-4 h-4" />
+                      Ver lista de confirmados ({confirmations.length})
+                      <span className="group-open:rotate-180 transition-transform">▼</span>
+                    </span>
+                  </summary>
+                  <div className="mt-3 space-y-1 max-h-32 overflow-y-auto">
+                    {confirmations.slice(0, 20).map((confirmation, index) => (
+                      <div key={confirmation.id} className="flex items-center gap-2 text-xs text-muted-foreground">
+                        <span className="w-4 h-4 flex items-center justify-center bg-green-100 text-green-700 rounded-full text-[10px] font-bold dark:bg-green-900 dark:text-green-300">
+                          ✓
+                        </span>
+                        {confirmation.guest_name}
+                      </div>
+                    ))}
+                    {confirmations.length > 20 && (
+                      <p className="text-xs text-muted-foreground italic">
+                        ... e mais {confirmations.length - 20} confirmações
+                      </p>
+                    )}
+                  </div>
+                </details>
+              </div>
+            )}
+
             {/* Simple Confirmation */}
             <div className="border-t border-border pt-4">
               {confirmationResult?.success ? (
