@@ -120,6 +120,9 @@ export default function MasterAdmin() {
             total_events: (eventsData.total_events || 1) - 1
           });
         }
+
+        // Pequena animação de feedback (sem confete, é uma exclusão)
+        // Apenas um feedback visual discreto que o item foi removido
       } else {
         alert(`Erro ao excluir: ${result.error}`);
       }
