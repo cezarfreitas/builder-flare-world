@@ -108,10 +108,10 @@ export default function Admin() {
               <Heart className="w-8 h-8 text-primary fill-primary" />
             </div>
             <CardTitle className="text-2xl sm:text-3xl font-bold text-foreground">
-              Gestão do Momento Especial
+              {event.title}
             </CardTitle>
             <CardDescription className="text-base sm:text-lg text-muted-foreground">
-              Acompanhe quem confirmou presença para o seu momento doce
+              Gestão do seu momento especial
             </CardDescription>
           </CardHeader>
         </Card>
