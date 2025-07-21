@@ -5,7 +5,8 @@ const DB_CONFIG = {
   port: 3566,
   user: 'convite',
   password: 'a247d38c3ef256d11e77',
-  database: 'convite'
+  database: 'convite',
+  timezone: 'America/Sao_Paulo'
 };
 
 export async function getConnection() {
