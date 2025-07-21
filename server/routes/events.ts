@@ -1,11 +1,6 @@
 import { RequestHandler } from "express";
 import { getConnection } from "../db";
-import { CreateEventRequest, CreateEventResponse, EventDetailsResponse, ConfirmGuestRequest, ConfirmGuestResponse, AdminEventResponse, MasterAdminLoginRequest, MasterAdminLoginResponse, MasterAdminResponse } from "@shared/api";
-
-export interface DeleteEventResponse {
-  success: boolean;
-  error?: string;
-}
+import { CreateEventRequest, CreateEventResponse, EventDetailsResponse, ConfirmGuestRequest, ConfirmGuestResponse, AdminEventResponse, MasterAdminLoginRequest, MasterAdminLoginResponse, MasterAdminResponse, DeleteEventResponse } from "@shared/api";
 
 function generateLinkCode(): string {
   return Math.random().toString(36).substring(2, 8) + Date.now().toString(36);
