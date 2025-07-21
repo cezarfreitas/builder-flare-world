@@ -23,8 +23,8 @@ export const createEvent: RequestHandler = async (req, res) => {
 
     try {
       const [result] = await connection.execute(
-        'INSERT INTO events (date_time, location, full_address, phone, maps_link, message, link_code) VALUES (?, ?, ?, ?, ?, ?, ?)',
-        [date_time, location, full_address || null, phone || null, maps_link || null, message || null, linkCode]
+        'INSERT INTO events (title, date_time, location, full_address, phone, maps_link, message, link_code) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+        [title, date_time, location, full_address || null, phone || null, maps_link || null, message || null, linkCode]
       ) as any;
 
       const [rows] = await connection.execute(
