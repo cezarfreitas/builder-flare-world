@@ -13,6 +13,7 @@ import {
   DeleteEventResponse,
   UpdateEventRequest,
   UpdateEventResponse,
+  ClearConfirmationsResponse,
 } from "@shared/api";
 
 function generateLinkCode(): string {
