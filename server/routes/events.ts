@@ -163,3 +163,48 @@ export const confirmGuest: RequestHandler = async (req, res) => {
     res.status(500).json(response);
   }
 };
+
+export const getAdminEvent: RequestHandler = async (req, res) => {
+  try {
+    const { code } = req.params;
+    const connection = await getConnection();
+
+    try {
+      const [eventRows] = await connection.execute(
+        'SELECT * FROM events WHERE link_code = ?',
+        [code]
+      ) as any;
+
+      if (eventRows.length === 0) {
+        const response: AdminEventResponse = {
+          success: false,
+          error: "Evento não encontrado"
+        };
+        return res.status(404).json(response);
+      }
+
+      const [confirmationRows] = await connection.execute(
+        'SELECT id, guest_name, confirmed_at FROM confirmations WHERE event_id = ? ORDER BY confirmed_at DESC',
+        [eventRows[0].id]
+      ) as any;
+
+      const response: AdminEventResponse = {
+        success: true,
+        event: eventRows[0],
+        confirmations: confirmationRows,
+        total_confirmations: confirmationRows.length
+      };
+
+      res.json(response);
+    } finally {
+      await connection.end();
+    }
+  } catch (error) {
+    console.error('Error getting admin event:', error);
+    const response: AdminEventResponse = {
+      success: false,
+      error: "Erro interno do servidor"
+    };
+    res.status(500).json(response);
+  }
+};
