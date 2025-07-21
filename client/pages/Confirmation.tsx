@@ -111,10 +111,15 @@ export default function Confirmation() {
   const calculateDaysRemaining = (eventDateTime: string) => {
     const eventDate = new Date(eventDateTime);
     const today = new Date();
-    today.setHours(0, 0, 0, 0); // Reset time to start of day
-    eventDate.setHours(0, 0, 0, 0); // Reset time to start of day
 
-    const diffTime = eventDate.getTime() - today.getTime();
+    // Converter para fuso horário de São Paulo
+    const eventSaoPaulo = new Date(eventDate.toLocaleString('en-US', { timeZone: 'America/Sao_Paulo' }));
+    const todaySaoPaulo = new Date(today.toLocaleString('en-US', { timeZone: 'America/Sao_Paulo' }));
+
+    eventSaoPaulo.setHours(0, 0, 0, 0); // Reset time to start of day
+    todaySaoPaulo.setHours(0, 0, 0, 0); // Reset time to start of day
+
+    const diffTime = eventSaoPaulo.getTime() - todaySaoPaulo.getTime();
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
     return diffDays;
