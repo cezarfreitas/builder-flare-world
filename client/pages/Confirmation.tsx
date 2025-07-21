@@ -168,7 +168,7 @@ export default function Confirmation() {
           <CardContent className="space-y-4">
             {/* Ultra-Minimal Event Details */}
             <div className="space-y-3">
-              <h3 className="font-semibold text-foreground text-base">Detalhes do Evento:</h3>
+              <h3 className="font-semibold text-foreground text-base">Detalhes do Momento:</h3>
 
               {/* Essential Info - Minimal */}
               <div className="space-y-2">
