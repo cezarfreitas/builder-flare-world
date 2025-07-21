@@ -157,10 +157,10 @@ export default function Confirmation() {
               <Heart className="w-8 h-8 text-primary fill-primary" />
             </div>
             <CardTitle className="text-2xl sm:text-3xl font-bold text-foreground">
-              Um Momento Doce Te Espera
+              {event.title}
             </CardTitle>
             <CardDescription className="text-base sm:text-lg text-muted-foreground">
-              Você foi convidado para algo muito especial 🍓
+              Você foi convidado para este momento especial 🍓
             </CardDescription>
 
             {/* Days Remaining */}
