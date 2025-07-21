@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, Clock, MapPin, MessageSquare, Users, Download, PartyPopper, Building, Phone, Navigation, AlertCircle } from "lucide-react";
+import { Calendar, Clock, MapPin, MessageSquare, Users, Download, Heart, Building, Phone, Navigation, AlertCircle } from "lucide-react";
 import { AdminEventResponse } from "@shared/api";
 import { Button } from "@/components/ui/button";
 
