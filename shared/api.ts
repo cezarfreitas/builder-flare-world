@@ -88,3 +88,19 @@ export interface DeleteEventResponse {
   success: boolean;
   error?: string;
 }
+
+export interface UpdateEventRequest {
+  title: string;
+  date_time: string;
+  location: string;
+  full_address?: string;
+  phone?: string;
+  maps_link?: string;
+  message?: string;
+}
+
+export interface UpdateEventResponse {
+  success: boolean;
+  event?: Event;
+  error?: string;
+}
