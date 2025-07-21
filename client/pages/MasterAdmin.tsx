@@ -120,6 +120,83 @@ export default function MasterAdmin() {
     }
   };
 
+  const handleEditEvent = (event: EventWithStats) => {
+    setEditingEvent(event);
+
+    // Preencher formulário com dados do evento
+    const eventDate = new Date(event.date_time);
+    const date = eventDate.toISOString().split('T')[0];
+    const time = eventDate.toTimeString().split(' ')[0].slice(0, 5);
+
+    setEditForm({
+      title: event.title,
+      date: date,
+      time: time,
+      location: event.location,
+      full_address: event.full_address || "",
+      phone: event.phone || "",
+      maps_link: event.maps_link || "",
+      message: event.message || ""
+    });
+
+    setEditOpen(true);
+  };
+
+  const handleSaveEdit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingEvent) return;
+
+    setEditLoading(true);
+
+    try {
+      const updateData: UpdateEventRequest = {
+        title: editForm.title,
+        date_time: `${editForm.date}T${editForm.time}`,
+        location: editForm.location,
+        full_address: editForm.full_address || undefined,
+        phone: editForm.phone || undefined,
+        maps_link: editForm.maps_link || undefined,
+        message: editForm.message || undefined
+      };
+
+      const response = await fetch(`/api/master-admin/events/${editingEvent.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updateData),
+      });
+
+      const result: UpdateEventResponse = await response.json();
+
+      if (result.success && result.event) {
+        // Atualizar lista com evento editado
+        if (eventsData?.events) {
+          const updatedEvents = eventsData.events.map(event =>
+            event.id === editingEvent.id
+              ? { ...event, ...result.event! }
+              : event
+          );
+
+          setEventsData({
+            ...eventsData,
+            events: updatedEvents
+          });
+        }
+
+        setEditOpen(false);
+        setEditingEvent(null);
+      } else {
+        alert(`Erro ao atualizar: ${result.error}`);
+      }
+    } catch (error) {
+      console.error('Error updating event:', error);
+      alert('Erro de conexão ao atualizar o evento.');
+    } finally {
+      setEditLoading(false);
+    }
+  };
+
   const getEventStatus = (event: EventWithStats) => {
     const eventDate = new Date(event.date_time);
     const today = new Date();
