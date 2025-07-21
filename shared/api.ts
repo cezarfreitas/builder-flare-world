@@ -48,3 +48,15 @@ export interface EventDetailsResponse {
   }>;
   error?: string;
 }
+
+export interface AdminEventResponse {
+  success: boolean;
+  event?: Event;
+  confirmations?: Array<{
+    id: number;
+    guest_name: string;
+    confirmed_at: string;
+  }>;
+  total_confirmations?: number;
+  error?: string;
+}
