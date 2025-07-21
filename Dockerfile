@@ -24,7 +24,7 @@ COPY . .
 # Build da aplicação
 RUN npm run build
 
-# Limpar node_modules e reinstalar apenas produção (.npmrc resolve conflitos)
+# Limpar node_modules e reinstalar apenas produção
 RUN rm -rf node_modules && \
     npm install --production --no-optional && \
     npm cache clean --force
