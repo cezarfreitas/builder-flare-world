@@ -1,0 +1,31 @@
+# Dockerfile simplificado para resolução de problemas
+FROM node:20-slim
+
+# Instalar dependências básicas
+RUN apt-get update && apt-get install -y \
+    python3 \
+    make \
+    g++ \
+    && rm -rf /var/lib/apt/lists/*
+
+# Definir diretório de trabalho
+WORKDIR /app
+
+# Copiar todos os arquivos
+COPY . .
+
+# Instalar dependências e fazer build
+RUN npm install && npm run build
+
+# Limpar dependências de desenvolvimento
+RUN npm prune --production
+
+# Expor porta
+EXPOSE 8080
+
+# Variáveis de ambiente
+ENV NODE_ENV=production
+ENV PORT=8080
+
+# Comando para iniciar
+CMD ["npm", "start"]
