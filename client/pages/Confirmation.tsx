@@ -149,6 +149,20 @@ export default function Confirmation() {
             <CardDescription className="text-base sm:text-lg text-muted-foreground">
               Você foi convidado para um evento especial
             </CardDescription>
+
+            {/* Days Remaining */}
+            <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold ${
+              daysRemaining < 0
+                ? 'bg-muted text-muted-foreground'
+                : daysRemaining === 0
+                ? 'bg-primary text-primary-foreground animate-pulse'
+                : daysRemaining <= 7
+                ? 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200'
+                : 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
+            }`}>
+              <Calendar className="w-4 h-4" />
+              {getDaysRemainingText(daysRemaining)}
+            </div>
           </CardHeader>
           
           <CardContent className="space-y-6">
