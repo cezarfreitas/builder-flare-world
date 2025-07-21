@@ -1,11 +1,11 @@
 import mysql from 'mysql2/promise';
 
 const DB_CONFIG = {
-  host: '5.161.52.206',
-  port: 3566,
-  user: 'convite',
-  password: 'a247d38c3ef256d11e77',
-  database: 'convite',
+  host: process.env.DB_HOST || '5.161.52.206',
+  port: parseInt(process.env.DB_PORT || '3566'),
+  user: process.env.DB_USER || 'convite',
+  password: process.env.DB_PASSWORD || 'a247d38c3ef256d11e77',
+  database: process.env.DB_NAME || 'convite',
   timezone: '-03:00'
 };
 
