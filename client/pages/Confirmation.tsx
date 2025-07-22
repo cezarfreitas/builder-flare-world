@@ -316,10 +316,6 @@ export default function Confirmation() {
           <CardContent className="space-y-4">
             {/* Ultra-Minimal Event Details */}
             <div className="space-y-3">
-              <h3 className="font-semibold text-foreground text-base">
-                Detalhes do Momento:
-              </h3>
-
               {/* Essential Info - Minimal */}
               <div className="space-y-2">
                 <div className="flex items-center gap-2 text-sm">
@@ -408,7 +404,7 @@ export default function Confirmation() {
                         className="flex items-center gap-2 text-xs text-muted-foreground"
                       >
                         <span className="w-4 h-4 flex items-center justify-center bg-green-100 text-green-700 rounded-full text-[10px] font-bold dark:bg-green-900 dark:text-green-300">
-                          ✓
+                          ��
                         </span>
                         {confirmation.guest_name}
                       </div>
