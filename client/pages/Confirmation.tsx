@@ -485,7 +485,7 @@ export default function Confirmation() {
                       <Label htmlFor="guest_name" className="font-semibold">
                         {isSimilarNameError
                           ? "Por favor, digite seu nome completo:"
-                          : `Confirme sua presença para "${event.title}":`}
+                          : "Confirme sua presença abaixo:"}
                       </Label>
                       <div className="space-y-1">
                         <Input
