@@ -46,6 +46,7 @@ export function createServer() {
   app.post("/api/events", createEvent);
   app.get("/api/events/:code", getEventByCode);
   app.post("/api/events/:code/confirm", confirmGuest);
+  app.post("/api/events/:code/confirm-family", confirmFamily);
   app.get("/api/admin/:code", getAdminEvent);
 
   // Master admin routes
