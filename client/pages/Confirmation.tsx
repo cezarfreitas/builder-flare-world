@@ -44,6 +44,12 @@ export default function Confirmation() {
     useState<ConfirmGuestResponse | null>(null);
   const [isSimilarNameError, setIsSimilarNameError] = useState(false);
 
+  // Family confirmation state
+  const [isFamilyMode, setIsFamilyMode] = useState(false);
+  const [familyNames, setFamilyNames] = useState<string[]>(["", "", ""]);
+  const [familyConfirmationResult, setFamilyConfirmationResult] =
+    useState<ConfirmFamilyResponse | null>(null);
+
   useEffect(() => {
     if (code) {
       fetchEventData();
