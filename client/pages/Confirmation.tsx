@@ -423,16 +423,19 @@ export default function Confirmation() {
               </div>
             )}
 
-            {/* Simple Confirmation */}
+            {/* Confirmation Section */}
             <div className="border-t border-border pt-4">
-              {confirmationResult?.success ? (
+              {(confirmationResult?.success || familyConfirmationResult?.success) ? (
                 <div className="text-center space-y-3 p-6 bg-gradient-to-r from-green-50 to-primary/5 rounded-xl border border-green-200 dark:from-green-950 dark:to-primary/10 dark:border-green-800 animate-in fade-in slide-in-from-bottom-4 duration-500">
                   <div className="relative">
                     <CheckCircle className="w-12 h-12 text-green-600 mx-auto dark:text-green-400 animate-in zoom-in duration-300" />
                     <div className="absolute inset-0 w-12 h-12 mx-auto rounded-full bg-green-500/20 animate-ping" />
                   </div>
                   <h3 className="font-bold text-xl text-green-800 dark:text-green-200 animate-in slide-in-from-bottom-2 duration-700">
-                    Presença Confirmada! 🎉
+                    {familyConfirmationResult?.success ?
+                      `${familyConfirmationResult.confirmed_count || 1} Presença${(familyConfirmationResult.confirmed_count || 1) > 1 ? 's' : ''} Confirmada${(familyConfirmationResult.confirmed_count || 1) > 1 ? 's' : ''}! 🎉` :
+                      "Presença Confirmada! 🎉"
+                    }
                   </h3>
                   <p className="text-base text-green-700 dark:text-green-300 animate-in slide-in-from-bottom-1 duration-1000">
                     Obrigado por confirmar! Nos vemos em "{event.title}" 🍓
@@ -444,118 +447,226 @@ export default function Confirmation() {
                   </div>
                 </div>
               ) : (
-                <form onSubmit={handleConfirmation} className="space-y-3">
-                  <Label htmlFor="guest_name" className="font-semibold">
-                    {isSimilarNameError
-                      ? "Por favor, digite seu nome completo:"
-                      : `Confirme sua presença para "${event.title}":`}
-                  </Label>
-                  <div className="space-y-1">
-                    <Input
-                      id="guest_name"
-                      placeholder={
-                        isSimilarNameError
-                          ? "Ex: João Silva Santos (nome e sobrenome completo)"
-                          : "Digite seu nome completo"
-                      }
-                      value={guestName}
-                      onChange={(e) => {
-                        setGuestName(e.target.value);
-                        // Limpar estado de erro ao digitar
-                        if (
-                          isSimilarNameError &&
-                          e.target.value.trim().split(" ").length > 1
-                        ) {
-                          setIsSimilarNameError(false);
-                          setConfirmationResult(null);
-                        }
+                <div className="space-y-4">
+                  {/* Mode Selection */}
+                  <div className="flex gap-2 p-1 bg-muted rounded-lg">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setIsFamilyMode(false);
+                        setConfirmationResult(null);
+                        setFamilyConfirmationResult(null);
+                        setIsSimilarNameError(false);
                       }}
-                      required
-                      className={`h-11 ${isSimilarNameError ? "border-orange-300 focus:border-orange-500 bg-orange-50 dark:bg-orange-950/20" : ""}`}
-                    />
-                    {/* Indicador de progresso do nome */}
-                    {guestName.trim().length > 0 && (
-                      <div className="flex items-center gap-2 text-xs">
-                        <div
-                          className={`w-2 h-2 rounded-full ${
-                            guestName.trim().split(" ").length >= 2
-                              ? "bg-green-500"
-                              : "bg-yellow-500"
-                          }`}
-                        />
-                        <span
-                          className={`${
-                            guestName.trim().split(" ").length >= 2
-                              ? "text-green-600 dark:text-green-400"
-                              : "text-yellow-600 dark:text-yellow-400"
-                          }`}
-                        >
-                          {guestName.trim().split(" ").length >= 2
-                            ? "✓ Nome completo"
-                            : "Adicione sobrenome"}
-                        </span>
-                      </div>
-                    )}
-                  </div>
-
-                  {confirmationResult && !confirmationResult.success && (
-                    <div
-                      className={`p-3 border rounded-lg ${
-                        isSimilarNameError
-                          ? "bg-orange-50 border-orange-200 dark:bg-orange-950/20 dark:border-orange-800"
-                          : "bg-destructive/10 border-destructive/20"
+                      className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-md text-sm font-medium transition-all ${
+                        !isFamilyMode
+                          ? 'bg-background text-foreground shadow-sm'
+                          : 'text-muted-foreground hover:text-foreground'
                       }`}
                     >
-                      <p
-                        className={`text-sm ${
-                          isSimilarNameError
-                            ? "text-orange-800 dark:text-orange-200"
-                            : "text-destructive"
-                        }`}
-                      >
-                        {isSimilarNameError && (
-                          <span className="inline-flex items-center gap-1 mr-2">
-                            ⚠️
-                          </span>
-                        )}
-                        {confirmationResult.message}
-                      </p>
-                      {isSimilarNameError && (
-                        <p className="text-xs text-orange-600 dark:text-orange-300 mt-2">
-                          💡 Dica: Digite nome e sobrenome para distinguir de
-                          outras pessoas com o mesmo primeiro nome.
-                        </p>
-                      )}
-                    </div>
-                  )}
+                      <Heart className="w-4 h-4" />
+                      Individual
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setIsFamilyMode(true);
+                        setConfirmationResult(null);
+                        setFamilyConfirmationResult(null);
+                        setIsSimilarNameError(false);
+                      }}
+                      className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-md text-sm font-medium transition-all ${
+                        isFamilyMode
+                          ? 'bg-background text-foreground shadow-sm'
+                          : 'text-muted-foreground hover:text-foreground'
+                      }`}
+                    >
+                      <Users className="w-4 h-4" />
+                      Família
+                    </button>
+                  </div>
 
-                  {/* Dica proativa para nomes curtos */}
-                  {guestName.trim().length > 0 &&
-                    guestName.trim().split(" ").length === 1 &&
-                    !confirmationResult && (
+                  {!isFamilyMode ? (
+                    /* Individual Form */
+                    <form onSubmit={handleConfirmation} className="space-y-3">
+                      <Label htmlFor="guest_name" className="font-semibold">
+                        {isSimilarNameError
+                          ? "Por favor, digite seu nome completo:"
+                          : `Confirme sua presença para "${event.title}":`}
+                      </Label>
+                      <div className="space-y-1">
+                        <Input
+                          id="guest_name"
+                          placeholder={
+                            isSimilarNameError
+                              ? "Ex: João Silva Santos (nome e sobrenome completo)"
+                              : "Digite seu nome completo"
+                          }
+                          value={guestName}
+                          onChange={(e) => {
+                            setGuestName(e.target.value);
+                            if (
+                              isSimilarNameError &&
+                              e.target.value.trim().split(" ").length > 1
+                            ) {
+                              setIsSimilarNameError(false);
+                              setConfirmationResult(null);
+                            }
+                          }}
+                          required
+                          className={`h-11 ${isSimilarNameError ? "border-orange-300 focus:border-orange-500 bg-orange-50 dark:bg-orange-950/20" : ""}`}
+                        />
+                        {guestName.trim().length > 0 && (
+                          <div className="flex items-center gap-2 text-xs">
+                            <div
+                              className={`w-2 h-2 rounded-full ${
+                                guestName.trim().split(" ").length >= 2
+                                  ? "bg-green-500"
+                                  : "bg-yellow-500"
+                              }`}
+                            />
+                            <span
+                              className={`${
+                                guestName.trim().split(" ").length >= 2
+                                  ? "text-green-600 dark:text-green-400"
+                                  : "text-yellow-600 dark:text-yellow-400"
+                              }`}
+                            >
+                              {guestName.trim().split(" ").length >= 2
+                                ? "✓ Nome completo"
+                                : "Adicione sobrenome"}
+                            </span>
+                          </div>
+                        )}
+                      </div>
+
+                      {confirmationResult && !confirmationResult.success && (
+                        <div
+                          className={`p-3 border rounded-lg ${
+                            isSimilarNameError
+                              ? "bg-orange-50 border-orange-200 dark:bg-orange-950/20 dark:border-orange-800"
+                              : "bg-destructive/10 border-destructive/20"
+                          }`}
+                        >
+                          <p
+                            className={`text-sm ${
+                              isSimilarNameError
+                                ? "text-orange-800 dark:text-orange-200"
+                                : "text-destructive"
+                            }`}
+                          >
+                            {isSimilarNameError && (
+                              <span className="inline-flex items-center gap-1 mr-2">⚠️</span>
+                            )}
+                            {confirmationResult.message}
+                          </p>
+                          {isSimilarNameError && (
+                            <p className="text-xs text-orange-600 dark:text-orange-300 mt-2">
+                              💡 Dica: Digite nome e sobrenome para distinguir de outras pessoas com o mesmo primeiro nome.
+                            </p>
+                          )}
+                        </div>
+                      )}
+
+                      {guestName.trim().length > 0 &&
+                        guestName.trim().split(" ").length === 1 &&
+                        !confirmationResult && (
+                          <div className="p-2 bg-blue-50 border border-blue-200 rounded-lg dark:bg-blue-950/20 dark:border-blue-800">
+                            <p className="text-xs text-blue-700 dark:text-blue-300">
+                              💡 Recomendado: Digite nome e sobrenome (ex: "João Silva") para evitar confusão com outros convidados.
+                            </p>
+                          </div>
+                        )}
+
+                      <Button
+                        type="submit"
+                        disabled={confirming || !guestName.trim()}
+                        className="w-full h-11 font-semibold"
+                      >
+                        {confirming ? (
+                          <>
+                            <div className="w-4 h-4 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin mr-2" />
+                            Confirmando...
+                          </>
+                        ) : (
+                          "Confirmar Presença"
+                        )}
+                      </Button>
+                    </form>
+                  ) : (
+                    /* Family Form */
+                    <form onSubmit={handleFamilyConfirmation} className="space-y-3">
+                      <Label className="font-semibold">
+                        Confirme a presença da família para "{event.title}":
+                      </Label>
+
+                      <div className="space-y-2">
+                        {familyNames.map((name, index) => (
+                          <div key={index} className="flex gap-2">
+                            <Input
+                              placeholder={`Nome completo ${index + 1}${index < 3 ? ' (obrigatório)' : ' (opcional)'}`}
+                              value={name}
+                              onChange={(e) => updateFamilyName(index, e.target.value)}
+                              required={index < 3}
+                              className="h-10"
+                            />
+                            {familyNames.length > 3 && index >= 3 && (
+                              <Button
+                                type="button"
+                                variant="outline"
+                                size="sm"
+                                onClick={() => removeFamilyMember(index)}
+                                className="p-2 h-10 w-10"
+                              >
+                                <Minus className="w-4 h-4" />
+                              </Button>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+
+                      <Button
+                        type="button"
+                        variant="outline"
+                        onClick={addFamilyMember}
+                        className="w-full h-10 font-medium"
+                        disabled={familyNames.length >= 10}
+                      >
+                        <Plus className="w-4 h-4 mr-2" />
+                        Adicionar Familiar {familyNames.length >= 10 ? '(máximo 10)' : ''}
+                      </Button>
+
+                      {familyConfirmationResult && !familyConfirmationResult.success && (
+                        <div className="p-3 border rounded-lg bg-destructive/10 border-destructive/20">
+                          <p className="text-sm text-destructive">
+                            {familyConfirmationResult.message}
+                          </p>
+                        </div>
+                      )}
+
                       <div className="p-2 bg-blue-50 border border-blue-200 rounded-lg dark:bg-blue-950/20 dark:border-blue-800">
                         <p className="text-xs text-blue-700 dark:text-blue-300">
-                          💡 Recomendado: Digite nome e sobrenome (ex: "João
-                          Silva") para evitar confusão com outros convidados.
+                          💡 Digite nomes completos (nome e sobrenome) para evitar confusão. Mínimo 3 campos, máximo 10.
                         </p>
                       </div>
-                    )}
 
-                  <Button
-                    type="submit"
-                    disabled={confirming || !guestName.trim()}
-                    className="w-full h-11 font-semibold"
-                  >
-                    {confirming ? (
-                      <>
-                        <div className="w-4 h-4 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin mr-2" />
-                        Confirmando...
-                      </>
-                    ) : (
-                      "Confirmar Presença"
-                    )}
-                  </Button>
-                </form>
+                      <Button
+                        type="submit"
+                        disabled={confirming || familyNames.filter(name => name.trim().length > 0).length === 0}
+                        className="w-full h-11 font-semibold"
+                      >
+                        {confirming ? (
+                          <>
+                            <div className="w-4 h-4 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin mr-2" />
+                            Confirmando Família...
+                          </>
+                        ) : (
+                          `Confirmar ${familyNames.filter(name => name.trim().length > 0).length} Presença${familyNames.filter(name => name.trim().length > 0).length !== 1 ? 's' : ''}`
+                        )}
+                      </Button>
+                    </form>
+                  )}
+                </div>
               )}
             </div>
           </CardContent>
