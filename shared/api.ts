@@ -57,6 +57,7 @@ export interface EventDetailsResponse {
     id: number;
     guest_name: string;
     confirmed_at: string;
+    family_batch_id?: string;
   }>;
   error?: string;
 }
@@ -68,6 +69,7 @@ export interface AdminEventResponse {
     id: number;
     guest_name: string;
     confirmed_at: string;
+    family_batch_id?: string;
   }>;
   total_confirmations?: number;
   error?: string;
