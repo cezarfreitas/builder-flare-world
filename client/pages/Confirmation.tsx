@@ -135,8 +135,8 @@ export default function Confirmation() {
 
     // Filter out empty names
     const validNames = familyNames
-      .map(name => name.trim())
-      .filter(name => name.length > 0);
+      .map((name) => name.trim())
+      .filter((name) => name.length > 0);
 
     if (validNames.length === 0) {
       setFamilyConfirmationResult({
@@ -328,7 +328,7 @@ export default function Confirmation() {
                       month: "2-digit",
                       year: "numeric",
                       hour: "2-digit",
-                      minute: "2-digit"
+                      minute: "2-digit",
                     })}
                   </span>
                 </div>
@@ -348,15 +348,15 @@ export default function Confirmation() {
                 {(event.phone || event.maps_link) && (
                   <div className="flex gap-2 ml-6">
                     {event.phone && (
-                        <a
-                          href={`https://wa.me/${event.phone.replace(/\D/g, "")}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-1 text-green-600 hover:text-green-700 text-xs"
-                        >
-                          <MessageSquare className="w-3 h-3" />
-                          WhatsApp
-                        </a>
+                      <a
+                        href={`https://wa.me/${event.phone.replace(/\D/g, "")}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-1 text-green-600 hover:text-green-700 text-xs"
+                      >
+                        <MessageSquare className="w-3 h-3" />
+                        WhatsApp
+                      </a>
                     )}
 
                     {event.maps_link && (
@@ -418,17 +418,17 @@ export default function Confirmation() {
 
             {/* Confirmation Section */}
             <div className="border-t border-border pt-4">
-              {(confirmationResult?.success || familyConfirmationResult?.success) ? (
+              {confirmationResult?.success ||
+              familyConfirmationResult?.success ? (
                 <div className="text-center space-y-3 p-6 bg-gradient-to-r from-green-50 to-primary/5 rounded-xl border border-green-200 dark:from-green-950 dark:to-primary/10 dark:border-green-800 animate-in fade-in slide-in-from-bottom-4 duration-500">
                   <div className="relative">
                     <CheckCircle className="w-12 h-12 text-green-600 mx-auto dark:text-green-400 animate-in zoom-in duration-300" />
                     <div className="absolute inset-0 w-12 h-12 mx-auto rounded-full bg-green-500/20 animate-ping" />
                   </div>
                   <h3 className="font-bold text-xl text-green-800 dark:text-green-200 animate-in slide-in-from-bottom-2 duration-700">
-                    {familyConfirmationResult?.success ?
-                      `${familyConfirmationResult.confirmed_count || 1} Presença${(familyConfirmationResult.confirmed_count || 1) > 1 ? 's' : ''} Confirmada${(familyConfirmationResult.confirmed_count || 1) > 1 ? 's' : ''}! 🎉` :
-                      "Presença Confirmada! 🎉"
-                    }
+                    {familyConfirmationResult?.success
+                      ? `${familyConfirmationResult.confirmed_count || 1} Presença${(familyConfirmationResult.confirmed_count || 1) > 1 ? "s" : ""} Confirmada${(familyConfirmationResult.confirmed_count || 1) > 1 ? "s" : ""}! 🎉`
+                      : "Presença Confirmada! 🎉"}
                   </h3>
                   <p className="text-base text-green-700 dark:text-green-300 animate-in slide-in-from-bottom-1 duration-1000">
                     Obrigado por confirmar! Nos vemos em "{event.title}" 🍓
@@ -453,8 +453,8 @@ export default function Confirmation() {
                       }}
                       className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-md text-sm font-medium transition-all ${
                         !isFamilyMode
-                          ? 'bg-background text-foreground shadow-sm'
-                          : 'text-muted-foreground hover:text-foreground'
+                          ? "bg-background text-foreground shadow-sm"
+                          : "text-muted-foreground hover:text-foreground"
                       }`}
                     >
                       <Heart className="w-4 h-4" />
@@ -470,8 +470,8 @@ export default function Confirmation() {
                       }}
                       className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-md text-sm font-medium transition-all ${
                         isFamilyMode
-                          ? 'bg-background text-foreground shadow-sm'
-                          : 'text-muted-foreground hover:text-foreground'
+                          ? "bg-background text-foreground shadow-sm"
+                          : "text-muted-foreground hover:text-foreground"
                       }`}
                     >
                       <Users className="w-4 h-4" />
@@ -549,13 +549,16 @@ export default function Confirmation() {
                             }`}
                           >
                             {isSimilarNameError && (
-                              <span className="inline-flex items-center gap-1 mr-2">⚠️</span>
+                              <span className="inline-flex items-center gap-1 mr-2">
+                                ⚠️
+                              </span>
                             )}
                             {confirmationResult.message}
                           </p>
                           {isSimilarNameError && (
                             <p className="text-xs text-orange-600 dark:text-orange-300 mt-2">
-                              💡 Dica: Digite nome e sobrenome para distinguir de outras pessoas com o mesmo primeiro nome.
+                              💡 Dica: Digite nome e sobrenome para distinguir
+                              de outras pessoas com o mesmo primeiro nome.
                             </p>
                           )}
                         </div>
@@ -566,7 +569,9 @@ export default function Confirmation() {
                         !confirmationResult && (
                           <div className="p-2 bg-blue-50 border border-blue-200 rounded-lg dark:bg-blue-950/20 dark:border-blue-800">
                             <p className="text-xs text-blue-700 dark:text-blue-300">
-                              💡 Recomendado: Digite nome e sobrenome (ex: "João Silva") para evitar confusão com outros convidados.
+                              💡 Recomendado: Digite nome e sobrenome (ex: "João
+                              Silva") para evitar confusão com outros
+                              convidados.
                             </p>
                           </div>
                         )}
@@ -588,7 +593,10 @@ export default function Confirmation() {
                     </form>
                   ) : (
                     /* Family Form */
-                    <form onSubmit={handleFamilyConfirmation} className="space-y-3">
+                    <form
+                      onSubmit={handleFamilyConfirmation}
+                      className="space-y-3"
+                    >
                       <Label className="font-semibold">
                         Confirme a presença da família abaixo:
                       </Label>
@@ -597,9 +605,11 @@ export default function Confirmation() {
                         {familyNames.map((name, index) => (
                           <div key={index} className="flex gap-2">
                             <Input
-                              placeholder={`Nome completo ${index + 1}${index < 2 ? ' (obrigatório)' : ' (opcional)'}`}
+                              placeholder={`Nome completo ${index + 1}${index < 2 ? " (obrigatório)" : " (opcional)"}`}
                               value={name}
-                              onChange={(e) => updateFamilyName(index, e.target.value)}
+                              onChange={(e) =>
+                                updateFamilyName(index, e.target.value)
+                              }
                               required={index < 2}
                               className="h-10"
                             />
@@ -626,26 +636,33 @@ export default function Confirmation() {
                         disabled={familyNames.length >= 10}
                       >
                         <Plus className="w-4 h-4 mr-2" />
-                        Adicionar Familiar {familyNames.length >= 10 ? '(máximo 10)' : ''}
+                        Adicionar Familiar{" "}
+                        {familyNames.length >= 10 ? "(máximo 10)" : ""}
                       </Button>
 
-                      {familyConfirmationResult && !familyConfirmationResult.success && (
-                        <div className="p-3 border rounded-lg bg-destructive/10 border-destructive/20">
-                          <p className="text-sm text-destructive">
-                            {familyConfirmationResult.message}
-                          </p>
-                        </div>
-                      )}
+                      {familyConfirmationResult &&
+                        !familyConfirmationResult.success && (
+                          <div className="p-3 border rounded-lg bg-destructive/10 border-destructive/20">
+                            <p className="text-sm text-destructive">
+                              {familyConfirmationResult.message}
+                            </p>
+                          </div>
+                        )}
 
                       <div className="p-2 bg-blue-50 border border-blue-200 rounded-lg dark:bg-blue-950/20 dark:border-blue-800">
                         <p className="text-xs text-blue-700 dark:text-blue-300">
-                          💡 Digite nomes completos (nome e sobrenome) para evitar confusão. Mínimo 2 campos, máximo 10.
+                          💡 Digite nomes completos (nome e sobrenome) para
+                          evitar confusão. Mínimo 2 campos, máximo 10.
                         </p>
                       </div>
 
                       <Button
                         type="submit"
-                        disabled={confirming || familyNames.filter(name => name.trim().length > 0).length === 0}
+                        disabled={
+                          confirming ||
+                          familyNames.filter((name) => name.trim().length > 0)
+                            .length === 0
+                        }
                         className="w-full h-11 font-semibold"
                       >
                         {confirming ? (
@@ -654,7 +671,7 @@ export default function Confirmation() {
                             Confirmando Família...
                           </>
                         ) : (
-                          `Confirmar ${familyNames.filter(name => name.trim().length > 0).length} Presença${familyNames.filter(name => name.trim().length > 0).length !== 1 ? 's' : ''}`
+                          `Confirmar ${familyNames.filter((name) => name.trim().length > 0).length} Presença${familyNames.filter((name) => name.trim().length > 0).length !== 1 ? "s" : ""}`
                         )}
                       </Button>
                     </form>

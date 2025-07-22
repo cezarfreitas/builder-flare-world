@@ -258,7 +258,11 @@ export const confirmFamily: RequestHandler = async (req, res) => {
     const { code } = req.params;
     const { guest_names }: ConfirmFamilyRequest = req.body;
 
-    if (!guest_names || !Array.isArray(guest_names) || guest_names.length === 0) {
+    if (
+      !guest_names ||
+      !Array.isArray(guest_names) ||
+      guest_names.length === 0
+    ) {
       const response: ConfirmFamilyResponse = {
         success: false,
         message: "Lista de nomes é obrigatória",
@@ -268,8 +272,8 @@ export const confirmFamily: RequestHandler = async (req, res) => {
 
     // Validate all names
     const validNames = guest_names
-      .map(name => name?.trim())
-      .filter(name => name && name.length > 0);
+      .map((name) => name?.trim())
+      .filter((name) => name && name.length > 0);
 
     if (validNames.length === 0) {
       const response: ConfirmFamilyResponse = {
@@ -318,13 +322,13 @@ export const confirmFamily: RequestHandler = async (req, res) => {
         }
 
         // Check similar names (same first name)
-        const inputFirstName = guestName.split(' ')[0].toLowerCase();
+        const inputFirstName = guestName.split(" ")[0].toLowerCase();
         const [similarRows] = (await connection.execute(
           "SELECT guest_name FROM confirmations WHERE event_id = ? AND LOWER(SUBSTRING_INDEX(guest_name, ' ', 1)) = ?",
           [eventId, inputFirstName],
         )) as any;
 
-        if (similarRows.length > 0 && guestName.split(' ').length === 1) {
+        if (similarRows.length > 0 && guestName.split(" ").length === 1) {
           similarNames.push(guestName);
           continue;
         }
@@ -349,22 +353,23 @@ export const confirmFamily: RequestHandler = async (req, res) => {
       if (alreadyConfirmed.length > 0 && confirmedCount === 0) {
         const response: ConfirmFamilyResponse = {
           success: false,
-          message: `${alreadyConfirmed.length > 1 ? 'Estes nomes já foram confirmados' : 'Este nome já foi confirmado'}: ${alreadyConfirmed.join(', ')}`,
+          message: `${alreadyConfirmed.length > 1 ? "Estes nomes já foram confirmados" : "Este nome já foi confirmado"}: ${alreadyConfirmed.join(", ")}`,
         };
         return res.status(400).json(response);
       }
 
       const totalAttempted = validNames.length;
-      let message = '';
+      let message = "";
 
       if (confirmedCount === totalAttempted) {
-        message = confirmedCount === 1
-          ? 'Presença confirmada com sucesso!'
-          : `${confirmedCount} presenças confirmadas com sucesso!`;
+        message =
+          confirmedCount === 1
+            ? "Presença confirmada com sucesso!"
+            : `${confirmedCount} presenças confirmadas com sucesso!`;
       } else {
         message = `${confirmedCount} de ${totalAttempted} presenças confirmadas.`;
         if (alreadyConfirmed.length > 0) {
-          message += ` Já confirmados: ${alreadyConfirmed.join(', ')}`;
+          message += ` Já confirmados: ${alreadyConfirmed.join(", ")}`;
         }
       }
 

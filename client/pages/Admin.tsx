@@ -167,7 +167,7 @@ export default function Admin() {
   const familyGroups = new Map<string, typeof confirmations>();
   const individualConfirmations: typeof confirmations = [];
 
-  confirmations.forEach(confirmation => {
+  confirmations.forEach((confirmation) => {
     if (confirmation.family_batch_id) {
       if (!familyGroups.has(confirmation.family_batch_id)) {
         familyGroups.set(confirmation.family_batch_id, []);
@@ -180,20 +180,22 @@ export default function Admin() {
 
   // Create family colors for visual distinction
   const familyColors = [
-    'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-200',
-    'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-200',
-    'bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-200',
-    'bg-orange-100 text-orange-700 dark:bg-orange-900 dark:text-orange-200',
-    'bg-pink-100 text-pink-700 dark:bg-pink-900 dark:text-pink-200',
-    'bg-indigo-100 text-indigo-700 dark:bg-indigo-900 dark:text-indigo-200',
+    "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-200",
+    "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-200",
+    "bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-200",
+    "bg-orange-100 text-orange-700 dark:bg-orange-900 dark:text-orange-200",
+    "bg-pink-100 text-pink-700 dark:bg-pink-900 dark:text-pink-200",
+    "bg-indigo-100 text-indigo-700 dark:bg-indigo-900 dark:text-indigo-200",
   ];
 
-  const familyGroupsArray = Array.from(familyGroups.entries()).map(([batchId, members], index) => ({
-    batchId,
-    members,
-    color: familyColors[index % familyColors.length],
-    familyNumber: index + 1
-  }));
+  const familyGroupsArray = Array.from(familyGroups.entries()).map(
+    ([batchId, members], index) => ({
+      batchId,
+      members,
+      color: familyColors[index % familyColors.length],
+      familyNumber: index + 1,
+    }),
+  );
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-accent/30 to-primary/10 p-4 sm:p-6">
@@ -339,9 +341,12 @@ export default function Admin() {
                 {familyGroupsArray.map((family) => (
                   <div key={family.batchId} className="space-y-2">
                     <div className="flex items-center gap-2 mb-2">
-                      <div className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${family.color}`}>
+                      <div
+                        className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${family.color}`}
+                      >
                         <Users className="w-3 h-3" />
-                        Família {family.familyNumber} ({family.members.length} pessoas)
+                        Família {family.familyNumber} ({family.members.length}{" "}
+                        pessoas)
                       </div>
                       <div className="h-px bg-border flex-1"></div>
                     </div>
@@ -349,11 +354,19 @@ export default function Admin() {
                       <div
                         key={confirmation.id}
                         className="flex items-center justify-between p-3 ml-4 bg-muted/20 rounded-lg hover:bg-muted/40 transition-colors border-l-2"
-                        style={{ borderLeftColor: family.color.includes('blue') ? '#3b82f6' :
-                                family.color.includes('green') ? '#10b981' :
-                                family.color.includes('purple') ? '#8b5cf6' :
-                                family.color.includes('orange') ? '#f59e0b' :
-                                family.color.includes('pink') ? '#ec4899' : '#6366f1' }}
+                        style={{
+                          borderLeftColor: family.color.includes("blue")
+                            ? "#3b82f6"
+                            : family.color.includes("green")
+                              ? "#10b981"
+                              : family.color.includes("purple")
+                                ? "#8b5cf6"
+                                : family.color.includes("orange")
+                                  ? "#f59e0b"
+                                  : family.color.includes("pink")
+                                    ? "#ec4899"
+                                    : "#6366f1",
+                        }}
                       >
                         <div className="flex items-center gap-3">
                           <div className="w-6 h-6 bg-primary/10 rounded-full flex items-center justify-center">
@@ -367,20 +380,20 @@ export default function Admin() {
                         </div>
                         <div className="text-right">
                           <p className="text-sm text-muted-foreground">
-                            {new Date(confirmation.confirmed_at).toLocaleDateString(
-                              "pt-BR",
-                              { timeZone: "America/Sao_Paulo" },
-                            )}
+                            {new Date(
+                              confirmation.confirmed_at,
+                            ).toLocaleDateString("pt-BR", {
+                              timeZone: "America/Sao_Paulo",
+                            })}
                           </p>
                           <p className="text-xs text-muted-foreground">
-                            {new Date(confirmation.confirmed_at).toLocaleTimeString(
-                              "pt-BR",
-                              {
-                                hour: "2-digit",
-                                minute: "2-digit",
-                                timeZone: "America/Sao_Paulo",
-                              },
-                            )}
+                            {new Date(
+                              confirmation.confirmed_at,
+                            ).toLocaleTimeString("pt-BR", {
+                              hour: "2-digit",
+                              minute: "2-digit",
+                              timeZone: "America/Sao_Paulo",
+                            })}
                           </p>
                         </div>
                       </div>
@@ -396,7 +409,8 @@ export default function Admin() {
                         <div className="flex items-center gap-2 mb-2">
                           <div className="flex items-center gap-1 px-2 py-1 bg-gray-100 text-gray-700 rounded-full text-xs font-medium dark:bg-gray-800 dark:text-gray-300">
                             <Heart className="w-3 h-3" />
-                            Confirmações Individuais ({individualConfirmations.length})
+                            Confirmações Individuais (
+                            {individualConfirmations.length})
                           </div>
                           <div className="h-px bg-border flex-1"></div>
                         </div>
@@ -410,7 +424,12 @@ export default function Admin() {
                         <div className="flex items-center gap-3">
                           <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
                             <span className="text-sm font-semibold text-primary">
-                              {familyGroupsArray.reduce((acc, family) => acc + family.members.length, 0) + index + 1}
+                              {familyGroupsArray.reduce(
+                                (acc, family) => acc + family.members.length,
+                                0,
+                              ) +
+                                index +
+                                1}
                             </span>
                           </div>
                           <span className="font-medium text-base">
@@ -419,20 +438,20 @@ export default function Admin() {
                         </div>
                         <div className="text-right">
                           <p className="text-sm text-muted-foreground">
-                            {new Date(confirmation.confirmed_at).toLocaleDateString(
-                              "pt-BR",
-                              { timeZone: "America/Sao_Paulo" },
-                            )}
+                            {new Date(
+                              confirmation.confirmed_at,
+                            ).toLocaleDateString("pt-BR", {
+                              timeZone: "America/Sao_Paulo",
+                            })}
                           </p>
                           <p className="text-xs text-muted-foreground">
-                            {new Date(confirmation.confirmed_at).toLocaleTimeString(
-                              "pt-BR",
-                              {
-                                hour: "2-digit",
-                                minute: "2-digit",
-                                timeZone: "America/Sao_Paulo",
-                              },
-                            )}
+                            {new Date(
+                              confirmation.confirmed_at,
+                            ).toLocaleTimeString("pt-BR", {
+                              hour: "2-digit",
+                              minute: "2-digit",
+                              timeZone: "America/Sao_Paulo",
+                            })}
                           </p>
                         </div>
                       </div>
