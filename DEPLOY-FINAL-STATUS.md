@@ -91,7 +91,7 @@ DB_PORT=3306
 - ✅ Validação nomes duplicados
 - ✅ Função limpar lista de convidados
 - ✅ Confirmação família (2 campos + adicionar mais)
-- ✅ Indicador família na página admin
+- ✅ Agrupamento famílias na página admin
 - ✅ Build local funcionando: `npm run build`
 - ✅ Dependências limpas (sem @react-three)
 - ✅ Múltiplas opções Docker preparadas
