@@ -84,6 +84,18 @@ export async function initializeDatabase() {
       )
     `);
 
+    // Add family_batch_id column if it doesn't exist
+    try {
+      await connection.execute(
+        `ALTER TABLE confirmations ADD COLUMN family_batch_id VARCHAR(50)`,
+      );
+      console.log("Added family_batch_id column");
+    } catch (error: any) {
+      if (error.code !== "ER_DUP_FIELDNAME") {
+        console.error("Error adding family_batch_id column:", error);
+      }
+    }
+
     console.log("Database initialized successfully");
   } catch (error) {
     console.error("Error initializing database:", error);
