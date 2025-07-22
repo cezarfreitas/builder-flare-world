@@ -35,9 +35,19 @@ export interface ConfirmGuestRequest {
   guest_name: string;
 }
 
+export interface ConfirmFamilyRequest {
+  guest_names: string[];
+}
+
 export interface ConfirmGuestResponse {
   success: boolean;
   message: string;
+}
+
+export interface ConfirmFamilyResponse {
+  success: boolean;
+  message: string;
+  confirmed_count?: number;
 }
 
 export interface EventDetailsResponse {
