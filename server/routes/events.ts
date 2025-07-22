@@ -14,6 +14,8 @@ import {
   UpdateEventRequest,
   UpdateEventResponse,
   ClearConfirmationsResponse,
+  ConfirmFamilyRequest,
+  ConfirmFamilyResponse,
 } from "@shared/api";
 
 function generateLinkCode(): string {
