@@ -301,6 +301,9 @@ export const confirmFamily: RequestHandler = async (req, res) => {
       const alreadyConfirmed = [];
       const similarNames = [];
 
+      // Generate unique batch ID for this family registration
+      const familyBatchId = `family_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+
       // Check each name for duplicates and similar names
       for (const guestName of validNames) {
         // Check exact match
