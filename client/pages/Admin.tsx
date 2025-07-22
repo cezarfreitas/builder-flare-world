@@ -334,50 +334,111 @@ export default function Admin() {
                 </p>
               </div>
             ) : (
-              <div className="space-y-3">
-                {confirmations.map((confirmation, index) => (
-                  <div
-                    key={confirmation.id}
-                    className="flex items-center justify-between p-4 bg-muted/30 rounded-lg hover:bg-muted/50 transition-colors"
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
-                        <span className="text-sm font-semibold text-primary">
-                          {index + 1}
-                        </span>
+              <div className="space-y-4">
+                {/* Family Groups */}
+                {familyGroupsArray.map((family) => (
+                  <div key={family.batchId} className="space-y-2">
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${family.color}`}>
+                        <Users className="w-3 h-3" />
+                        Família {family.familyNumber} ({family.members.length} pessoas)
                       </div>
-                      <div className="flex items-center gap-2">
-                        <span className="font-medium text-base">
-                          {confirmation.guest_name}
-                        </span>
-                        {confirmation.family_batch_id && (
-                          <div className="flex items-center gap-1 px-2 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-medium dark:bg-blue-900 dark:text-blue-200">
-                            <Users className="w-3 h-3" />
-                            Família
+                      <div className="h-px bg-border flex-1"></div>
+                    </div>
+                    {family.members.map((confirmation, memberIndex) => (
+                      <div
+                        key={confirmation.id}
+                        className="flex items-center justify-between p-3 ml-4 bg-muted/20 rounded-lg hover:bg-muted/40 transition-colors border-l-2"
+                        style={{ borderLeftColor: family.color.includes('blue') ? '#3b82f6' :
+                                family.color.includes('green') ? '#10b981' :
+                                family.color.includes('purple') ? '#8b5cf6' :
+                                family.color.includes('orange') ? '#f59e0b' :
+                                family.color.includes('pink') ? '#ec4899' : '#6366f1' }}
+                      >
+                        <div className="flex items-center gap-3">
+                          <div className="w-6 h-6 bg-primary/10 rounded-full flex items-center justify-center">
+                            <span className="text-xs font-semibold text-primary">
+                              {memberIndex + 1}
+                            </span>
                           </div>
-                        )}
+                          <span className="font-medium text-base">
+                            {confirmation.guest_name}
+                          </span>
+                        </div>
+                        <div className="text-right">
+                          <p className="text-sm text-muted-foreground">
+                            {new Date(confirmation.confirmed_at).toLocaleDateString(
+                              "pt-BR",
+                              { timeZone: "America/Sao_Paulo" },
+                            )}
+                          </p>
+                          <p className="text-xs text-muted-foreground">
+                            {new Date(confirmation.confirmed_at).toLocaleTimeString(
+                              "pt-BR",
+                              {
+                                hour: "2-digit",
+                                minute: "2-digit",
+                                timeZone: "America/Sao_Paulo",
+                              },
+                            )}
+                          </p>
+                        </div>
                       </div>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-sm text-muted-foreground">
-                        {new Date(confirmation.confirmed_at).toLocaleDateString(
-                          "pt-BR",
-                          { timeZone: "America/Sao_Paulo" },
-                        )}
-                      </p>
-                      <p className="text-xs text-muted-foreground">
-                        {new Date(confirmation.confirmed_at).toLocaleTimeString(
-                          "pt-BR",
-                          {
-                            hour: "2-digit",
-                            minute: "2-digit",
-                            timeZone: "America/Sao_Paulo",
-                          },
-                        )}
-                      </p>
-                    </div>
+                    ))}
                   </div>
                 ))}
+
+                {/* Individual Confirmations */}
+                {individualConfirmations.length > 0 && (
+                  <div className="space-y-2">
+                    {familyGroupsArray.length > 0 && (
+                      <>
+                        <div className="flex items-center gap-2 mb-2">
+                          <div className="flex items-center gap-1 px-2 py-1 bg-gray-100 text-gray-700 rounded-full text-xs font-medium dark:bg-gray-800 dark:text-gray-300">
+                            <Heart className="w-3 h-3" />
+                            Confirmações Individuais ({individualConfirmations.length})
+                          </div>
+                          <div className="h-px bg-border flex-1"></div>
+                        </div>
+                      </>
+                    )}
+                    {individualConfirmations.map((confirmation, index) => (
+                      <div
+                        key={confirmation.id}
+                        className="flex items-center justify-between p-4 bg-muted/30 rounded-lg hover:bg-muted/50 transition-colors"
+                      >
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
+                            <span className="text-sm font-semibold text-primary">
+                              {familyGroupsArray.reduce((acc, family) => acc + family.members.length, 0) + index + 1}
+                            </span>
+                          </div>
+                          <span className="font-medium text-base">
+                            {confirmation.guest_name}
+                          </span>
+                        </div>
+                        <div className="text-right">
+                          <p className="text-sm text-muted-foreground">
+                            {new Date(confirmation.confirmed_at).toLocaleDateString(
+                              "pt-BR",
+                              { timeZone: "America/Sao_Paulo" },
+                            )}
+                          </p>
+                          <p className="text-xs text-muted-foreground">
+                            {new Date(confirmation.confirmed_at).toLocaleTimeString(
+                              "pt-BR",
+                              {
+                                hour: "2-digit",
+                                minute: "2-digit",
+                                timeZone: "America/Sao_Paulo",
+                              },
+                            )}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             )}
           </CardContent>
