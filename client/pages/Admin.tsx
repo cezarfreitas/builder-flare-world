@@ -314,9 +314,17 @@ export default function Admin() {
                           {index + 1}
                         </span>
                       </div>
-                      <span className="font-medium text-base">
-                        {confirmation.guest_name}
-                      </span>
+                      <div className="flex items-center gap-2">
+                        <span className="font-medium text-base">
+                          {confirmation.guest_name}
+                        </span>
+                        {confirmation.family_batch_id && (
+                          <div className="flex items-center gap-1 px-2 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-medium dark:bg-blue-900 dark:text-blue-200">
+                            <Users className="w-3 h-3" />
+                            Família
+                          </div>
+                        )}
+                      </div>
                     </div>
                     <div className="text-right">
                       <p className="text-sm text-muted-foreground">
