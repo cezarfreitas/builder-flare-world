@@ -104,7 +104,7 @@ export const getEventByCode: RequestHandler = async (req, res) => {
       }
 
       const [confirmationRows] = (await connection.execute(
-        "SELECT id, guest_name, confirmed_at FROM confirmations WHERE event_id = ? ORDER BY confirmed_at DESC",
+        "SELECT id, guest_name, confirmed_at, family_batch_id FROM confirmations WHERE event_id = ? ORDER BY confirmed_at DESC",
         [eventRows[0].id],
       )) as any;
 
@@ -408,7 +408,7 @@ export const getAdminEvent: RequestHandler = async (req, res) => {
       }
 
       const [confirmationRows] = (await connection.execute(
-        "SELECT id, guest_name, confirmed_at FROM confirmations WHERE event_id = ? ORDER BY confirmed_at DESC",
+        "SELECT id, guest_name, confirmed_at, family_batch_id FROM confirmations WHERE event_id = ? ORDER BY confirmed_at DESC",
         [eventRows[0].id],
       )) as any;
 
