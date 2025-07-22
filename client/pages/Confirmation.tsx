@@ -348,14 +348,6 @@ export default function Confirmation() {
                 {(event.phone || event.maps_link) && (
                   <div className="flex gap-2 ml-6">
                     {event.phone && (
-                      <>
-                        <a
-                          href={`tel:${event.phone}`}
-                          className="flex items-center gap-1 text-green-600 hover:text-green-700 text-xs"
-                        >
-                          <Phone className="w-3 h-3" />
-                          Ligar
-                        </a>
                         <a
                           href={`https://wa.me/${event.phone.replace(/\D/g, "")}`}
                           target="_blank"
@@ -365,7 +357,6 @@ export default function Confirmation() {
                           <MessageSquare className="w-3 h-3" />
                           WhatsApp
                         </a>
-                      </>
                     )}
 
                     {event.maps_link && (
