@@ -129,6 +129,80 @@ export default function Confirmation() {
     }
   };
 
+  const handleFamilyConfirmation = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!code || confirming) return;
+
+    // Filter out empty names
+    const validNames = familyNames
+      .map(name => name.trim())
+      .filter(name => name.length > 0);
+
+    if (validNames.length === 0) {
+      setFamilyConfirmationResult({
+        success: false,
+        message: "Adicione pelo menos um nome para confirmar presença.",
+      });
+      return;
+    }
+
+    setConfirming(true);
+    setFamilyConfirmationResult(null);
+
+    try {
+      const requestData: ConfirmFamilyRequest = {
+        guest_names: validNames,
+      };
+
+      const response = await fetch(`/api/events/${code}/confirm-family`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestData),
+      });
+
+      const result: ConfirmFamilyResponse = await response.json();
+      setFamilyConfirmationResult(result);
+
+      if (result.success) {
+        setFamilyNames(["", "", ""]);
+        // Refresh event data to show updated confirmations
+        fetchEventData();
+
+        // 🎉 CONFETE para família!
+        setTimeout(() => {
+          fireConfirmationConfetti();
+        }, 300);
+      }
+    } catch (error) {
+      console.error("Error confirming family:", error);
+      setFamilyConfirmationResult({
+        success: false,
+        message: "Erro ao confirmar presenças. Tente novamente.",
+      });
+    } finally {
+      setConfirming(false);
+    }
+  };
+
+  const addFamilyMember = () => {
+    setFamilyNames([...familyNames, ""]);
+  };
+
+  const removeFamilyMember = (index: number) => {
+    if (familyNames.length > 1) {
+      const newNames = familyNames.filter((_, i) => i !== index);
+      setFamilyNames(newNames);
+    }
+  };
+
+  const updateFamilyName = (index: number, value: string) => {
+    const newNames = [...familyNames];
+    newNames[index] = value;
+    setFamilyNames(newNames);
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-background via-accent/30 to-primary/10 flex items-center justify-center p-4 sm:p-6">
