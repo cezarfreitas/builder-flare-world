@@ -610,7 +610,7 @@ export default function Confirmation() {
                               required={index < 2}
                               className="h-10"
                             />
-                            {familyNames.length > 3 && index >= 3 && (
+                            {familyNames.length > 2 && index >= 2 && (
                               <Button
                                 type="button"
                                 variant="outline"
