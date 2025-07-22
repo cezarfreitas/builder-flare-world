@@ -646,7 +646,7 @@ export default function Confirmation() {
 
                       <div className="p-2 bg-blue-50 border border-blue-200 rounded-lg dark:bg-blue-950/20 dark:border-blue-800">
                         <p className="text-xs text-blue-700 dark:text-blue-300">
-                          💡 Digite nomes completos (nome e sobrenome) para evitar confusão. Mínimo 3 campos, máximo 10.
+                          💡 Digite nomes completos (nome e sobrenome) para evitar confusão. Mínimo 2 campos, máximo 10.
                         </p>
                       </div>
 
