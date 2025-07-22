@@ -251,6 +251,138 @@ export const confirmGuest: RequestHandler = async (req, res) => {
   }
 };
 
+export const confirmFamily: RequestHandler = async (req, res) => {
+  try {
+    const { code } = req.params;
+    const { guest_names }: ConfirmFamilyRequest = req.body;
+
+    if (!guest_names || !Array.isArray(guest_names) || guest_names.length === 0) {
+      const response: ConfirmFamilyResponse = {
+        success: false,
+        message: "Lista de nomes é obrigatória",
+      };
+      return res.status(400).json(response);
+    }
+
+    // Validate all names
+    const validNames = guest_names
+      .map(name => name?.trim())
+      .filter(name => name && name.length > 0);
+
+    if (validNames.length === 0) {
+      const response: ConfirmFamilyResponse = {
+        success: false,
+        message: "Pelo menos um nome válido é obrigatório",
+      };
+      return res.status(400).json(response);
+    }
+
+    const connection = await getConnection();
+
+    try {
+      // Check if event exists
+      const [eventRows] = (await connection.execute(
+        "SELECT id FROM events WHERE link_code = ?",
+        [code],
+      )) as any;
+
+      if (eventRows.length === 0) {
+        const response: ConfirmFamilyResponse = {
+          success: false,
+          message: "Evento não encontrado",
+        };
+        return res.status(404).json(response);
+      }
+
+      const eventId = eventRows[0].id;
+      let confirmedCount = 0;
+      const alreadyConfirmed = [];
+      const similarNames = [];
+
+      // Check each name for duplicates and similar names
+      for (const guestName of validNames) {
+        // Check exact match
+        const [existingRows] = (await connection.execute(
+          "SELECT id FROM confirmations WHERE event_id = ? AND guest_name = ?",
+          [eventId, guestName],
+        )) as any;
+
+        if (existingRows.length > 0) {
+          alreadyConfirmed.push(guestName);
+          continue;
+        }
+
+        // Check similar names (same first name)
+        const inputFirstName = guestName.split(' ')[0].toLowerCase();
+        const [similarRows] = (await connection.execute(
+          "SELECT guest_name FROM confirmations WHERE event_id = ? AND LOWER(SUBSTRING_INDEX(guest_name, ' ', 1)) = ?",
+          [eventId, inputFirstName],
+        )) as any;
+
+        if (similarRows.length > 0 && guestName.split(' ').length === 1) {
+          similarNames.push(guestName);
+          continue;
+        }
+
+        // Insert confirmation
+        await connection.execute(
+          "INSERT INTO confirmations (event_id, guest_name) VALUES (?, ?)",
+          [eventId, guestName],
+        );
+        confirmedCount++;
+      }
+
+      // Handle response based on results
+      if (similarNames.length > 0) {
+        const response: ConfirmFamilyResponse = {
+          success: false,
+          message: `Já existe alguém com o nome "${similarNames[0]}" confirmado. Use nome completo para distinguir.`,
+        };
+        return res.status(400).json(response);
+      }
+
+      if (alreadyConfirmed.length > 0 && confirmedCount === 0) {
+        const response: ConfirmFamilyResponse = {
+          success: false,
+          message: `${alreadyConfirmed.length > 1 ? 'Estes nomes já foram confirmados' : 'Este nome já foi confirmado'}: ${alreadyConfirmed.join(', ')}`,
+        };
+        return res.status(400).json(response);
+      }
+
+      const totalAttempted = validNames.length;
+      let message = '';
+
+      if (confirmedCount === totalAttempted) {
+        message = confirmedCount === 1
+          ? 'Presença confirmada com sucesso!'
+          : `${confirmedCount} presenças confirmadas com sucesso!`;
+      } else {
+        message = `${confirmedCount} de ${totalAttempted} presenças confirmadas.`;
+        if (alreadyConfirmed.length > 0) {
+          message += ` Já confirmados: ${alreadyConfirmed.join(', ')}`;
+        }
+      }
+
+      const response: ConfirmFamilyResponse = {
+        success: true,
+        message,
+        confirmed_count: confirmedCount,
+      };
+
+      res.json(response);
+    } finally {
+      await connection.end();
+    }
+  } catch (error) {
+    console.error("Error confirming family:", error);
+    const response: ConfirmFamilyResponse = {
+      success: false,
+      message: "Erro interno do servidor",
+    };
+    res.status(500).json(response);
+  }
+};
+
 export const getAdminEvent: RequestHandler = async (req, res) => {
   try {
     const { code } = req.params;
