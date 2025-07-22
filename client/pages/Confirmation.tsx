@@ -191,7 +191,7 @@ export default function Confirmation() {
   };
 
   const removeFamilyMember = (index: number) => {
-    if (familyNames.length > 1) {
+    if (familyNames.length > 2) {
       const newNames = familyNames.filter((_, i) => i !== index);
       setFamilyNames(newNames);
     }
