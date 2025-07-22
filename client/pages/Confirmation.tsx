@@ -22,11 +22,15 @@ import {
   Phone,
   Navigation,
   Users,
+  Plus,
+  Minus,
 } from "lucide-react";
 import {
   EventDetailsResponse,
   ConfirmGuestRequest,
   ConfirmGuestResponse,
+  ConfirmFamilyRequest,
+  ConfirmFamilyResponse,
 } from "@shared/api";
 import { fireConfirmationConfetti } from "@/lib/confetti-utils";
 
