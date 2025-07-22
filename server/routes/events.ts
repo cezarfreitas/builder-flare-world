@@ -329,10 +329,10 @@ export const confirmFamily: RequestHandler = async (req, res) => {
           continue;
         }
 
-        // Insert confirmation
+        // Insert confirmation with family batch ID
         await connection.execute(
-          "INSERT INTO confirmations (event_id, guest_name) VALUES (?, ?)",
-          [eventId, guestName],
+          "INSERT INTO confirmations (event_id, guest_name, family_batch_id) VALUES (?, ?, ?)",
+          [eventId, guestName, familyBatchId],
         );
         confirmedCount++;
       }
