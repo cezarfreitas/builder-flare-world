@@ -590,7 +590,7 @@ export default function Confirmation() {
                     /* Family Form */
                     <form onSubmit={handleFamilyConfirmation} className="space-y-3">
                       <Label className="font-semibold">
-                        Confirme a presença da família para "{event.title}":
+                        Confirme a presença da família abaixo:
                       </Label>
 
                       <div className="space-y-2">
