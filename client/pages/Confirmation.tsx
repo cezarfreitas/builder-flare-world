@@ -46,7 +46,7 @@ export default function Confirmation() {
 
   // Family confirmation state
   const [isFamilyMode, setIsFamilyMode] = useState(false);
-  const [familyNames, setFamilyNames] = useState<string[]>(["", "", ""]);
+  const [familyNames, setFamilyNames] = useState<string[]>(["", ""]);
   const [familyConfirmationResult, setFamilyConfirmationResult] =
     useState<ConfirmFamilyResponse | null>(null);
 
