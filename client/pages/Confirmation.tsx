@@ -166,7 +166,7 @@ export default function Confirmation() {
       setFamilyConfirmationResult(result);
 
       if (result.success) {
-        setFamilyNames(["", "", ""]);
+        setFamilyNames(["", ""]);
         // Refresh event data to show updated confirmations
         fetchEventData();
 
