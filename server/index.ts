@@ -11,6 +11,7 @@ import {
   deleteEvent,
   updateEvent,
   clearConfirmations,
+  confirmFamily,
 } from "./routes/events";
 import { initializeDatabase } from "./db";
 
