@@ -604,10 +604,10 @@ export default function Confirmation() {
                         {familyNames.map((name, index) => (
                           <div key={index} className="flex gap-2">
                             <Input
-                              placeholder={`Nome completo ${index + 1}${index < 3 ? ' (obrigatório)' : ' (opcional)'}`}
+                              placeholder={`Nome completo ${index + 1}${index < 2 ? ' (obrigatório)' : ' (opcional)'}`}
                               value={name}
                               onChange={(e) => updateFamilyName(index, e.target.value)}
-                              required={index < 3}
+                              required={index < 2}
                               className="h-10"
                             />
                             {familyNames.length > 3 && index >= 3 && (
