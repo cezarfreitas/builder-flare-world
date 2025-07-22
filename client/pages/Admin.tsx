@@ -163,6 +163,38 @@ export default function Admin() {
   const event = eventData.event;
   const confirmations = eventData.confirmations || [];
 
+  // Group confirmations by family
+  const familyGroups = new Map<string, typeof confirmations>();
+  const individualConfirmations: typeof confirmations = [];
+
+  confirmations.forEach(confirmation => {
+    if (confirmation.family_batch_id) {
+      if (!familyGroups.has(confirmation.family_batch_id)) {
+        familyGroups.set(confirmation.family_batch_id, []);
+      }
+      familyGroups.get(confirmation.family_batch_id)!.push(confirmation);
+    } else {
+      individualConfirmations.push(confirmation);
+    }
+  });
+
+  // Create family colors for visual distinction
+  const familyColors = [
+    'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-200',
+    'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-200',
+    'bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-200',
+    'bg-orange-100 text-orange-700 dark:bg-orange-900 dark:text-orange-200',
+    'bg-pink-100 text-pink-700 dark:bg-pink-900 dark:text-pink-200',
+    'bg-indigo-100 text-indigo-700 dark:bg-indigo-900 dark:text-indigo-200',
+  ];
+
+  const familyGroupsArray = Array.from(familyGroups.entries()).map(([batchId, members], index) => ({
+    batchId,
+    members,
+    color: familyColors[index % familyColors.length],
+    familyNumber: index + 1
+  }));
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-accent/30 to-primary/10 p-4 sm:p-6">
       <div className="max-w-4xl mx-auto space-y-6">
